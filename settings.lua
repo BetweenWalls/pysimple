@@ -7,6 +7,14 @@ data:extend ({
         setting_type = "startup",
         default_value = false,
         order = "a"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-storage-tanks",
+        setting_type = "startup",
+        default_value = false,
+        hidden = true,
+        order = "b"
     }
 })
 

@@ -1,4 +1,18 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.4
+Date: 2024.08.04
+  Changes:
+    - Reordered recipe unlocks within technologies to generally be in order of priority - recipes that need to be used first will
+      be listed first
+    - Moved evaporation processing deeper into the tech tree since it is only needed for gunpowder in the early game
+    - Moved high-pressure furnace recipe into mining with fluid so that it is also available for ceramic, which was overlooked in
+      the previous version
+    - Moved moss to be slightly earlier so that it is adjacent with seaweed
+    - Moved kerogen processing below glass since shale oil can only be used to fuel glassworks in the early game
+    - Moved some recipes from vacuum tube electronics to technologies immediately above it
+    - Adjusted "gravel" saline water recipe to be equivalent to the "stone" version instead of being less efficient even though it
+      requires more processing steps
+---------------------------------------------------------------------------------------------------
 Version: 0.0.3
 Date: 2024.08.02
   Changes:
