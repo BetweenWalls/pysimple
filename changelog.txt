@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.0.3
+Date: 2024.08.02
+  Changes:
+    - The high-pressure furnace is now unlocked alongside the recipes which use it instead of being unlocked from
+      a single technology
+    - Early recipes with multiple products are renamed to include each product so they are searchable
+    - Moved basic substrate tech slightly deeper into the tech tree
+---------------------------------------------------------------------------------------------------
+Version: 0.0.2
+Date: 2024.08.02
+  Changes:
+    - Fixed typo
+---------------------------------------------------------------------------------------------------
+Version: 0.0.1
+Date: 2024.08.02
+  Changes:
+    - Initial release
