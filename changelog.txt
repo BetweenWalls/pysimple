@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.5
+Date: 2024.08.10
+  Changes:
+    - Added startup settings for minor balance changes affecting saline water recipes and storage tank capacities
+    - Expanded previous improvements involving prioritized ordering of recipe unlocks as well as names of multi-product recipes
+      to also apply to technologies and recipes acquired with "py science pack 1"
+    - Moved most military techs deeper so the logistic-science techs can be viewed together more easily
+    - Adjusted prerequisites for fluid pressurization to include both glass and ceramic, and moved saline water recipes into it
+      while moving pressurized air/water recipes deeper in the tech tree where they first get used
+    - Moved additional techs deeper into the tech tree: electrolysis, land animals, microbiology, fertilizer
+    - Removed efficiency-focused titanium/lead processing prerequisites from nexelit processing
+    - Reduced the length of connections from mycology and floor tile technologies to improve tech tree readability
+---------------------------------------------------------------------------------------------------
 Version: 0.0.4
 Date: 2024.08.04
   Changes:

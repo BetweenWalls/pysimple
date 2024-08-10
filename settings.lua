@@ -10,12 +10,18 @@ data:extend ({
     },
     {
         type = "bool-setting",
+        name = "pysimple-saline-water",
+        setting_type = "startup",
+        default_value = false,
+        order = "b"
+    },
+    {
+        type = "bool-setting",
         name = "pysimple-storage-tanks",
         setting_type = "startup",
         default_value = false,
-        hidden = true,
-        order = "b"
-    }
+        order = "c"
+    },
 })
 
 if data.raw["bool-setting"]["py-tank-adjust"] ~= nil then
