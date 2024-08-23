@@ -13,14 +13,21 @@ data:extend ({
         name = "pysimple-saline-water",
         setting_type = "startup",
         default_value = false,
-        order = "b"
+        order = "c"
     },
     {
         type = "bool-setting",
         name = "pysimple-storage-tanks",
         setting_type = "startup",
         default_value = false,
-        order = "c"
+        order = "d"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-recipe-menu",
+        setting_type = "startup",
+        default_value = false,
+        order = "e"
     },
 })
 

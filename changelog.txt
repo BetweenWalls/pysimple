@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.6
+Date: 2024.08.23
+  Changes:
+    - Added a startup setting to reorganize items to fit into 7 total item groups (instead of 10) based on in-game similarities
+      instead of which pymod they come from. Groups for "materials", "fluids", and "life" are used in addition to the original
+      4 groups from the base game.
+    - Added a check for fixing technology unlocks in case Py's post-processing doesn't fix them
+---------------------------------------------------------------------------------------------------
 Version: 0.0.5
 Date: 2024.08.10
   Changes:
