@@ -2,7 +2,7 @@
 
 -- The code here is copied from Tech Tree Trimmer by _CodeGreen:
 
-if settings.startup["pysimple-tech-tree"].value then
+if settings.startup["pysimple-tech-tree"].value ~= "1" then
     -- fetch all science packs
     local pack_names = {} ---@type table<string, true>
     for _, lab in pairs(data.raw.lab) do
