@@ -3,28 +3,36 @@
 data:extend ({
     {
         type = "bool-setting",
-        name = "pysimple-enemies",
+        name = "pysimple-recipe-menu",
         setting_type = "startup",
-        default_value = false,
+        default_value = true,
         order = "a"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-descriptions",
+        setting_type = "startup",
+        default_value = true,
+        order = "b"
+    },
+    {
+        type = "string-setting",
+        name = "pysimple-tech-tree",
+        setting_type = "startup",
+        allowed_values = {"1", "2", "3"},
+        default_value = "3",
+        order = "c"
     },
     {
         type = "bool-setting",
         name = "pysimple-saline-water",
         setting_type = "startup",
         default_value = false,
-        order = "c"
-    },
-    {
-        type = "bool-setting",
-        name = "pysimple-storage-tanks",
-        setting_type = "startup",
-        default_value = false,
         order = "d"
     },
     {
         type = "bool-setting",
-        name = "pysimple-recipe-menu",
+        name = "pysimple-storage-tanks",
         setting_type = "startup",
         default_value = false,
         order = "e"

@@ -1,6 +1,6 @@
 {
 	"name": "pysimple",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"title": "Pyanodons Simplified",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
@@ -20,5 +20,5 @@
 		"? BottleneckLite",
 		"? Milestones"
 	],
-	"description": "Makes minor adjustments to the technology tree and names/descriptions to improve clarity. No significant gameplay changes. Optional: reorganizes items based on in-game similarities instead of which py mod they come from."
+	"description": "Makes adjustments to the recipe menu, technology tree, and names/descriptions for improved clarity. No significant gameplay changes. Fully configurable settings."
 }

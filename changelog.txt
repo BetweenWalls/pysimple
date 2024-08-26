@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.0.7
+Date: 2024.08.26
+  Changes:
+    - Adjusted startup settings to be fully configurable - all features can be enabled/disabled separately
+    - Expanded renaming of multi-product recipes to include most multi-product recipes from first 4 science packs
+---------------------------------------------------------------------------------------------------
 Version: 0.0.6
 Date: 2024.08.23
   Changes:
