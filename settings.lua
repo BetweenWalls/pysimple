@@ -45,3 +45,6 @@ end
 if data.raw["bool-setting"]["future-beacons"] ~= nil then
     data.raw["bool-setting"]["future-beacons"].default_value = true
 end
+if data.raw["bool-setting"]["pypp-big-inventory-gui"] ~= nil then
+    data.raw["bool-setting"]["pypp-big-inventory-gui"].default_value = true
+end

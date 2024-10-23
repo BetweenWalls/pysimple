@@ -8,13 +8,18 @@ local groups = {
         ["py-pipes"] = {recipes={"niobium-pipe", "casting-niobium-pipe", "hotair-casting-niobium-pipe", "niobium-pipe-to-ground", "casting-niobium-pipe-underground", "hotair-casting-niobium-pipe-underground", "ht-pipes", "casting-ht-pipe", "hotair-casting-ht-pipe", "ht-pipes-to-ground", "casting-ht-pipe-underground", "hotair-casting-ht-pipe-underground"}},
         ["energy-pipe-distribution"] = {items={"small-electric-pole", "medium-electric-pole", "nexelit-power-pole", "big-electric-pole", "substation", "nexelit-substation", "pipe", "pipe-to-ground", "pump"}, recipes={"pipe", "casting-pipe", "hotair-casting-pipe", "pipe-to-ground", "casting-pipe-ug", "hotair-casting-pipe-ug", "pump"}},
         ["train-transport"] = {items={"mk02-locomotive", "mk02-wagon", "mk02-fluid-wagon", "ht-locomotive", "ht-generic-wagon", "ht-generic-fluid-wagon", "mk04-locomotive", "mk04-wagon", "mk04-fluid-wagon"}},
+        ["logistic-network"] = {items={"storage-chest", "passive-provider-chest", "buffer-chest", "requester-chest", "active-provider-chest"}},
+        ["py-containers-shed"] = {items={"py-shed-storage", "py-shed-passive-provider", "py-shed-buffer", "py-shed-requester", "py-shed-active-provider"}},
+        ["py-containers-storehouse"] = {items={"py-storehouse-storage", "py-storehouse-passive-provider", "py-storehouse-buffer", "py-storehouse-requester", "py-storehouse-active-provider"}},
+        ["py-containers-warehouse"] = {items={"py-warehouse-storage", "py-warehouse-passive-provider", "py-warehouse-buffer", "py-warehouse-requester", "py-warehouse-active-provider"}},
+        ["py-containers-deposit"] = {items={"py-deposit-storage", "py-deposit-passive-provider", "py-deposit-buffer", "py-deposit-requester", "py-deposit-active-provider"}},
         ["py-trains"] = {order="f"},
         ["py-stations"] = {items={"roboport"}},
         ["py-robots"] = {items={"logistic-robot", "construction-robot"}},
         ["terrain"] = {items={{"stone-brick","1"}}, recipes={{"stone-brick"}, {"sand-brick"}, {"stone-brick-2"}}},
     },
     ["production"] = {
-        ["energy"] = {order="zpy[general]-a[power]-1", items={"boiler", "electric-boiler", "oil-boiler-mk01", "steam-engine", "steam-turbine", "accumulator", "accumulator-mk01", "accumulator-mk02", "accumulator-mk03", "py-turbine"}},
+        ["energy"] = {order="zpy[general]-a[power]-1", items={"boiler", "electric-boiler", "py-electric-boiler", "oil-boiler-mk01", "steam-engine", "steam-turbine", "accumulator", "accumulator-mk01", "accumulator-mk02", "accumulator-mk03", "py-turbine"}},
         ["py-alternativeenergy-special-buildings"] = {order="zpy[general]-a[power]-2", items={"rhe", "heat-exchanger", "heat-pipe", "nuclear-reactor", "py-rtg", "fusion-reactor-mk01", "fusion-reactor-mk02", "mdh"}},
         ["py-alternativeenergy-thermosolar"] = {order="zpy[general]-a[power]-3", items={{"microwave-receiver","1"}, {"anti-solar","2"}, "aerial-base", "aerial-blimp-mk01", "aerial-blimp-mk02", "aerial-blimp-mk03", "aerial-blimp-mk04"}},
         ["extraction-machine"] = {order="zpy[general]-b[extraction]", items={"burner-mining-drill", "electric-mining-drill", "offshore-pump", "coal-mine", "iron-mine", "copper-mine", "aluminium-mine", "tin-mine", "lead-mine", "zinc-mine", "titanium-mine", "nickel-mine", "chromium-mine", "quartz-mine", "phosphate-mine-02", "salt-mine", "mo-mine", "phosphate-mine", "rare-earth-mine", "niobium-mine", "diamond-mine", "regolite-mine", "sulfur-mine", "geothermal-plant-mk01", "fracking-rig", "retorter", "uranium-mining-drill", "uranium-mine", "nexelit-mine"}},
@@ -30,7 +35,7 @@ local groups = {
         ["py-rawores-buildings-others"] = {order="zpy[general]-e"},
         ["module"] = {order="zpy[general]-x", items={{"beacon","a[beacon]-2"}}},
         ["science-pack"] = {order="zpy[general]-y", items={{"lab","0"}}},
-        ["space-related"] = {order="zpy[general]-z", items={"rocket-part", "capsule", "microwave-satellite", "satellite", "destablilized-toxirus"}},
+        ["space-related"] = {order="zpy[general]-z", items={"rocket-part", "capsule", "microwave-satellite", "satellite", "destablilized-toxirus", "cargo-pod", "cargo-pod-container"}},
         ["py-alternativeenergy-buildings-mk01"] = {order="zpy[mk01]-a[power]", items={{"steam-turbine-mk01","1"}, {"py-heat-exchanger","2"}, "solar-panel-mk01", "tidal-mk01", "vawt-turbine-mk01", "hawt-turbine-mk01", "multiblade-turbine-mk01", "gasturbinemk01"}},
         ["py-alternativeenergy-buildings-mk02"] = {order="zpy[mk02]-a[power]", items={{"steam-turbine-mk02","1"}, {"py-heat-exchanger-mk02","2"}, "solar-panel-mk02", "tidal-mk02", "vawt-turbine-mk02", "hawt-turbine-mk02", "gasturbinemk02"}},
         ["py-alternativeenergy-buildings-mk03"] = {order="zpy[mk03]-a[power]", items={{"steam-turbine-mk03","1"}, {"py-heat-exchanger-mk03","2"}, "solar-panel-mk03", "tidal-mk03", "vawt-turbine-mk03", "hawt-turbine-mk03", "multiblade-turbine-mk03", "gasturbinemk03"}},
@@ -47,10 +52,10 @@ local groups = {
         ["py-cp-buildings-mk02"] = {order="zpy[mk02]-d", items={"wpu-mk02", "jaw-crusher-mk02", "secondary-crusher-mk02", "impact-crusher-mk02", "ball-mill-mk02", "automated-screener-mk02", "classifier-mk02", "washer-mk02", "evaporator-mk02", "carbon-filter-mk02", "pulp-mill-mk02", "solid-separator-mk02", "grease-table-mk02", "scrubber-mk02", "wet-scrubber-mk02", "hydroclassifier-mk02", "flotation-cell-mk02", "leaching-station-mk02", "electrolyzer-mk02", "agitator-mk02", "thickener-mk02", "hydrocyclone-mk02", "centrifugal-pan-mk02", "jig-mk02", "centrifuge-mk02", "vacuum-pump-mk02", "cooling-tower-mk02"}},
         ["py-cp-buildings-mk03"] = {order="zpy[mk03]-d", items={"wpu-mk03", "jaw-crusher-mk03", "secondary-crusher-mk03", "impact-crusher-mk03", "ball-mill-mk03", "automated-screener-mk03", "classifier-mk03", "washer-mk03", "evaporator-mk03", "carbon-filter-mk03", "pulp-mill-mk03", "solid-separator-mk03", "grease-table-mk03", "scrubber-mk03", "wet-scrubber-mk03", "hydroclassifier-mk03", "flotation-cell-mk03", "leaching-station-mk03", "electrolyzer-mk03", "agitator-mk03", "thickener-mk03", "hydrocyclone-mk03", "centrifugal-pan-mk03", "jig-mk03", "centrifuge-mk03", "vacuum-pump-mk03"}},
         ["py-cp-buildings-mk04"] = {order="zpy[mk04]-d", items={"wpu-mk04", "jaw-crusher-mk04", "secondary-crusher-mk04", "impact-crusher-mk04", "ball-mill-mk04", "automated-screener-mk04", "classifier-mk04", "washer-mk04", "evaporator-mk04", "carbon-filter-mk04", "pulp-mill-mk04", "solid-separator-mk04", "grease-table-mk04", "scrubber-mk04", "wet-scrubber-mk04", "hydroclassifier-mk04", "flotation-cell-mk04", "leaching-station-mk04", "electrolyzer-mk04", "agitator-mk04", "thickener-mk04", "hydrocyclone-mk04", "centrifugal-pan-mk04", "jig-mk04", "centrifuge-mk04", "vacuum-pump-mk04"}},
-        ["py-fusion-buildings-mk01"] = {order="zpy[mk01]-e", items={}},
-        ["py-fusion-buildings-mk02"] = {order="zpy[mk02]-e", items={}},
-        ["py-fusion-buildings-mk03"] = {order="zpy[mk03]-e", items={}},
-        ["py-fusion-buildings-mk04"] = {order="zpy[mk04]-e", items={}},
+        ["py-fusion-buildings-mk01"] = {order="zpy[mk01]-e"},
+        ["py-fusion-buildings-mk02"] = {order="zpy[mk02]-e"},
+        ["py-fusion-buildings-mk03"] = {order="zpy[mk03]-e"},
+        ["py-fusion-buildings-mk04"] = {order="zpy[mk04]-e"},
         ["py-petroleum-handling-buildings-mk01"] = {order="zpy[mk01]-f", items={"distilator", "cracker-mk01", "quenching-tower", "tar-processing-unit", "methanol-reactor", "olefin-plant", "desulfurizator-unit", "compressor-mk01", "fluid-separator", "gasifier", "rectisol", "fts-reactor", "reformer-mk01", "lor-mk01", "heavy-oil-refinery-mk01", "gas-refinery-mk01"}},
         ["py-petroleum-handling-buildings-mk02"] = {order="zpy[mk02]-f", items={"distilator-mk02", "cracker-mk02", "quenching-tower-mk02", "tar-processing-unit-mk02", "methanol-reactor-mk02", "olefin-plant-mk02", "desulfurizator-unit-mk02", "compressor-mk02", "fluid-separator-mk02", "gasifier-mk02", "rectisol-mk02", "fts-reactor-mk02", "reformer-mk02", "lor-mk02", "heavy-oil-refinery-mk02", "gas-refinery-mk02"}},
         ["py-petroleum-handling-buildings-mk03"] = {order="zpy[mk03]-f", items={"distilator-mk03", "cracker-mk03", "quenching-tower-mk03", "tar-processing-unit-mk03", "methanol-reactor-mk03", "olefin-plant-mk03", "desulfurizator-unit-mk03", "compressor-mk03", "fluid-separator-mk03", "gasifier-mk03", "rectisol-mk03", "fts-reactor-mk03", "reformer-mk03", "lor-mk03", "heavy-oil-refinery-mk03", "gas-refinery-mk03"}},
@@ -80,7 +85,7 @@ local groups = {
         ["py-intermediates-6"] = {order="zpy-12", items={"solder", "molten-solder", "duralumin", "vitreloy", "intermetallics", "fenxsb-alloy", "nichrome"}, recipes={{"solder"}, {"hotair-solder"}}},
         ["py-rawores-solder"] = {order="zpy-12b"},
         ["py-intermediates-7"] = {order="zpy-13", items={"eva", "sncr-alloy", "crmoni", "nbalti", "nxsb-alloy", "pbsb-alloy", "nbfe-alloy", "fecr-alloy", "ferrite"}},
-        ["py-alternativeenergy-intermetallics-1"] = {order="zpy-14", items={}},
+        ["py-alternativeenergy-intermetallics-1"] = {order="zpy-14"},
         ["py-intermediates-8"] = {order="zpy-15", items={"sodium-hydroxide", "sodium-silicate", "silica-powder", "nisi", "sodium-chlorate", "ammonium-chloride"}},
         ["py-intermediates-9"] = {order="zpy-16", items={"sand-casting", "mold", "lead-container", "coated-container", "crucible", "quartz-crucible"}, recipes={{"casting-lead-container"}, {"hotair-casting-lead-container"}}},
         ["py-intermediates-10"] = {order="zpy-17", items={"phenol", "bakelite", "bisphenol-a", "epoxy", "nexelit-matrix", "nylon", "nylon-parts"}},
@@ -117,12 +122,12 @@ local groups = {
         ["py-hightech-quantum"] = {order="zpy-48", items={"bose-einstein-superfluid", "quantum-vortex-storage-system", "alag-grid", "ingaas", "mqdc", "nv-center", "var-josephson-junction", "pi-josephson-junction", }},
         ["py-intermediates-34"] = {order="zpy-49", items={"crystallographic-substrate", "proton-donor", "proton-receiver"}},
         ["py-nuclear"] = {order="zpy-50", items={"po-210", "pa-233", "americium-oxide", "am-241", "am-243", "uranium-oxide", "u-232", "u-233", "u-234", "u-235", "uranium-235", "u-236", "u-237", "u-238", "uranium-238", "plutonium-oxide", "plutonium-oxide-mox", "pu-238", "pu-239", "pu-240", "pu-241", "pu-242", "cm-250", "plutonium", "vitrified-glass"}},
-        ["py-intermediates-35"] = {order="zpy-51", items={"nuclear-sample", "control-rod", "used-control-rod", "nuclear-fuel", "used-nuclear-fuel", "fuelrod-mk01", "fuelrod-mk02", "fuelrod-mk03", "fuelrod-mk04", "fuelrod-mk05", "mox-fuel-cell", "uranium-fuel-cell", "uranium-fuel-cell-mk02", "uranium-fuel-cell-mk03", "uranium-fuel-cell-mk04", "uranium-fuel-cell-mk05", "used-up-mox-fuel-cell", "used-up-uranium-fuel-cell", "used-up-uranium-fuel-cell-mk02", "used-up-uranium-fuel-cell-mk03", "used-up-uranium-fuel-cell-mk04", "used-up-uranium-fuel-cell-mk05"}},
+        ["py-intermediates-35"] = {order="zpy-51", items={"nuclear-sample", "control-rod", "used-control-rod", "nuclear-fuel", "used-nuclear-fuel", "fuelrod-mk01", "fuelrod-mk02", "fuelrod-mk03", "fuelrod-mk04", "fuelrod-mk05", "mox-fuel-cell", "uranium-fuel-cell", "uranium-fuel-cell-mk02", "uranium-fuel-cell-mk03", "uranium-fuel-cell-mk04", "uranium-fuel-cell-mk05", "used-up-mox-fuel-cell", "depleted-uranium-fuel-cell", "used-up-uranium-fuel-cell", "used-up-uranium-fuel-cell-mk02", "used-up-uranium-fuel-cell-mk03", "used-up-uranium-fuel-cell-mk04", "used-up-uranium-fuel-cell-mk05"}},
         ["py-intermediates-36"] = {order="zpy-52", items={"warm-stone-brick", "warmer-stone-brick", "hot-stone-brick"}},
-        ["py-intermediates-37"] = {order="zpy-53", items={"charcoal-briquette", "coal-briquette", "rocket-fuel", "nuclear-fuel", "used-nuclear-fuel", "solid-fuel"}},
+        ["py-intermediates-37"] = {order="zpy-53", items={"coal-briquette", "charcoal-briquette", "rocket-fuel", "nuclear-fuel", "used-nuclear-fuel", "solid-fuel"}},
         ["py-intermediates-38"] = {order="zpy-54", items={"drill-head", "mega-drill-head"}, recipes={{"casting-drill-heads"}, {"hotair-casting-drill-heads"}}},
         ["py-intermediates-39"] = {order="zpy-55", items={"gunpowder", "explosives"}},
-        ["py-intermediates-40"] = {order="zpy-56", items={"empty-barrel", "empty-fuel-canister", "empty-gas-canister", "methanol-gas-canister", "empty-proto-tholins-vessel", "filled-proto-tholins-vessel", "filled-tholins-vessel"}, recipes={"empty-methanol-gas-canister", "barrel-milk", "fill-milk-barrel", "empty-milk-barrel", "empty-proto-tholins-vessel", "fill-proto-tholins-vessel", "empty-tholins-vessel"}},
+        ["py-intermediates-40"] = {order="zpy-56", items={"empty-barrel", "barrel", "empty-fuel-canister", "empty-gas-canister", "methanol-gas-canister", "empty-proto-tholins-vessel", "filled-proto-tholins-vessel", "filled-tholins-vessel"}, recipes={"empty-methanol-gas-canister", "barrel-milk", "fill-milk-barrel", "empty-milk-barrel", "empty-proto-tholins-vessel", "fill-proto-tholins-vessel", "empty-tholins-vessel"}},
         ["py-rawores-casting"] = {order="zpy-x"},
         ["py-items-hpf"] = {order="zpy-x"},
         ["py-petroleum-handling-items"] = {order="zpy-x"},
@@ -149,7 +154,7 @@ local groups = {
         ["py-crusher"] = {order="zpy-06"},
         ["py-rawores-iron-alloys"] = {order="zpy-08", items={"steel-plate", "stainless-steel", "super-steel", "molten-steel", "molten-stainless-steel-p1", "molten-stainless-steel-p2", "molten-stainless-steel-p3", "molten-stainless-steel", "molten-super-steel-p1", "molten-super-steel-p2", "molten-super-steel"}, recipes={{"steel-20"}, {"hotair-steel-20"}, {"hotair-stainless-steel"}, {"hotair-super-steel"}}},
         ["py-rawores-coal"] = {order="zpy-09", items={"raw-coal", "coal", "crushed-coal", "coarse-coal", "coal-dust", "fines-pulp", "high-ash-fines", "thickened-coal-fines", "coal-fines", "conditioned-fines", "coal-slime-overflow", "coal-under-pulp", "coal-pulp-01", "coal-pulp-02", "coal-pulp-03", "coal-pulp-04", "coal-pulp-05", "coke", "carbon-dust", "redhot-coke"}, recipes={{"coal-fawogae"}, {"pa-coal2"}}},
-        ["py-rawores-coke"] = {order="zpy-10", items={}},
+        ["py-rawores-coke"] = {order="zpy-10"},
         ["py-rawores-iron"] = {order="zpy-11", items={"iron-plate", "iron-ore", "processed-iron-ore", "grade-1-iron", "grade-2-iron", "grade-3-iron", "grade-4-iron", "crushed-iron", "iron-ore-dust", "iron-slime", "unslimed-iron", "iron-concentrate", "iron-dust-concentrate", "iron-pulp-01", "iron-pulp-02", "iron-pulp-03", "iron-pulp-04", "iron-pulp-05", "iron-pulp-06", "iron-pulp-07", "high-grade-iron", "reduced-iron", "sintered-iron", "molten-iron", "fe-biomass", "sponge-iron"}, recipes={{"iron-plate"}, {"low-grade-smelting-iron"}, {"iron-oxide-smelting"}, {"iron-plate-1"}, {"hotair-iron-plate-1"}, {"soot-to-iron"}, {"mining-iron"}}},
         ["py-rawores-copper"] = {order="zpy-12", items={"copper-plate", "copper-ore", "grade-1-copper", "grade-2-copper", "grade-3-copper", "grade-4-copper", "crushed-copper", "copper-rejects", "low-grade-rejects", "copper-low-dust", "low-grade-copper", "copper-solution", "copper-pulp-01", "copper-pulp-02", "copper-pulp-03", "copper-pulp-04", "copper-pregnant-solution", "high-grade-copper", "reduced-copper", "sintered-copper", "molten-copper", "cu-biomass"}, recipes={{"copper-plate"}, {"copper-plate-4"}, {"low-grade-smelting-copper"}, {"copper-plate-1"}, {"hotair-copper-plate-1"}, {"soot-to-copper"}, {"mining-copper"}}},
         ["py-rawores-aluminium"] = {order="zpy-13", items={"aluminium-plate", "ore-aluminium", "powdered-aluminium", "al-pulp-01", "al-pulp-02", "al-pulp-03", "al-pulp-04", "sodium-aluminate", "crystalized-sodium-aluminate", "high-grade-alumina", "reduced-aluminium", "sintered-aluminium", "molten-aluminium", "al-biomass", "al-tailings"}, recipes={{"mining-aluminium"}}},
@@ -192,9 +197,9 @@ local groups = {
         ["py-fluids-3"] = {order="zpy-03", items={"helium", "helium3", "helium-rich-gas", "purier-helium", "liquid-helium"}},
         ["py-fluids-4"] = {order="zpy-04", items={"nitrogen", "purest-nitrogen-gas", "liquid-nitrogen", "tpa", "nitrous-oxide"}},
         ["py-fluids-5"] = {order="zpy-05", items={"water", "water-saline", "pressured-water", "subcritical-water", "geothermal-water", "waste-water"}, recipes={"tar-quenching"}},
-        ["py-fluids-6"] = {order="zpy-06", items={"steam", "pressured-steam", "critical-steam"}, recipes={"steam-exchange5"}},
+        ["py-fluids-6"] = {order="zpy-06", items={"steam", "pressured-steam", "critical-steam"}, recipes={"steam-exchange1", "steam-exchange2", "steam-exchange3", "steam-exchange4", "steam-exchange5"}},
         ["py-fluids-7"] = {order="zpy-07", items={"molten-salt", "hot-molten-salt"}, recipes={"lithium-salt-fuel-seperation", "mox-fuel-seperation"}},
-        ["py-fluids-8"] = {order="zpy-08", items={"vacuum", "pressured-air", "purified-air", "cold-air", "cold-clean-air", "liquid-pure-air", "hot-air"}, recipes={"warm-air-1", "warmer-air-2", "hot-air-3", "warm-stone-brick-1", "warm-stone-brick-2", "warmer-stone-brick-1", "warmer-stone-brick-2", "hot-stone-brick"}},
+        ["py-fluids-8"] = {order="zpy-08", items={"vacuum", "pressured-air", "purified-air", "cold-air", "cold-clean-air", "liquid-pure-air", "hot-air", "warm-stone-brick", "warmer-stone-brick", "hot-stone-brick"}, recipes={"warm-air-1", "warmer-air-2", "hot-air-3", "warm-stone-brick-1", "warm-stone-brick-2", "warmer-stone-brick-1", "warmer-stone-brick-2", "hot-stone-brick"}},
         ["py-fluids-9"] = {order="zpy-09", items={"scrude", "crude-oil", "light-oil", "heavy-oil", "petroleum-gas", "liquid-petgas", "condensates", "low-distillate", "medium-distillate", "high-distillate", "stripped-distillate", "residual-oil", "residual-mixture", "hot-residual-mixture", "btx", "fuel-oil", "condensed-distillate", "naphtha", "middle-oil", "tall-oil", "petroleum-sulfonates", "oil-sand-slurry", "bitumen-froth", "bitumen", "bio-oil"}, recipes={{"fluidize-coke","zpy-item-20"}}},
         ["py-fluids-10"] = {order="zpy-10", items={"olefin", "oleochemicals", "alamac"}},
         ["py-fluids-11"] = {order="zpy-11", items={"kerosene", "gasoline", "diesel"}},
@@ -222,12 +227,13 @@ local groups = {
         ["py-fluids-33"] = {order="zpy-33", items={"dirty-water-light", "organic-pulp", "clean-organic-pulp", "middle-processed-lard", "fatty-acids", "processed-fatty-acids", "organic-acid-anhydride", "vinyl-acetate", "raw-ralesia-extract", "ralesia-extract", "bee-venom", "a-molasse", "b-molasse", "sweet-syrup", "syrup-01", "wax", "dms", "msa", "mutant-enzymes", "flavonoids", "coal-slurry"}},
         ["py-fluids-34"] = {order="zpy-34", items={"pre-pesticide-01", "pre-pesticide-02", "fish-hydrolysate", "fish-emulsion", "fish-oil", "fetal-serum", "liquid-manure", "depolymerized-organics", "creamy-latex", "formic-acid", "zogna-bacteria", "manure-bacteria", "bacteria-1", "bacteria-2", "artificial-blood", "ethanolamine", "gta"}},
         ["py-fluids-35"] = {order="zpy-35", items={"xenogenic-cells", "chelator", "psc"}},
-        ["py-fluids-36"] = {order="zpy-36", items={"heavy-water", "deuterium", "tritium"}},
+        ["py-fluids-36"] = {order="zpy-36", items={"hydrogen-sulfide", "deuterium-sulfide", "enriched-water", "heavy-water", "deuterium", "tritium"}},
         ["py-fluids-37"] = {order="zpy-37", items={"uf6"}, recipes={{"yellow-cake-uf6","1"}, {"u233-uf6","2"}, "uf6-2,42%", "uf6-3,10%", "uf6-3,97%", "uf6-5,09%", "uf6-6,53%", "uf6-8,37%", "uf6-10,72%", "uf6-13,74%", "uf6-17,61%", "uf6-22,57%", "uf6-28,93%", "uf6-37,07%", "uf6-47,51%", "uf6-60,88%", "uf6-78,03%", "uf6-100,00%"}},
         ["py-fluids-38"] = {order="zpy-38", items={"proton", "neutron", "molten-fluoride-thorium-pa233"}, recipes={"neutron-absorbston", "antimatter-fusion", "b-h", "deuterium-fusion", "dt-fusion", "dt-he3"}},
         ["py-fluids-39"] = {order="zpy-39", items={"puo2", "purex-concentrate-1", "purex-concentrate-2", "purex-concentrate-3", "purex-concentrate-4", "purex-concentrate-5", "purex-pu-concentrate-1", "purex-pu-concentrate-2", "purex-pu-concentrate-3", "purex-u-concentrate-1", "purex-u-concentrate-2", "purex-u-concentrate-3", "purex-raffinate", "purex-raffinate-2", "purex-raffinate-3", "ac", "ac-oxygenated", "c-oxygenated", "plutonium-peroxide", "sb-phosphate-1", "sb-phosphate-2", "sb-phosphate-3", "reactor-waste-1", "reactor-waste-2", "purex-waste-1", "purex-waste-2", "purex-waste-3"}},
         ["py-fluids-40"] = {order="zpy-40", items={"drilling-fluid-0", "drilling-fluid-1", "drilling-fluid-2", "drilling-fluid-3"}},
         ["py-fluids-41"] = {order="zpy-41", items={"proto-tholins", "tholins"}},
+        ["py-fluids-42"] = {order="zpy-42", recipes={"empty-processed-light-oil-canister", "empty-scrude-canister", "empty-crude-oil-canister", "empty-light-oil-canister", "empty-heavy-oil-canister", "empty-petroleum-gas-canister", "empty-condensates-canister", "empty-low-distillate-canister", "empty-medium-distillate-canister", "empty-high-distillate-canister", "empty-stripped-distillate-canister", "empty-residual-oil-canister", "empty-residual-mixture-canister", "empty-hot-residual-mixture-canister", "empty-btx-canister", "empty-fuel-oil-canister", "empty-condensed-distillate-canister", "empty-naphtha-canister", "empty-middle-oil-canister", "empty-tall-oil-canister", "empty-bitumen-canister", "empty-bio-oil-canister", "empty-kerosene-canister", "empty-gasoline-canister", "empty-diesel-canister", "empty-anthracene-oil-canister", "empty-naphthalene-oil-canister", "empty-carbolic-oil-canister", "empty-pitch-canister", "empty-acetylene-canister", "empty-aromatics-canister", "empty-black-liquor-canister", "empty-coalbed-gas-canister", "empty-coal-gas-canister", "empty-syngas-canister", "empty-refsyngas-canister", "empty-dirty-syngas-canister", "empty-purified-syngas-canister", "empty-hot-syngas-canister", "empty-outlet-gas-01-canister", "empty-outlet-gas-02-canister", "empty-outlet-gas-03-canister", "empty-raw-gas-canister", "empty-natural-gas-canister", "empty-purified-natural-gas-canister", "empty-pure-natural-gas-canister", "empty-refined-natural-gas-canister", "empty-methane-canister", "empty-methanol-canister", "empty-tar-canister", "empty-benzene-canister", "empty-propene-canister", "empty-ethylene-canister", "empty-fatty-acids-canister", "empty-high-ash-fines-canister", "empty-empty-residual-gas-canister"}},
         ["test"] = {order="zpy-xa"},
         ["fluid"] = {order="zpy-xb"},
         ["py-fluid-handling"] = {order="zpy-xc"},
@@ -297,7 +303,7 @@ local groups = {
         ["py-alienlife-zungror"] = {items={"blood-caged-zungror", "bone-caged-zungror", "brain-caged-zungror", "fat-caged-zungror", "guts-caged-zungror", "meat-caged-zungror", "skin-caged-zungror", {"vsk","b"}, "caged-zungror", "zungror-cocoon", "zungror", "zungror-mk02", "zungror-mk03", "zungror-mk04", {"pre-fiber-1","zpya"}, {"pre-fiber-2","zpyb"}, {"pre-fiber-3","zpyc"}}, recipes={{"full-render-zun","1"}, {"ex-blo-zun"}, {"ex-bra-zun","a04"}, {"ex-fat-zun"}, {"ex-gut-zun"}, {"ex-me-zun"}, {"ex-ski-zun"}}},
         ["py-alienlife-antelope"] = {order="e-w", items={"antelope", "anti-lope", "neutra-lope", "pos-tilope", "cage-antelope", "caged-antelope", "dimensional-gastricorg", "strangelets"}, recipes={{"full-render-antelope","1"}}},
         ["py-alienlife-dhilmos"] = {order="e-x[water]-1", items={"blood-dhilmos", "fat-dhilmos", "guts-dhilmos", "meat-dhilmos", {"autoantigens","b"}, "dhilmos-egg", "dhilmos-pup", "dhilmos", "dhilmos-mk02", "dhilmos-mk03", "dhilmos-mk04"}, recipes={{"full-render-dhilmoss","1"}, {"ex-blo-dhi"}, {"ex-fat-dhi"}, {"ex-gut-dhi"}, {"ex-me-dhi"}, {"extract-dhilmos-eye"}}},
-        ["py-alienlife-zipir"] = {order="e-x[water]-2", items={"blood-zipir", "brain-zipir", "fat-zipir", "guts-zipir", "meat-zipir", "skin-zipir", {"adaptable-automucosa","b"}, "zipir-eggs", "zipir-pup", "zipir1", "zipir2", "zipir3", "zipir4", "zipir-carcass"}, recipes={{"full-render-zipir","1"}, {"ex-blo-zipir"}, {"ex-bra-zipir"}, {"ex-fat-zipir"}, {"ex-gut-zipir"}, {"ex-me-zipir"}, {"ex-ski-zipir"}}},
+        ["py-alienlife-zipir"] = {order="e-x[water]-2", items={"blood-zipir", "brain-zipir", "fat-zipir", "guts-zipir", "meat-zipir", "skin-zipir", {"adaptable-automucosa","b"}, "zipir-eggs", "zipir-pup", "zipir1", "zipir2", "zipir3", "zipir4", "zipir-carcass"}, recipes={{"full-render-zipir","1"}, {"rendering","1"}, {"ex-blo-zipir"}, {"ex-bra-zipir"}, {"ex-fat-zipir"}, {"ex-gut-zipir"}, {"ex-me-zipir"}, {"ex-ski-zipir"}}},
         ["py-alienlife-trits"] = {order="e-x[water]-3", items={"blood-trits", "bone-trits", "brain-trits", "fat-trits", "guts-trits", "meat-trits", "skin-trits", {"photophore","b"}, "trits-pup", "trits", "trits-mk02", "trits-mk03", "trits-mk04"}, recipes={{"full-render-trit","1"}, {"ex-blo-trit"}, {"ex-bon-trit"}, {"ex-bra-trit"}, {"ex-fat-trit"}, {"ex-gut-trit"}, {"ex-me-trit"}, {"ex-ski-trit"}}},
         ["py-alienlife-xyhiphoe"] = {order="e-x[water]-4", items={"blood-xyhiphoe", "guts-xyhiphoe", "meat-xyhiphoe", "shell-xyhiphoe", "xyhiphoe-cub", "xyhiphoe-cub-mk02", "xyhiphoe-cub-mk03", "xyhiphoe-cub-mk04", "xyhiphoe", "xyhiphoe-mk02", "xyhiphoe-mk03", "xyhiphoe-mk04", "shell"}, recipes={{"full-render-xyhiphoe","1"}, {"ex-blo-xyh"}, {"ex-gut-xyh"}, {"ex-me-xyh"}, {"ex-ski-xyh","b"}}},
         ["py-alienlife-numal"] = {order="e-x[water]-5", items={"blood-numal", "guts-numal", "meat-numal", "skin-numal", "chitin-numal", {"aeroorgan","b"}, "numal-egg", "numal", "numal-mk02", "numal-mk03", "numal-mk04", "numal-ink"}, recipes={{"full-render-num","1"}, {"ex-blo-num"}, {"ex-gut-num"}, {"ex-me-num"}, {"ex-ski-num"}}},
@@ -327,7 +333,6 @@ local groups = {
         ["py-alienlife-tree"] = {items={"tree-mk01", "tree-mk02", "tree-mk03", "tree-mk04", "wood-seedling", "wood-seedling-mk02", "wood-seedling-mk03", "wood-seedling-mk04", "wood-seeds", "wood-seeds-mk02", "wood-seeds-mk03", "wood-seeds-mk04", "log"}},
     },
     ["combat"] = {
-        ["other"] = {order="1a"},
         ["tool"] = {order="1b"},
         ["gun"] = {items={"dragon-breath"}},
         ["ammo"] = {items={"dragon-breath-ammo"}},
@@ -341,6 +346,35 @@ local groups = {
         ["py-walls"] = {order="fe"},
         --["defensive-structure"] = {order="g"},
         ["radar"] = {order="h", items={"py-local-radar", "radar", "megadar"}},
+        --["turret"] = {order="i"},
+        ["ammo-category"] = {order="j"},
+    },
+    ["environment"] = {
+        ["planets"] = {order="1", items={"nauvis"}},
+        --["cliffs"] = {order="a"},
+        --["trees"] = {order="aa"},
+        --["grass"] = {order="b"},
+        ["nauvis-tiles"] = {order="f"},
+        ["special-tiles"] = {order="g", items={"polluted-ground", "polluted-ground-burnt", "out-of-map"}},
+        ["artificial-tiles"] = {order="h"},
+        ["mineable-fluids"] = {order="i", items={"bitumen-seep", "oil-mk01", "oil-mk02", "oil-mk03", "oil-mk04", "tar-patch", "geothermal-crack"}},
+        ["enemies"] = {order="j"},
+        ["creatures"] = {order="k", items={"ulric-man-corpse"}},
+    },
+    ["signals"] = { -- renamed "abstract"
+        ["planners"] = {order="1", items={"blueprint", "deconstruction-planner", "upgrade-planner", "blueprint-book"}},
+        ["spawnables"] = {order="2"},
+        --["virtual-signal-special"] = {order="a"},
+        --["virtual-signal-number"] = {order="b"},
+        --["virtual-signal-letter"] = {order="c"},
+        --["virtual-signal-color"] = {order="d"},
+        --["virtual-signal"] = {order="e"},
+        --["shapes"] = {order="f"},
+        --["arrows"] = {order="g"},
+        --["additions"] = {order="h"},
+        ["parameters"] = {order="i"},
+        ["indicators"] = {order="j", items={"tile-ghost", "entity-ghost", "item-on-ground", "item-request-proxy"}},
+        ["other"] = {order="z"},
     },
 }
 local tabs = {
@@ -348,21 +382,25 @@ local tabs = {
     ["py-rawores"] = {order="t"},
     ["py-petroleum-handling"] = {order="u"},
     ["py-alienlife"] = {order="v"},
+    ["environment"] = {order="xd", icon="__base__/graphics/icons/nauvis.png", size=64},
+    ["signals"] = {order="y"},
 }
 local new_subgroups = {
     ["production"] = {"py-mining-mk01", "py-mining-mk02", "py-mining-mk03", "py-mining-mk04"},
     ["py-hightech"] = {"py-alternativeenergy-parts-2", "py-alternativeenergy-parts-3", "py-alternativeenergy-parts-4", "py-intermediates-1", "py-intermediates-2", "py-intermediates-3", "py-intermediates-4", "py-intermediates-5", "py-intermediates-6", "py-intermediates-7", "py-intermediates-8", "py-intermediates-9", "py-intermediates-10", "py-intermediates-11", "py-intermediates-12", "py-intermediates-13", "py-intermediates-14", "py-intermediates-15", "py-intermediates-16", "py-intermediates-17", "py-intermediates-18", "py-intermediates-19", "py-intermediates-20", "py-intermediates-21", "py-intermediates-22", "py-intermediates-23", "py-intermediates-24", "py-intermediates-25", "py-intermediates-26", "py-intermediates-27", "py-intermediates-28", "py-intermediates-29", "py-intermediates-30", "py-intermediates-31", "py-intermediates-32", "py-intermediates-33", "py-intermediates-34", "py-intermediates-35", "py-intermediates-36", "py-intermediates-37", "py-intermediates-38", "py-intermediates-39", "py-intermediates-40"},
-    ["py-petroleum-handling"] = {"py-fluids-1", "py-fluids-2", "py-fluids-3", "py-fluids-4", "py-fluids-5", "py-fluids-6", "py-fluids-7", "py-fluids-8", "py-fluids-9", "py-fluids-10", "py-fluids-11", "py-fluids-12", "py-fluids-13", "py-fluids-14", "py-fluids-15", "py-fluids-16", "py-fluids-17", "py-fluids-18", "py-fluids-19", "py-fluids-20", "py-fluids-21", "py-fluids-22", "py-fluids-23", "py-fluids-24", "py-fluids-25", "py-fluids-26", "py-fluids-27", "py-fluids-28", "py-fluids-29", "py-fluids-30", "py-fluids-31", "py-fluids-32", "py-fluids-33", "py-fluids-34", "py-fluids-35", "py-fluids-36", "py-fluids-37", "py-fluids-38", "py-fluids-39", "py-fluids-40", "py-fluids-41"},
+    ["py-petroleum-handling"] = {"py-fluids-1", "py-fluids-2", "py-fluids-3", "py-fluids-4", "py-fluids-5", "py-fluids-6", "py-fluids-7", "py-fluids-8", "py-fluids-9", "py-fluids-10", "py-fluids-11", "py-fluids-12", "py-fluids-13", "py-fluids-14", "py-fluids-15", "py-fluids-16", "py-fluids-17", "py-fluids-18", "py-fluids-19", "py-fluids-20", "py-fluids-21", "py-fluids-22", "py-fluids-23", "py-fluids-24", "py-fluids-25", "py-fluids-26", "py-fluids-27", "py-fluids-28", "py-fluids-29", "py-fluids-30", "py-fluids-31", "py-fluids-32", "py-fluids-33", "py-fluids-34", "py-fluids-35", "py-fluids-36", "py-fluids-37", "py-fluids-38", "py-fluids-39", "py-fluids-40", "py-fluids-41", "py-fluids-42"},
     ["py-rawores"] = {"py-rawores-natural-1", "py-rawores-natural-2", "py-rawores-borax", "py-rawores-molybdenum", "py-rawores-salt", "py-rawores-cobalt", "py-rawores-regolite", "py-rawores-phosphate", "py-rawores-diamond", "py-resource-1"},
     ["py-alienlife"] = {"py-alienlife-body-parts", "py-alienlife-biosample"},
     ["combat"] = {"radar"},
+    ["environment"] = {"planets"},
+    ["signals"] = {"indicators", "planners"},
 }
 local new_main_products = {
     ["basic-oil-processing"] = "petroleum-gas",
     ["heavy-oil-cracking"] = "light-oil",
     ["light-oil-cracking"] = "petroleum-gas",
-    ["kovarex-enrichment-process"] = "uranium-235",
-    ["nuclear-fuel-reprocessing"] = "uranium-238",
+    ["kovarex-enrichment-process"] = "u-235",
+    ["nuclear-fuel-reprocessing"] = "u-238",
     ["crusher-ree"] = "rare-earth-powder",
     ["syngas2"] = "syngas",
     ["py-sodium-hydroxide"] = "sodium-hydroxide",
@@ -524,7 +562,7 @@ function organize_subgroups(groups)
                             item = item[1]
                         end
                         local found = false
-                        local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo"}
+                        local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item"}
                         for _,kind in pairs(kinds) do
                             if data.raw[kind][item] then
                                 data.raw[kind][item].subgroup = subgroup
@@ -579,16 +617,9 @@ function get_product_order(recipe_name)
                 if recipe.results[1].name then item = recipe.results[1].name
                 else item = recipe.results[1][1] end
             end
-            local diffs = {"normal", "expensive"}
-            for _,diff in pairs(diffs) do
-                if recipe[diff] and recipe[diff].results and #recipe[diff].results > 0 then
-                    if recipe[diff].results[1].name then item = recipe[diff].results[1].name
-                    else item = recipe[diff].results[1][1] end
-                end
-            end
         end
         if item then
-            kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo"}
+            kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item"}
             for _,kind in pairs(kinds) do
                 if data.raw[kind][item] then
                     order = data.raw[kind][item].order
@@ -621,16 +652,8 @@ if settings.startup["pysimple-recipe-menu"].value then
         local has_product = false
         if recipe.main_product then multi = true end
         if recipe.results and #recipe.results > 1 then multi = true end
-        if recipe.normal and recipe.normal.main_product then multi = true end
-        if recipe.normal and recipe.normal.results and #recipe.normal.results > 1 then multi = true end
-        if recipe.expensive and recipe.expensive.main_product then multi = true end
-        if recipe.expensive and recipe.expensive.results and #recipe.expensive.results > 1 then multi = true end
         if recipe.result then has_product = true end
         if recipe.results and #recipe.results > 0 then has_product = true end
-        if recipe.normal and recipe.normal.result then has_product = true end
-        if recipe.normal and recipe.normal.results and #recipe.normal.results > 0 then has_product = true end
-        if recipe.expensive and recipe.expensive.result then has_product = true end
-        if recipe.expensive and recipe.expensive.results and #recipe.expensive.results > 0 then has_product = true end
         if (recipe.main_product and multi) or (has_product and not multi) then
             recipe.subgroup = nil
         end
@@ -644,5 +667,39 @@ if settings.startup["pysimple-recipe-menu"].value then
 
     organize_subgroups(groups)
     data.raw["item-group"]["combat"].order = "x"
+    data.raw["item-group"]["enemies"].order = "xb"
+    data.raw["item-group"]["tiles"].order = "xc"
+    data.raw["item-group"]["environment"].order = "xd"
     data.raw["item-group"]["signals"].order = "y"
+
+    for i=0,32,1 do
+        data.raw["simple-entity-with-owner"]["solar-tower-panel"..i].hidden_in_factoriopedia = true
+    end
+    for am=1,5,1 do
+        for fm=1,5,1 do
+            data.raw["beacon"]["beacon-AM"..am.."-FM"..fm].hidden_in_factoriopedia = true
+            data.raw["beacon"]["diet-beacon-AM"..am.."-FM"..fm].hidden_in_factoriopedia = true
+        end
+    end
+    for i=1,4,1 do
+        data.raw["assembling-machine"]["bitumen-seep-mk0"..i.."-base"].hidden_in_factoriopedia = true
+        data.raw["simple-entity-with-force"]["hawt-turbine-mk0"..i.."-collision"].hidden_in_factoriopedia = true
+        data.raw["simple-entity-with-force"]["vawt-turbine-mk0"..i.."-collision"].hidden_in_factoriopedia = true
+    end
+    data.raw["simple-entity-with-force"]["multiblade-turbine-mk01-collision"].hidden_in_factoriopedia = true
+    data.raw["simple-entity-with-force"]["multiblade-turbine-mk03-collision"].hidden_in_factoriopedia = true
+    data.raw["electric-energy-interface"]["multiblade-turbine-mk01-blank"].hidden_in_factoriopedia = true
+    data.raw["electric-energy-interface"]["multiblade-turbine-mk03-blank"].hidden_in_factoriopedia = true
+    data.raw["assembling-machine"]["tar-seep-mk01-base"].hidden_in_factoriopedia = true
+    data.raw["assembling-machine"]["natural-gas-seep-mk01-base"].hidden_in_factoriopedia = true
+    data.raw["simple-entity-with-force"]["sut-placement-distance"].hidden_in_factoriopedia = true
+    data.raw["fire"]["sut-smokestack"].hidden_in_factoriopedia = true
+    data.raw["fire"]["sut-smokestack-weak"].hidden_in_factoriopedia = true
+    data.raw["tree"]["ninja-tree"].hidden_in_factoriopedia = true
+    data.raw["tree"]["arum-fake"].hidden_in_factoriopedia = true
+    data.raw["tree"]["kicalk-tree-fake"].hidden_in_factoriopedia = true
+    data.raw["tree"]["mova-fake"].hidden_in_factoriopedia = true
+    data.raw["resource"]["borax"].subgroup = "py-rawores-borax"
+    data.raw["resource"]["stone"].subgroup = "py-rawores-natural-1"
+    data.raw["recipe"]["empty-residual-gas-canister"].subgroup = "py-fluids-42"
 end

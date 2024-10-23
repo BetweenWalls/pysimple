@@ -27,11 +27,11 @@ end
 
 --- Changes where a recipe gets unlocked
 --- @param recipe string
---- @param new_tech string
+--- @param new_tech string? if provided, recipe will be added to this technology
 --- @param old_tech string? if provided, recipe will be removed from this technology; if old_tech and new_tech are the same, the recipe will only be reordered (it won't be added if it wasn't already present)
 --- @param index int? if provided, recipe will be inserted into this index
 function add_unlock(recipe, new_tech, old_tech, index)
-    if data.raw.recipe[recipe] and data.raw.technology[new_tech] then
+    if data.raw.recipe[recipe] and (data.raw.technology[new_tech] or data.raw.technology[old_tech]) then
         local found = false
         if old_tech and data.raw.technology[old_tech] then
             for i,effect in pairs(data.raw.technology[old_tech].effects) do
@@ -42,13 +42,15 @@ function add_unlock(recipe, new_tech, old_tech, index)
             end
             if debug_errors and not found then error("incorrect recipe assumption: "..recipe) end
         end
-        if not (new_tech == old_tech and not found) then
+        if new_tech and data.raw.technology[new_tech] and not (new_tech == old_tech and not found) then
             if index then
                 table.insert( data.raw.technology[new_tech].effects, index, {type = "unlock-recipe", recipe = recipe} )
             else
                 table.insert( data.raw.technology[new_tech].effects, {type = "unlock-recipe", recipe = recipe} )
             end
         end
+    elseif data.raw.recipe[recipe] and data.raw.technology[old_tech] then
+
     elseif debug_errors then
         error("invalid recipe or technology: "..recipe..", "..tech)
     end
@@ -73,11 +75,11 @@ end
 if settings.startup["pysimple-tech-tree"].value == "3" then
     local military_groups = {
         ["py1_science"] = {
-            ingredients = {{name="automation-science-pack", amount=2}, {name="py-science-pack-1", amount=1}},
+            ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}},
             techs = {"fluid-processing-machines-1", "military", "military-2", "stone-wall", "gate"}
         },
         ["military_science"] = {
-            ingredients = {{name="automation-science-pack", amount=6}, {name="py-science-pack-1", amount=3}, {name="logistic-science-pack", amount=2}, {name="military-science-pack", amount=2}, {name="py-science-pack-2", amount=1}},
+            ingredients = {{"automation-science-pack", 6}, {"py-science-pack-1", 3}, {"logistic-science-pack", 2}, {"military-science-pack", 2}, {"py-science-pack-2", 1}},
             techs = {   "physical-projectile-damage-1", "weapon-shooting-speed-1", "physical-projectile-damage-2", "weapon-shooting-speed-2", "stronger-explosives-1",
                         "physical-projectile-damage-3", "weapon-shooting-speed-3", "physical-projectile-damage-4", "weapon-shooting-speed-4", "stronger-explosives-2", "gun-turret",
                         "defender", "follower-robot-count-1", "follower-robot-count-2", "flamethrower", "refined-flammables-1", "refined-flammables-2", "land-mine", "rocketry"
@@ -100,9 +102,30 @@ if settings.startup["pysimple-tech-tree"].value == "3" then
     adjust_prerequisites("physical-projectile-damage-1", "military-science-pack", "military")
     adjust_prerequisites("weapon-shooting-speed-1", "military-science-pack", "military")
     adjust_prerequisites("stronger-explosives-1", "military-science-pack", "military-2")
+    --NOTE: While turrets are available very early, ammo cannot be made until after lead processing
 end
 
 if settings.startup["pysimple-tech-tree"].value ~= "1" then
+    -- Adds appropriate prerequisites to some early techs so they don't appear until needed (these kind of adjustments would normally be made programmatically in trim-tech-tree.lua)
+    -- TODO: Update trim-tech-tree.lua for Factorio 2.0
+    adjust_prerequisites("nexelit-mk01", "py-science-pack-mk01")
+    adjust_prerequisites("oil-gathering", "logistic-science-pack")
+    adjust_prerequisites("efficiency-module", "py-science-pack-mk02")
+    adjust_prerequisites("bulk-inserter", "py-science-pack-mk02")
+    adjust_prerequisites("uranium-mining", "py-science-pack-mk02")
+    adjust_prerequisites("inserter-capacity-bonus-1", "py-science-pack-mk02")
+    adjust_prerequisites("bulk-inserter-2", "py-science-pack-mk03")
+
+    -- Fixes some technology issues new in Factorio 2.0
+    adjust_prerequisites("lamp", "glass", "automation-science-pack")
+    adjust_prerequisites("radar", "vacuum-tube-electronics", "automation-science-pack")
+    data.raw.technology["radar"].hidden = true
+    add_unlock("iron-stick", nil, "concrete")
+    add_unlock("iron-stick", nil, "circuit-network")
+    add_unlock("iron-stick", nil, "railway")
+    add_unlock("niobium-pipe", nil, "py-storage-tanks")
+    add_unlock("niobium-pipe-to-ground", nil, "py-storage-tanks")
+
     -- repositions other technologies
     adjust_prerequisites("coal-processing-1", "automation")
     adjust_prerequisites("soil-washing", "steel-processing")
@@ -123,7 +146,7 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("hpf", "concrete", nil, 1)
     add_unlock("hpf", "mining-with-fluid", "coal-processing-1")
     add_unlock("coke-co2", "mining-with-fluid", "coal-processing-1")
-    add_unlock("gasifier", "acetylene", "tar-processing", 2)
+    --add_unlock("gasifier", "acetylene", "tar-processing", 2)
     add_unlock("tinned-cable", "petri-dish", "mining-with-fluid", 1)
     add_unlock("zinc-plate-1", "solder-mk01", "vacuum-tube-electronics", 1)
     add_unlock("methanal", "moondrop", "vacuum-tube-electronics")
@@ -134,6 +157,8 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("gravel-saline-water", "fluid-pressurization", "crusher")
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
+    -- TDOO: remove iron stick recipe unlock from concrete technology (it is available without any research)
+    -- TDOO: remove duplicate gasifier recipe unlock from acetylene
 
     -- more repositioning for stage 2 techs (those requiring automation science and py science 1)
     adjust_prerequisites("microbiology-mk01", "compost")
@@ -144,7 +169,7 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     adjust_prerequisites("lab-instrument", "py-asphalt")
     adjust_prerequisites("compost", "mycology-mk01")
     adjust_prerequisites("fertilizer-mk01", "logistic-science-pack")
-    data.raw.technology["fertilizer-mk01"].unit.ingredients = {{name="automation-science-pack", amount=3}, {name="py-science-pack-1", amount=2}, {name="logistic-science-pack", amount=1}}
+    data.raw.technology["fertilizer-mk01"].unit.ingredients = {{"automation-science-pack", 3}, {"py-science-pack-1", 2}, {"logistic-science-pack", 1}}
 end
 
 -- adjusts balance slightly so the harder recipe isn't less efficient
@@ -183,12 +208,13 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
     end
     for i,tank in pairs(storage_tanks) do
         if data.raw["storage-tank"][tank.id] then
-            local capacity = data.raw["storage-tank"][tank.id].fluid_box.base_area
+            local capacity = data.raw["storage-tank"][tank.id].fluid_box.volume
             if cap == "new" then
                 capacity = tonumber(tank[cap])
-                data.raw["storage-tank"][tank.id].fluid_box.base_area = capacity
+                data.raw["storage-tank"][tank.id].fluid_box.volume = capacity
             end
-            data.raw["storage-tank"][tank.id].localised_name = {"name.storage", capacity/10}
+            data.raw["storage-tank"][tank.id].localised_name = {"name.storage", tostring(capacity/10)}
+            data.raw.recipe[tank.id].localised_name = {"name.storage", tostring(capacity/10)}
             if tank.id ~= "storage-tank" then
                 local order = tostring(capacity)
                 if capacity < 1000 then order = "0"..order end
@@ -213,7 +239,7 @@ if settings.startup["pysimple-descriptions"].value then
                 "grade-2-copper", "grade-1-copper-crush", "uncaged-vrauks", "full-render-vrauks", "crushed-coal", "coke-coal", "borax-washing", "crushing-quartz", "grade-1-zinc", "grade-2-zinc",
                 "grade-1-tin", "grade-2-crush-tin", "grade-1-ti", "grade-2-ti-crush", "grade-3-ti", "ti-rejects-recrush", "grade-1-nickel", "sb-grade-01", "sb-grade-02", "sb-grade-03", "nexelit-ore-1",
                 "clean-nexelit", "powdered-aluminium", "grade-1-chromite", "soil-separation-2", "coarse-classification", "sand-classification", "tailings-classification", "polybutadiene", "uncaged-auog",
-                "urea-decomposition", "melamine", "fiberboard", "black-liquor", "starch", "he-01",
+                "urea-decomposition", "melamine", "fiberboard", "black-liquor", "starch", "he-01", "tar-to-carbolic", "anthracene-gasoline-cracking",
                 "boric-acid-hcl", "cobalt-extract", "fish-emulsion", "acidgas-2", "coal-slurry-fuel", "coalbed-gas-to-acidgas", "crude-from-manure", "eg-si", "organic-solvent","petgas-methanol",
                 "syngas-distilation", "tall-oil-separation", "dedicated-oleochemicals", "grade-1-u", "he-02", "natural-gas-refining", "oleochemicals", "phosphoric-acid", "pressured-hydrogen",
                 "purest-nitrogen-gas", "aromatics-from-naphthalene", "hot-syngas-cooldown", "light-oil_from_syngas", "liquid-nitrogen", "natural-gas-to-syngas", "oleo-gasification", "p2s5", "p2s5-2",
@@ -228,12 +254,15 @@ if settings.startup["pysimple-descriptions"].value then
                 "tar-talloil", "concentrated-ti", "bitumen-froth", "bitumen", "split-yellowcake", "empty-methanol-gas-canister", "calcinate-separation", "richdust-separation", "tailings-separation",
                 "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
                 "niobium-dust", "powdered-quartz","grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
+                "battery-mk00", "dried-meat-01", "guts-to-jerky", "portable-gasolene-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
+                "collector", "collector-mk02", "collector-mk03", "collector-mk04", "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "multiblade-turbine-mk01", "dino-dig-site",
             },
-            ["item"] = { "battery-mk00", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
+            ["item"] = { "battery-mk00", "portable-gasolene-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
             ["capsule"] = { "dried-meat", },
+            ["wall"] = { "poorman-wood-fence", },
             ["mining-drill"] = { "collector", "collector-mk02", "collector-mk03", "collector-mk04", },
-            ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
             ["storage-tank"] = { "tailings-pond", },
+            ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
             ["electric-energy-interface"] = { "multiblade-turbine-mk01", },
             ["assembling-machine"] = { "dino-dig-site", },
         },
@@ -251,7 +280,7 @@ if settings.startup["pysimple-descriptions"].value then
     }
     local supertypes = {
         ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["capsule"] = "item",
-        ["mining-drill"] = "entity", ["furnace"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
+        ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
     }
     -- adjusts names and descriptions for clarity, such as making multi-product recipes include each product so they can be searched the same way as other recipes
     for desc,desc_groups in pairs(locale_entries) do
@@ -269,11 +298,13 @@ end
 
 if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple-tech-tree"].value ~= "1" then
     local tech_unlocks = {
+        ["automation-science-pack"] = {"collector", "soil-extractor-mk01", "soil", "wpu", "log-wood", "empty-planter-box", "planter-box", "automation-science-pack", "lab"},
         ["coal-processing-1"] = {"distilator", "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "py-gas-vent", "tailings-pond", "iron-oxide-smelting"},
         ["ceramic"] = {"clay-pit-mk01", "clay", "ceramic", "electronics-factory-mk01", "inductor1"},
         ["crusher"] = {"jaw-crusher", "bricks-to-stone", "stone-to-gravel", "gravel-to-sand", "grade-1-iron-crush", "low-grade-smelting-iron"},
         ["concrete"] = {"hpf", "lime", "concrete", "hazard-concrete", "refined-concrete", "refined-hazard-concrete"},
         ["tar-processing"] = {"tar-distilation", "sand-brick", "tar-processing-unit", "tar-refining", "tar-refining-tops", "stone-brick-2", "pitch-refining", "light-oil-aromatics", "quenching-tower", "tar-quenching"},
+        ["acetylene"] = {"calcium-carbide", "gasifier", "acetylene"},
         ["creosote"] = {"carbolic-oil-creosote", "naphthalene-oil-creosote", "treated-wood", "small-electric-pole-2"},
         ["moondrop"] = {"moondrop-codex", "moondrop-sample", "moondrop-seeds", "moondrop-greenhouse-mk01", "moondrop-1", "methane-co2", "methanal"},
         ["sap-mk01"] = {"sap-seeds", "sap-tree", "sap-extractor-mk01", "sap-01"},
@@ -290,7 +321,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         ["boron"] = {"borax-washing", "diborane", "boric-acid", "boron-trioxide"},
         ["electric-mining-drill"] = {"electric-mining-drill", "fluid-drill-mk02"},
         ["geothermal-power-mk01"] = {"geothermal-plant-mk01", "geo-he-00"},
-        ["antimony-mk01"] = {"antimonium-drill-mk01", "sb-grade-01", "sb-grade-02", "sb-grade-03", "sb-grade-04", "pbsb-alloy"},
+        ["antimony-mk01"] = {"antimonium-drill-mk01", "sb-grade-01", "sb-grade-02", "sb-grade-03", "sb-grade-04", "sb-oxide-01", "pbsb-alloy"},
         ["nexelit-mk01"] = {"nexelit-ore-1", "dino-dig-site", "digosaurus", "clean-nexelit", "nexelit-plate-2"},
         ["casting-mk01"] = {"sand-casting", "casting-unit-mk01"},
         ["separation"] = {"soil-separation-2", "classifier", "coarse-classification", "sand-classification", "tailings-classification"},
@@ -314,6 +345,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         ["plastics"] = {"biofactory-mk01", "aromatics-to-plastic", "empty-jerry-can"},
         ["compost"] = {"biomass-cooking", "flue-gas-1", "flue-gas-3", "compost-plant-mk01"},
         ["py-storage-tanks"] = {"py-tank-3000", "py-tank-1000", "py-tank-1500", "storage-tank", "py-tank-4000", "py-tank-7000", "py-tank-5000", "py-tank-6500", "py-tank-8000", "py-tank-9000", "py-tank-10000"},
+        -- TODO: Reorder unlocks for stage 3 & stage 4 technologies
     }
     -- reorders recipe unlocks by priority - recipes which need to be used first will be listed first
     if not (settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value) then tech_unlocks["py-storage-tanks"] = nil end
@@ -338,4 +370,4 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
 end
 
 require("prototypes/reorganize-item-groups")
-require("prototypes/trim-tech-tree")
+--require("prototypes/trim-tech-tree")

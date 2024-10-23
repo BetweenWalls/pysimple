@@ -32,7 +32,7 @@ function validate_technology_effects()
   for _,force in pairs(game.forces) do
     for _,tech in pairs(altered_techs) do
       if force.technologies[tech] and force.technologies[tech].researched then
-        for _,effect in pairs(force.technologies[tech].effects) do
+        for _,effect in pairs(force.technologies[tech].prototype.effects) do
           if effect.type == "unlock-recipe" and force.recipes[effect.recipe] and not force.recipes[effect.recipe].enabled then
             force.recipes[effect.recipe].enabled = true
           end
