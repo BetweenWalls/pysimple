@@ -49,8 +49,6 @@ function add_unlock(recipe, new_tech, old_tech, index)
                 table.insert( data.raw.technology[new_tech].effects, {type = "unlock-recipe", recipe = recipe} )
             end
         end
-    elseif data.raw.recipe[recipe] and data.raw.technology[old_tech] then
-
     elseif debug_errors then
         error("invalid recipe or technology: "..recipe..", "..tech)
     end
@@ -146,7 +144,6 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("hpf", "concrete", nil, 1)
     add_unlock("hpf", "mining-with-fluid", "coal-processing-1")
     add_unlock("coke-co2", "mining-with-fluid", "coal-processing-1")
-    --add_unlock("gasifier", "acetylene", "tar-processing", 2)
     add_unlock("tinned-cable", "petri-dish", "mining-with-fluid", 1)
     add_unlock("zinc-plate-1", "solder-mk01", "vacuum-tube-electronics", 1)
     add_unlock("methanal", "moondrop", "vacuum-tube-electronics")
@@ -157,8 +154,6 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("gravel-saline-water", "fluid-pressurization", "crusher")
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
-    -- TDOO: remove iron stick recipe unlock from concrete technology (it is available without any research)
-    -- TDOO: remove duplicate gasifier recipe unlock from acetylene
 
     -- more repositioning for stage 2 techs (those requiring automation science and py science 1)
     adjust_prerequisites("microbiology-mk01", "compost")
@@ -213,8 +208,8 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
                 capacity = tonumber(tank[cap])
                 data.raw["storage-tank"][tank.id].fluid_box.volume = capacity
             end
-            data.raw["storage-tank"][tank.id].localised_name = {"name.storage", tostring(capacity/10)}
-            data.raw.recipe[tank.id].localised_name = {"name.storage", tostring(capacity/10)}
+            data.raw["storage-tank"][tank.id].localised_name = {"name.storage", tostring(capacity/1000)}
+            data.raw.recipe[tank.id].localised_name = {"name.storage", tostring(capacity/1000)}
             if tank.id ~= "storage-tank" then
                 local order = tostring(capacity)
                 if capacity < 1000 then order = "0"..order end
@@ -255,12 +250,11 @@ if settings.startup["pysimple-descriptions"].value then
                 "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
                 "niobium-dust", "powdered-quartz","grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
                 "battery-mk00", "dried-meat-01", "guts-to-jerky", "portable-gasolene-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
-                "collector", "collector-mk02", "collector-mk03", "collector-mk04", "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "multiblade-turbine-mk01", "dino-dig-site",
+                "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "multiblade-turbine-mk01", "dino-dig-site",
             },
             ["item"] = { "battery-mk00", "portable-gasolene-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
             ["capsule"] = { "dried-meat", },
             ["wall"] = { "poorman-wood-fence", },
-            ["mining-drill"] = { "collector", "collector-mk02", "collector-mk03", "collector-mk04", },
             ["storage-tank"] = { "tailings-pond", },
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
             ["electric-energy-interface"] = { "multiblade-turbine-mk01", },
@@ -298,7 +292,7 @@ end
 
 if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple-tech-tree"].value ~= "1" then
     local tech_unlocks = {
-        ["automation-science-pack"] = {"collector", "soil-extractor-mk01", "soil", "wpu", "log-wood", "empty-planter-box", "planter-box", "automation-science-pack", "lab"},
+        ["automation-science-pack"] = {"flora-collector-mk01", "soil-extractor-mk01", "soil", "wpu", "log-wood", "empty-planter-box", "planter-box", "lab"}, -- TODO: why does "automation-science-pack" cause a crash if added as an unlock recipe here?
         ["coal-processing-1"] = {"distilator", "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "py-gas-vent", "tailings-pond", "iron-oxide-smelting"},
         ["ceramic"] = {"clay-pit-mk01", "clay", "ceramic", "electronics-factory-mk01", "inductor1"},
         ["crusher"] = {"jaw-crusher", "bricks-to-stone", "stone-to-gravel", "gravel-to-sand", "grade-1-iron-crush", "low-grade-smelting-iron"},
@@ -353,6 +347,12 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         for i,unlock in pairs(unlocks) do
             add_unlock(unlock, tech, tech, i)
         end
+    end
+
+    local red_science_unlocks = data.raw.technology["automation-science-pack"].effects
+    if red_science_unlocks[5] and red_science_unlocks[5].recipe == "automation-science-pack" then
+        table.remove(data.raw.technology["automation-science-pack"].effects, 5)
+        table.insert( data.raw.technology["automation-science-pack"].effects, 7, {type = "unlock-recipe", recipe = "automation-science-pack"} )
     end
 
     local tech_icons = {
