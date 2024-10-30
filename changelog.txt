@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 2024.10.30
+  Changes:
+    - Fixed tank volumes for optional startup setting
+    - Moved "qualities" and "empty-barrel" subgroups to their appropriate groups
+---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 2024.10.24
   Changes:

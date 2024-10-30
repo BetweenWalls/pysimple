@@ -121,8 +121,6 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("iron-stick", nil, "concrete")
     add_unlock("iron-stick", nil, "circuit-network")
     add_unlock("iron-stick", nil, "railway")
-    add_unlock("niobium-pipe", nil, "py-storage-tanks")
-    add_unlock("niobium-pipe-to-ground", nil, "py-storage-tanks")
 
     -- repositions other technologies
     adjust_prerequisites("coal-processing-1", "automation")
@@ -179,17 +177,17 @@ end
 
 if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple-storage-tanks"].value then
     local storage_tanks = {
-        {id="py-tank-3000", tiles=4, original=300, adjusted=100, new=100},     -- 20 iron,  30 copper,  60 aluminium,  10 lead              ...used in  6 recipes (+1 indirectly)
-        {id="py-tank-1000", tiles=9, original=100, adjusted=100, new=250},     -- 10 iron,  10 copper,  20 aluminium,  10 lead              ...used in  0 recipes
-        {id="py-tank-1500", tiles=9, original=150, adjusted=150, new=250},     -- 10 iron,  40 copper,  80 aluminium,  10 lead              ...used in  1 recipe  (+5 indirectly)
-        {id="storage-tank", tiles=9, original=250, adjusted=250, new=250},     --           40 copper,  80 aluminium,  10 lead,  5 steel    ...used in 14 recipes (+5 indirectly)
-        {id="py-tank-4000", tiles=9, original=400, adjusted=275, new=250},     -- 28 iron,                             30 lead              ...used in  3 recipes (+18 indirectly)
-        {id="py-tank-7000", tiles=21, original=700, adjusted=700, new=700},    -- 38 iron,  40 copper,  80 aluminium,  40 lead              ...used in  5 recipes
-        {id="py-tank-5000", tiles=25, original=500, adjusted=650, new=750},    -- 10 iron,  80 copper, 160 aluminium,  20 lead,  5 steel    ...used in  4 recipes (+1 indirectly)
-        {id="py-tank-6500", tiles=25, original=650, adjusted=750, new=750},    -- 51 iron,                             60 lead              ...used in  7 recipes
-        {id="py-tank-8000", tiles=36, original=800, adjusted=1250, new=1250},  -- 60 iron,                             70 lead              ...used in 10 recipes
-        {id="py-tank-9000", tiles=49, original=900, adjusted=1800, new=1800},  -- 45 iron, 110 copper, 220 aluminium,  30 lead, 35 steel    ...used in  1 recipe
-        {id="py-tank-10000", tiles=64, original=1000, adjusted=2500, new=2500} -- 56 iron,  40 copper,  80 aluminium, 105 lead              ...used in  1 recipe
+        {id="py-tank-3000", tiles=4, original=30000, adjusted=10000, new=10000},     -- 20 iron,  30 copper,  60 aluminium,  10 lead              ...used in  6 recipes (+1 indirectly)
+        {id="py-tank-1000", tiles=9, original=10000, adjusted=10000, new=25000},     -- 10 iron,  10 copper,  20 aluminium,  10 lead              ...used in  0 recipes
+        {id="py-tank-1500", tiles=9, original=15000, adjusted=15000, new=25000},     -- 10 iron,  40 copper,  80 aluminium,  10 lead              ...used in  1 recipe  (+5 indirectly)
+        {id="storage-tank", tiles=9, original=25000, adjusted=25000, new=25000},     --           40 copper,  80 aluminium,  10 lead,  5 steel    ...used in 14 recipes (+5 indirectly)
+        {id="py-tank-4000", tiles=9, original=40000, adjusted=27500, new=25000},     -- 28 iron,                             30 lead              ...used in  3 recipes (+18 indirectly)
+        {id="py-tank-7000", tiles=21, original=70000, adjusted=70000, new=70000},    -- 38 iron,  40 copper,  80 aluminium,  40 lead              ...used in  5 recipes
+        {id="py-tank-5000", tiles=25, original=50000, adjusted=65000, new=75000},    -- 10 iron,  80 copper, 160 aluminium,  20 lead,  5 steel    ...used in  4 recipes (+1 indirectly)
+        {id="py-tank-6500", tiles=25, original=65000, adjusted=75000, new=75000},    -- 51 iron,                             60 lead              ...used in  7 recipes
+        {id="py-tank-8000", tiles=36, original=80000, adjusted=125000, new=125000},  -- 60 iron,                             70 lead              ...used in 10 recipes
+        {id="py-tank-9000", tiles=49, original=90000, adjusted=180000, new=180000},  -- 45 iron, 110 copper, 220 aluminium,  30 lead, 35 steel    ...used in  1 recipe
+        {id="py-tank-10000", tiles=64, original=100000, adjusted=250000, new=250000} -- 56 iron,  40 copper,  80 aluminium, 105 lead              ...used in  1 recipe
     }
     -- renames and sorts storage tanks by their dimensions and capacity
     local cap = "original"
@@ -212,7 +210,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
             data.raw.recipe[tank.id].localised_name = {"name.storage", tostring(capacity/1000)}
             if tank.id ~= "storage-tank" then
                 local order = tostring(capacity)
-                if capacity < 1000 then order = "0"..order end
+                if capacity < 100000 then order = "0"..order end
                 if settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value then
                     order = tostring(tank.tiles).."-"..order
                     if tank.tiles < 10 then order = "0"..order end
