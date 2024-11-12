@@ -107,12 +107,12 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     -- Adds appropriate prerequisites to some early techs so they don't appear until needed (these kind of adjustments would normally be made programmatically in trim-tech-tree.lua)
     -- TODO: Update trim-tech-tree.lua for Factorio 2.0
     adjust_prerequisites("nexelit-mk01", "py-science-pack-mk01")
-    adjust_prerequisites("oil-gathering", "logistic-science-pack")
-    adjust_prerequisites("efficiency-module", "py-science-pack-mk02")
-    adjust_prerequisites("bulk-inserter", "py-science-pack-mk02")
+    adjust_prerequisites("oil-gathering", "niobium")
     adjust_prerequisites("uranium-mining", "py-science-pack-mk02")
-    adjust_prerequisites("inserter-capacity-bonus-1", "py-science-pack-mk02")
-    adjust_prerequisites("bulk-inserter-2", "py-science-pack-mk03")
+    adjust_prerequisites("bulk-inserter", "basic-electronics")
+    adjust_prerequisites("inserter-capacity-bonus-1", "bulk-inserter")
+    adjust_prerequisites("efficiency-module", "machine-components-mk02")
+    adjust_prerequisites("bulk-inserter-2", "small-parts-mk03")
 
     -- Fixes some technology issues new in Factorio 2.0
     adjust_prerequisites("lamp", "glass", "automation-science-pack")
@@ -203,7 +203,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         if data.raw["storage-tank"][tank.id] then
             local capacity = data.raw["storage-tank"][tank.id].fluid_box.volume
             if cap == "new" then
-                capacity = tonumber(tank[cap])
+                capacity = tonumber(tank[cap]) or 0
                 data.raw["storage-tank"][tank.id].fluid_box.volume = capacity
             end
             data.raw["storage-tank"][tank.id].localised_name = {"name.storage", tostring(capacity/1000)}
@@ -247,11 +247,10 @@ if settings.startup["pysimple-descriptions"].value then
                 "tar-talloil", "concentrated-ti", "bitumen-froth", "bitumen", "split-yellowcake", "empty-methanol-gas-canister", "calcinate-separation", "richdust-separation", "tailings-separation",
                 "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
                 "niobium-dust", "powdered-quartz","grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
-                "battery-mk00", "dried-meat-01", "guts-to-jerky", "portable-gasolene-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
+                "battery-mk00", "portable-gasolene-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
                 "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "multiblade-turbine-mk01", "dino-dig-site",
             },
             ["item"] = { "battery-mk00", "portable-gasolene-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
-            ["capsule"] = { "dried-meat", },
             ["wall"] = { "poorman-wood-fence", },
             ["storage-tank"] = { "tailings-pond", },
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
@@ -337,7 +336,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         ["plastics"] = {"biofactory-mk01", "aromatics-to-plastic", "empty-jerry-can"},
         ["compost"] = {"biomass-cooking", "flue-gas-1", "flue-gas-3", "compost-plant-mk01"},
         ["py-storage-tanks"] = {"py-tank-3000", "py-tank-1000", "py-tank-1500", "storage-tank", "py-tank-4000", "py-tank-7000", "py-tank-5000", "py-tank-6500", "py-tank-8000", "py-tank-9000", "py-tank-10000"},
-        -- TODO: Reorder unlocks for stage 3 & stage 4 technologies
+        -- TODO: Reorder unlocks for stage 3 & stage 4 technologies (and beyond)
     }
     -- reorders recipe unlocks by priority - recipes which need to be used first will be listed first
     if not (settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value) then tech_unlocks["py-storage-tanks"] = nil end
@@ -347,8 +346,9 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         end
     end
 
+    -- janky workaround for reordering automation science pack unlock
     local red_science_unlocks = data.raw.technology["automation-science-pack"].effects
-    if red_science_unlocks[5] and red_science_unlocks[5].recipe == "automation-science-pack" then
+    if red_science_unlocks and red_science_unlocks[5] and red_science_unlocks[5].recipe == "automation-science-pack" then
         table.remove(data.raw.technology["automation-science-pack"].effects, 5)
         table.insert( data.raw.technology["automation-science-pack"].effects, 7, {type = "unlock-recipe", recipe = "automation-science-pack"} )
     end
@@ -362,7 +362,6 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         if data.raw.technology[tech] then
             data.raw.technology[tech].icon = info.icon
             data.raw.technology[tech].icon_size = info.size
-            data.raw.technology[tech].icon_mipmaps = info.mipmaps
         end
     end
 end

@@ -1,9 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 2024.11.12
+  Changes:
+    - Moved "void" subcategories to their appropriate groups
+    - Improved support for Py Hard Mode
+---------------------------------------------------------------------------------------------------
 Version: 1.0.2
 Date: 2024.10.30
   Changes:
     - Fixed tank volumes for optional startup setting
-    - Moved "qualities" and "empty-barrel" subgroups to their appropriate groups
+    - Moved "qualities" and "empty-barrel" subcategories to their appropriate groups
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.1
 Date: 2024.10.24
