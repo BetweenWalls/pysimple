@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: 2024.11.18
+  Changes:
+    - Fixed a startup error
+    - Updated recipe name for tailings-classification, calcinate-separation, organic-solvent
+    - Updated menu organization for some items/recipes
+---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 2024.11.12
   Changes:
@@ -9,6 +16,7 @@ Version: 1.0.2
 Date: 2024.10.30
   Changes:
     - Fixed tank volumes for optional startup setting
+    - Reorganized extra factoriopedia categories: "enemies" and "tiles" merged with "environment", "signals" renamed "abstract"
     - Moved "qualities" and "empty-barrel" subcategories to their appropriate groups
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.1

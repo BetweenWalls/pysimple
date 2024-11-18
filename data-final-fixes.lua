@@ -50,7 +50,7 @@ function add_unlock(recipe, new_tech, old_tech, index)
             end
         end
     elseif debug_errors then
-        error("invalid recipe or technology: "..recipe..", "..tech)
+        error("invalid recipe or technology: "..(recipe or "")..", "..(new_tech or "").."/"..(old_tech or ""))
     end
 end
 
@@ -233,7 +233,7 @@ if settings.startup["pysimple-descriptions"].value then
                 "grade-1-tin", "grade-2-crush-tin", "grade-1-ti", "grade-2-ti-crush", "grade-3-ti", "ti-rejects-recrush", "grade-1-nickel", "sb-grade-01", "sb-grade-02", "sb-grade-03", "nexelit-ore-1",
                 "clean-nexelit", "powdered-aluminium", "grade-1-chromite", "soil-separation-2", "coarse-classification", "sand-classification", "tailings-classification", "polybutadiene", "uncaged-auog",
                 "urea-decomposition", "melamine", "fiberboard", "black-liquor", "starch", "he-01", "tar-to-carbolic", "anthracene-gasoline-cracking",
-                "boric-acid-hcl", "cobalt-extract", "fish-emulsion", "acidgas-2", "coal-slurry-fuel", "coalbed-gas-to-acidgas", "crude-from-manure", "eg-si", "organic-solvent","petgas-methanol",
+                "boric-acid-hcl", "cobalt-extract", "fish-emulsion", "acidgas-2", "coal-slurry-fuel", "coalbed-gas-to-acidgas", "crude-from-manure", "eg-si", "petgas-methanol",
                 "syngas-distilation", "tall-oil-separation", "dedicated-oleochemicals", "grade-1-u", "he-02", "natural-gas-refining", "oleochemicals", "phosphoric-acid", "pressured-hydrogen",
                 "purest-nitrogen-gas", "aromatics-from-naphthalene", "hot-syngas-cooldown", "light-oil_from_syngas", "liquid-nitrogen", "natural-gas-to-syngas", "oleo-gasification", "p2s5", "p2s5-2",
                 "psc", "quench-ovengas", "syngas2", "coarse-coal", "formamide", "grade-2-iron", "low-distillate-to-heavy-oil", "middle-processed-lard", "nisi", "molten-steel", "rare-earth-beneficiation",
@@ -246,11 +246,11 @@ if settings.startup["pysimple-descriptions"].value then
                 "high-distillate-condensing", "hot-residual-mixture-to-coke", "quench-redcoke", "plutonium-oxidation", "plutonium-seperation", "purified-ti-pulp", "fluidize-coke", "redhot-coke",
                 "tar-talloil", "concentrated-ti", "bitumen-froth", "bitumen", "split-yellowcake", "empty-methanol-gas-canister", "calcinate-separation", "richdust-separation", "tailings-separation",
                 "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
-                "niobium-dust", "powdered-quartz","grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
-                "battery-mk00", "portable-gasolene-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
+                "niobium-dust", "powdered-quartz", "grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
+                "battery-mk00", "portable-gasoline-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
                 "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "multiblade-turbine-mk01", "dino-dig-site",
             },
-            ["item"] = { "battery-mk00", "portable-gasolene-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
+            ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
             ["wall"] = { "poorman-wood-fence", },
             ["storage-tank"] = { "tailings-pond", },
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
@@ -289,7 +289,7 @@ end
 
 if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple-tech-tree"].value ~= "1" then
     local tech_unlocks = {
-        ["automation-science-pack"] = {"flora-collector-mk01", "soil-extractor-mk01", "soil", "wpu", "log-wood", "empty-planter-box", "planter-box", "lab"}, -- TODO: why does "automation-science-pack" cause a crash if added as an unlock recipe here?
+        ["automation-science-pack"] = {"flora-collector-mk01", "soil-extractor-mk01", "soil", "wpu", "empty-planter-box", "planter-box", "automation-science-pack", "lab"},
         ["coal-processing-1"] = {"distilator", "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "py-gas-vent", "tailings-pond", "iron-oxide-smelting"},
         ["ceramic"] = {"clay-pit-mk01", "clay", "ceramic", "electronics-factory-mk01", "inductor1"},
         ["crusher"] = {"jaw-crusher", "bricks-to-stone", "stone-to-gravel", "gravel-to-sand", "grade-1-iron-crush", "low-grade-smelting-iron"},
@@ -305,28 +305,28 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         ["copper-mk01"] = {"automated-screener-mk01", "grade-2-copper", "grade-1-copper-crush", "copper-plate-4"},
         ["scrude"] = {"reformer-mk01", "scrude-refining", "olefin-plant", "heavy-oil-to-kerosene"},
         ["vrauks"] = {"vrauks-codex", "vrauks", "vrauks-cocoon-1", "vrauks-paddock-mk01", "vrauks-1", "caged-vrauks", "uncaged-vrauks"},
-        ["rendering"] = {"slaughterhouse-mk01", "full-render-vrauks", "dried-meat-01"},
+        ["rendering"] = {"slaughterhouse-mk01", "full-render-vrauks"},
         ["py-science-pack-mk01"] = {"stopper", "flask", "research-center-mk01", "py-science-pack-1"},
         ["fluid-processing-machines-1"] = {"evaporator", "tailings-dust", "extract-sulfur"},
         ["military"] = {"submachine-gun", "shotgun", "gun-powder", "shotgun-shell", "firearm-magazine"},
         ["boron"] = {"borax-washing", "diborane", "boric-acid", "boron-trioxide"},
         ["electric-mining-drill"] = {"electric-mining-drill", "fluid-drill-mk02"},
         ["geothermal-power-mk01"] = {"geothermal-plant-mk01", "geo-he-00"},
-        ["antimony-mk01"] = {"antimonium-drill-mk01", "sb-grade-01", "sb-grade-02", "sb-grade-03", "sb-grade-04", "sb-oxide-01", "pbsb-alloy"},
+        ["antimony-mk01"] = {"antimony-drill-mk01", "sb-grade-01", "sb-grade-02", "sb-grade-03", "sb-grade-04", "sb-oxide-01", "pbsb-alloy"},
         ["nexelit-mk01"] = {"nexelit-ore-1", "dino-dig-site", "digosaurus", "clean-nexelit", "nexelit-plate-2"},
         ["casting-mk01"] = {"sand-casting", "casting-unit-mk01"},
-        ["separation"] = {"soil-separation-2", "classifier", "coarse-classification", "sand-classification", "tailings-classification"},
+        ["separation"] = {"soil-separation-2", "classifier", "coarse-classification", "sand-classification"},
         ["mycology-mk01"] = {"ground-sample01", "spore-collector-mk01"},
         ["fawogae-mk01"] = {"fawogae-codex", "earth-shroom-sample", "fawogae-spore", "fawogae-sample", "fawogae-plantation-mk01", "fawogae-1", "coal-fawogae"},
         ["vrauks-mk02"] = {"vrauks-food-01", "vrauks-cocoon-2", "vrauks-2", "vrauks-mk02", "vrauks-mk02-cocoon", "vrauks-mk02-breeder"},
         ["rubber"] = {"carbon-black", "polybutadiene", "rubber-01", "stopper-2", "belt", "long-handed-inserter", "transport-belt-2", "engine-unit-2"},
-        ["ralesia"] = {"ralesia-codex", "earth-flower-sample", "ralesia-sample", "ralesia-seeds", "ralesia-plantation-mk01", "ralesias-1"},
+        ["ralesia"] = {"ralesia-codex", "earth-flower-sample", "ralesia-sample", "ralesia-seeds", "ralesia-plantation-mk01", "ralesia-1"},
         ["auog"] = {"auog-codex", "earth-bear-sample", "auog", "auog-food-01", "auog-pup-breeding-1", "auog-pup-breeding-2", "auog-paddock-mk01", "auog-maturing-1", "auog-maturing-2", "auog-pooping-1", "auog-pooping-2", "caged-auog", "uncaged-auog", "full-render-auogs"},
         ["melamine"] = {"bio-reactor-mk01", "liquid-manure", "urea-from-liquid-manure", "fbreactor-mk01", "urea-decomposition", "melamine", "melamine-resin"},
         ["starch-mk01"] = {"powdered-ralesia-seeds", "starch", "workers-food"},
         ["machine-components-mk01"] = {"utility-box-mk01", "controler-mk01", "mechanical-parts-01", "electronics-mk01"},
         ["cottongut-mk01"] = {"cottongut-codex", "earth-mouse-sample", "cottongut", "cottongut-food-01", "prandium-lab-mk01", "cottongut-pup-mk01-raising", "cottongut-mature-basic-01", "caged-cottongut-1", "cottongut-cub-1", "full-render-cottongut"},
-        ["energy-1"] = {"electric-boiler", "salt-mine", "water-saline", "molten-salt"},
+        ["energy-1"] = {"py-electric-boiler", "salt-mine", "water-saline", "molten-salt"},
         ["cooling-tower-1"] = {"cooling-tower-mk01", "cooling-water"},
         ["coalplant-mk01"] = {"py-coal-powerplant-mk01", "coal-molten-salt-01", "he-01"},
         ["oilplant-mk01"] = {"py-oil-powerplant-mk01", "oil-molten-salt-01", "he-01"},
@@ -346,16 +346,9 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         end
     end
 
-    -- janky workaround for reordering automation science pack unlock
-    local red_science_unlocks = data.raw.technology["automation-science-pack"].effects
-    if red_science_unlocks and red_science_unlocks[5] and red_science_unlocks[5].recipe == "automation-science-pack" then
-        table.remove(data.raw.technology["automation-science-pack"].effects, 5)
-        table.insert( data.raw.technology["automation-science-pack"].effects, 7, {type = "unlock-recipe", recipe = "automation-science-pack"} )
-    end
-
     local tech_icons = {
-        ["py-storage-tanks"] = {icon="__base__/graphics/technology/fluid-handling.png", size=256, mipmaps=1},
-        ["fluid-handling"] = {icon="__base__/graphics/icons/fluid/barreling/barrel-fill.png", size=64, mipmaps=1},
+        ["py-storage-tanks"] = {icon="__base__/graphics/technology/fluid-handling.png", size=256},
+        ["fluid-handling"] = {icon="__base__/graphics/icons/fluid/barreling/barrel-fill.png", size=64},
     }
     -- updates some technology icons
     for tech,info in pairs(tech_icons) do
