@@ -152,6 +152,7 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("gravel-saline-water", "fluid-pressurization", "crusher")
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
+    if settings.startup["pysimple-tech-tree"].value == "2" then add_unlock("saline-water", "fluid-processing-machines-1") end
 
     -- more repositioning for stage 2 techs (those requiring automation science and py science 1)
     adjust_prerequisites("microbiology-mk01", "compost")

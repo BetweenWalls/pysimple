@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.5
+Date: 2025.01.08
+  Changes:
+    - Added saline water recipe to evaporation processing if technology adjustments are made but biters are still enabled
+    - Fixed misspelling in tailings-dust recipe name
+---------------------------------------------------------------------------------------------------
 Version: 1.0.4
 Date: 2024.11.18
   Changes:

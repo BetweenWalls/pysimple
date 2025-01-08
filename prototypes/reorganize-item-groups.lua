@@ -366,7 +366,7 @@ local groups = {
         ["creatures"] = {order="k", items={"ulric-man-corpse"}},
     },
     ["signals"] = { -- renamed "abstract"
-        ["planners"] = {order="1", items={"blueprint", "deconstruction-planner", "upgrade-planner", "blueprint-book"}},
+        ["planners"] = {order="1", items={"blueprint", "deconstruction-planner", "upgrade-planner", "blueprint-book", "copy-paste-tool", "cut-paste-tool"}},
         ["spawnables"] = {order="2"},
         --["virtual-signal-special"] = {order="a"},
         --["virtual-signal-number"] = {order="b"},
@@ -570,7 +570,7 @@ function organize_subgroups(groups)
                             item = item[1]
                         end
                         local found = false
-                        local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item"}
+                        local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool"}
                         for _,kind in pairs(kinds) do
                             if data.raw[kind][item] then
                                 data.raw[kind][item].subgroup = subgroup
@@ -627,7 +627,7 @@ function get_product_order(recipe_name)
             end
         end
         if item then
-            kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item"}
+            kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool"}
             for _,kind in pairs(kinds) do
                 if data.raw[kind][item] then
                     order = data.raw[kind][item].order
