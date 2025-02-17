@@ -11,7 +11,7 @@ script.on_configuration_changed(
   end
 )
 
---- Enables beacon recipes which should be enabled but aren't due to technology changes
+--- Enables recipes which should be enabled but aren't due to technology changes
 function validate_technology_effects()
   local altered_techs = {
     "coal-processing-1",
@@ -28,6 +28,7 @@ function validate_technology_effects()
     "fluid-pressurization",
     "vacuum-tube-electronics",
     "hot-air-mk01",
+    "fluid-processing-machines-1",
   }
   for _,force in pairs(game.forces) do
     for _,tech in pairs(altered_techs) do

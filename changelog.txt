@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.7
+Date: 2025.02.10
+  Changes:
+    - Fixed error when setting new "main_product" (e.g. when using omnimatter_fluid and cybersyn together)
+---------------------------------------------------------------------------------------------------
+Version: 1.0.6
+Date: 2025.02.05
+  Changes:
+    - Removed hyphens from some names to reflect changes made in base py mods: rare-earth, titanium-enriched, red-hot,
+      plutonium-xxx, uranium-xxx
+    - Moved ur-biomass to uranium materials subgroup
+    - Fixed missing name for portable gas generator
+---------------------------------------------------------------------------------------------------
 Version: 1.0.5
 Date: 2025.01.08
   Changes:

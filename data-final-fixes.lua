@@ -104,14 +104,14 @@ if settings.startup["pysimple-tech-tree"].value == "3" then
 end
 
 if settings.startup["pysimple-tech-tree"].value ~= "1" then
-    -- Adds appropriate prerequisites to some early techs so they don't appear until needed (these kind of adjustments would normally be made programmatically in trim-tech-tree.lua)
+    -- Adds appropriate prerequisites to some techs so they don't appear until needed (these kind of adjustments would normally be made programmatically in trim-tech-tree.lua)
     -- TODO: Update trim-tech-tree.lua for Factorio 2.0
+    --adjust_prerequisites("oil-gathering", "niobium")
+    --adjust_prerequisites("uranium-mining", "py-science-pack-mk02")
+    --adjust_prerequisites("bulk-inserter", "basic-electronics")
+    --adjust_prerequisites("efficiency-module", "machine-components-mk02")
     adjust_prerequisites("nexelit-mk01", "py-science-pack-mk01")
-    adjust_prerequisites("oil-gathering", "niobium")
-    adjust_prerequisites("uranium-mining", "py-science-pack-mk02")
-    adjust_prerequisites("bulk-inserter", "basic-electronics")
     adjust_prerequisites("inserter-capacity-bonus-1", "bulk-inserter")
-    adjust_prerequisites("efficiency-module", "machine-components-mk02")
     adjust_prerequisites("bulk-inserter-2", "small-parts-mk03")
 
     -- Fixes some technology issues new in Factorio 2.0

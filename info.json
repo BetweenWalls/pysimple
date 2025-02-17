@@ -1,6 +1,6 @@
 {
 	"name": "pysimple",
-	"version": "1.0.5",
+	"version": "1.0.7",
 	"title": "Pyanodons Simplified",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
@@ -10,9 +10,9 @@
 		"(?) pyhardmode",
 		"? factoryplanner",
 		"? blueprint-sandboxes",
-		"? even-distribution",
-		"? BottleneckLite",
-		"? Milestones"
+		"? Milestones",
+		"? cybersyn",
+		"? not-enough-parameters"
 	],
 	"description": "Makes adjustments to the recipe menu, technology tree, and names/descriptions for improved clarity. No significant gameplay changes. Fully configurable settings."
 }
