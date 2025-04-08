@@ -1,4 +1,23 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.10
+Date: 2025.04.08
+  Changes:
+    - Added optional dependencies (recommendations) for RecipeBook, RateCalculator, FactorySearch, configurable-valves, HandyHandsRefactored
+    - Moved ash to bottom of materials group
+    - Fixed name for ree-float recipe
+    - Organized unsorted/hidden things
+    - Improved compatbility with PyBlock - disabled "technology adjustments" setting, sorted mk0 items, sorted uranium ore-creation items
+---------------------------------------------------------------------------------------------------
+Version: 1.0.9
+Date: 2025.02.28
+  Changes:
+    - Added Russian localisation (thanks to AbobaEnjoyer777)
+---------------------------------------------------------------------------------------------------
+Version: 1.0.8
+Date: 2025.02.27
+  Changes:
+    - Fixed error due to "vacuum-tube-electronics" being changed to "electronics"
+---------------------------------------------------------------------------------------------------
 Version: 1.0.7
 Date: 2025.02.10
   Changes:

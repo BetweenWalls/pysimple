@@ -27,6 +27,7 @@ function validate_technology_effects()
     "wood-processing",
     "fluid-pressurization",
     "vacuum-tube-electronics",
+    "electronics",
     "hot-air-mk01",
     "fluid-processing-machines-1",
   }

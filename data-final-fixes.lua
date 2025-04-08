@@ -2,6 +2,8 @@
 
 local debug_errors = false
 
+-- TODO: Remove conditional statements involving split between experimental and non-experimental once v2.0.37 or later becomes stable, and set a minimum version number for pyalternativeenergy >= 3.1.20 (or base >= 2.0.37?)
+
 --- Adds and/or removes a technology as a prerequisite
 --- @param tech string
 --- @param new_prereq string? if provided, will be added to tech
@@ -9,14 +11,14 @@ local debug_errors = false
 function adjust_prerequisites(tech, new_prereq, old_prereq)
     if data.raw.technology[tech] and data.raw.technology[tech].prerequisites then
         local prereqs = data.raw.technology[tech].prerequisites or {}
-        if old_prereq then
+        if old_prereq and data.raw.technology[old_prereq] then
             local found = false
             for i,prereq in pairs(prereqs) do
                 if prereq == old_prereq then table.remove(prereqs, i); found = true end
             end
             if debug_errors and not found then error("incorrect technology assumption: "..old_prereq) end
         end
-        if new_prereq then
+        if new_prereq and data.raw.technology[new_prereq] then
             table.insert(prereqs, new_prereq)
             data.raw.technology[tech].prerequisites = remove_duplicates(prereqs)
         end
@@ -32,8 +34,10 @@ end
 --- @param index int? if provided, recipe will be inserted into this index
 function add_unlock(recipe, new_tech, old_tech, index)
     if data.raw.recipe[recipe] and (data.raw.technology[new_tech] or data.raw.technology[old_tech]) then
+        if new_tech and not data.raw.technology[new_tech] then return end
+        if old_tech and not data.raw.technology[old_tech] then return end
         local found = false
-        if old_tech and data.raw.technology[old_tech] then
+        if old_tech and data.raw.technology[old_tech] and data.raw.technology[old_tech].effects then
             for i,effect in pairs(data.raw.technology[old_tech].effects) do
                 if effect.type == "unlock-recipe" and effect.recipe == recipe then
                     table.remove(data.raw.technology[old_tech].effects, i)
@@ -42,7 +46,7 @@ function add_unlock(recipe, new_tech, old_tech, index)
             end
             if debug_errors and not found then error("incorrect recipe assumption: "..recipe) end
         end
-        if new_tech and data.raw.technology[new_tech] and not (new_tech == old_tech and not found) then
+        if found and new_tech and data.raw.technology[new_tech] and data.raw.technology[new_tech].effects and not (new_tech == old_tech and not found) then
             if index then
                 table.insert( data.raw.technology[new_tech].effects, index, {type = "unlock-recipe", recipe = recipe} )
             else
@@ -69,8 +73,11 @@ function remove_duplicates(input)
     return output
 end
 
+local technology_adjustments = settings.startup["pysimple-tech-tree"].value
+if mods["PyBlock"] then technology_adjustments = "1" end
+
 -- repositions military technologies deeper in the tech tree (if biters are disabled)
-if settings.startup["pysimple-tech-tree"].value == "3" then
+if technology_adjustments == "3" then
     local military_groups = {
         ["py1_science"] = {
             ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}},
@@ -103,7 +110,7 @@ if settings.startup["pysimple-tech-tree"].value == "3" then
     --NOTE: While turrets are available very early, ammo cannot be made until after lead processing
 end
 
-if settings.startup["pysimple-tech-tree"].value ~= "1" then
+if technology_adjustments ~= "1" then
     -- Adds appropriate prerequisites to some techs so they don't appear until needed (these kind of adjustments would normally be made programmatically in trim-tech-tree.lua)
     -- TODO: Update trim-tech-tree.lua for Factorio 2.0
     --adjust_prerequisites("oil-gathering", "niobium")
@@ -116,11 +123,11 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
 
     -- Fixes some technology issues new in Factorio 2.0
     adjust_prerequisites("lamp", "glass", "automation-science-pack")
-    adjust_prerequisites("radar", "vacuum-tube-electronics", "automation-science-pack")
+    if data.raw.technology["vacuum-tube-electronics"] then adjust_prerequisites("radar", "vacuum-tube-electronics", "automation-science-pack") end
     data.raw.technology["radar"].hidden = true
-    add_unlock("iron-stick", nil, "concrete")
-    add_unlock("iron-stick", nil, "circuit-network")
-    add_unlock("iron-stick", nil, "railway")
+    --add_unlock("iron-stick", nil, "concrete") -- TODO: why does this cause a crash with the new py update
+    --add_unlock("iron-stick", nil, "circuit-network")
+    --add_unlock("iron-stick", nil, "railway")
 
     -- repositions other technologies
     adjust_prerequisites("coal-processing-1", "automation")
@@ -132,8 +139,13 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     adjust_prerequisites("acetylene", "concrete", "tar-processing")
     adjust_prerequisites("solder-mk01", "tar-processing")
     adjust_prerequisites("kerogen", "glass", "steel-processing")
-    adjust_prerequisites("electrolysis", "alloys-mk01", "vacuum-tube-electronics")
-    adjust_prerequisites("basic-substrate", "genetics-mk01", "vacuum-tube-electronics")
+    if data.raw.technology["vacuum-tube-electronics"] then
+        adjust_prerequisites("electrolysis", "alloys-mk01", "vacuum-tube-electronics") -- old (non-experimental)
+        adjust_prerequisites("basic-substrate", "genetics-mk01", "vacuum-tube-electronics") -- old (non-experimental)
+    else
+        adjust_prerequisites("electrolysis", "alloys-mk01", "electronics")
+        adjust_prerequisites("basic-substrate", "genetics-mk01", "electronics")
+    end
     adjust_prerequisites("land-animals-mk01", "xenobiology", "alloys-mk01")
     adjust_prerequisites("vrauks", "land-animals-mk01", "xenobiology")
 
@@ -143,16 +155,25 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
     add_unlock("hpf", "mining-with-fluid", "coal-processing-1")
     add_unlock("coke-co2", "mining-with-fluid", "coal-processing-1")
     add_unlock("tinned-cable", "petri-dish", "mining-with-fluid", 1)
-    add_unlock("zinc-plate-1", "solder-mk01", "vacuum-tube-electronics", 1)
-    add_unlock("methanal", "moondrop", "vacuum-tube-electronics")
-    add_unlock("cellulose-00", "wood-processing", "vacuum-tube-electronics")
-    add_unlock("graphite", "fluid-pressurization", "vacuum-tube-electronics")
-    add_unlock("vacuum-tube", "fluid-pressurization", "vacuum-tube-electronics")
-    add_unlock("saline-water", "fluid-pressurization", "vacuum-tube-electronics")
+    if data.raw.technology["vacuum-tube-electronics"] then
+        add_unlock("zinc-plate-1", "solder-mk01", "vacuum-tube-electronics", 1) -- old (non-experimental)
+        add_unlock("methanal", "moondrop", "vacuum-tube-electronics") -- old (non-experimental)
+        add_unlock("cellulose-00", "wood-processing", "vacuum-tube-electronics") -- old (non-experimental)
+        add_unlock("graphite", "fluid-pressurization", "vacuum-tube-electronics") -- old (non-experimental)
+        add_unlock("vacuum-tube", "fluid-pressurization", "vacuum-tube-electronics") -- old (non-experimental)
+        add_unlock("saline-water", "fluid-pressurization", "vacuum-tube-electronics") -- old (non-experimental)
+    else
+        add_unlock("zinc-plate-1", "solder-mk01", "electronics", 1)
+        add_unlock("methanal", "moondrop", "electronics")
+        add_unlock("cellulose-00", "wood-processing", "electronics")
+        add_unlock("graphite", "fluid-pressurization", "electronics")
+        add_unlock("vacuum-tube", "fluid-pressurization", "electronics")
+        add_unlock("saline-water", "fluid-pressurization", "electronics")
+    end
     add_unlock("gravel-saline-water", "fluid-pressurization", "crusher")
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
-    if settings.startup["pysimple-tech-tree"].value == "2" then add_unlock("saline-water", "fluid-processing-machines-1") end
+    if technology_adjustments == "2" then add_unlock("saline-water", "fluid-processing-machines-1") end
 
     -- more repositioning for stage 2 techs (those requiring automation science and py science 1)
     adjust_prerequisites("microbiology-mk01", "compost")
@@ -286,9 +307,14 @@ if settings.startup["pysimple-descriptions"].value then
             end
         end
     end
+    if mods["PyBlock"] then
+        -- soot-separation is the only recipe which needs a different name as it produces nickel ore in addition to the other products
+        if data.raw.recipe["soot-separation"] then data.raw.recipe["soot-separation"].localised_name = {"name.recipe-soot-separation-pyblock"} end
+    end
 end
+-- TODO: Programmatically rename multi-product recipes by combining already-existing locales for the individual items
 
-if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple-tech-tree"].value ~= "1" then
+if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or technology_adjustments ~= "1" then
     local tech_unlocks = {
         ["automation-science-pack"] = {"flora-collector-mk01", "soil-extractor-mk01", "soil", "wpu", "empty-planter-box", "planter-box", "automation-science-pack", "lab"},
         ["coal-processing-1"] = {"distilator", "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "py-gas-vent", "tailings-pond", "iron-oxide-smelting"},
@@ -302,7 +328,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         ["sap-mk01"] = {"sap-seeds", "sap-tree", "sap-extractor-mk01", "sap-01"},
         ["wood-processing"] = {"wood-seeds", "wood-seedling", "tree", "fwf-mk01", "log1", "log2", "log3", "fiber-01", "cellulose-00"},
         ["fluid-pressurization"] = {"vacuum-pump-mk01", "vacuum", "graphite", "vacuum-tube", "saline-water", "gravel-saline-water"},
-        ["vacuum-tube-electronics"] = {"battery-mk00", "capacitor1", "resistor1", "pulp-mill-mk01", "formica", "pcb-factory-mk01", "pcb1", "chipshooter-mk01", "electronic-circuit"},
+        --["vacuum-tube-electronics"] = {"battery-mk00", "capacitor1", "resistor1", "pulp-mill-mk01", "formica", "pcb-factory-mk01", "pcb1", "chipshooter-mk01", "electronic-circuit"},
         ["copper-mk01"] = {"automated-screener-mk01", "grade-2-copper", "grade-1-copper-crush", "copper-plate-4"},
         ["scrude"] = {"reformer-mk01", "scrude-refining", "olefin-plant", "heavy-oil-to-kerosene"},
         ["vrauks"] = {"vrauks-codex", "vrauks", "vrauks-cocoon-1", "vrauks-paddock-mk01", "vrauks-1", "caged-vrauks", "uncaged-vrauks"},
@@ -339,11 +365,18 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         ["py-storage-tanks"] = {"py-tank-3000", "py-tank-1000", "py-tank-1500", "storage-tank", "py-tank-4000", "py-tank-7000", "py-tank-5000", "py-tank-6500", "py-tank-8000", "py-tank-9000", "py-tank-10000"},
         -- TODO: Reorder unlocks for stage 3 & stage 4 technologies (and beyond)
     }
+    if data.raw.technology["vacuum-tube-electronics"] then
+        tech_unlocks["vacuum-tube-electronics"] = {"battery-mk00", "capacitor1", "resistor1", "pulp-mill-mk01", "formica", "pcb-factory-mk01", "pcb1", "chipshooter-mk01", "electronic-circuit"} -- old (non-experimental)
+    else
+        tech_unlocks["electronics"] = {"battery-mk00", "capacitor1", "resistor1", "pulp-mill-mk01", "formica", "pcb-factory-mk01", "pcb1", "chipshooter-mk01", "electronic-circuit"}
+    end
     -- reorders recipe unlocks by priority - recipes which need to be used first will be listed first
     if not (settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value) then tech_unlocks["py-storage-tanks"] = nil end
     for tech,unlocks in pairs(tech_unlocks) do
-        for i,unlock in pairs(unlocks) do
-            add_unlock(unlock, tech, tech, i)
+        if data.raw.technology[tech] then
+            for i,unlock in pairs(unlocks) do
+                add_unlock(unlock, tech, tech, i)
+            end
         end
     end
 
