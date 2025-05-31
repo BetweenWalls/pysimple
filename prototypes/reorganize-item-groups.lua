@@ -73,6 +73,7 @@ local groups = {
     ["py-alternativeenergy"] = {},
     ["py-hightech"] = { -- renamed "intermediate products"
         ["raw-material"] = {order="zpy-00"},
+        ["recipe-raw-material"] = {order="zpy-00"},
         ["py-intermediates-1"] = {order="zpy-01", items={"raw-fish", "wood", "bolts", "small-parts-01", "small-parts-02", "small-parts-03", "iron-stick", "iron-gear-wheel", "copper-cable", "tinned-cable", "battery"}, recipes={{"casting-small-parts"}, {"hotair-casting-small-parts"}, {"casting-sticks"}, {"hotair-casting-sticks"}, {"casting-gear"}, {"hotair-casting-gear"}, {"casting-copper-cable"}, {"hotair-casting-copper-cable"}, {"casting-tin-cable"}, {"hotair-casting-tin-cable"}}},
         ["py-hightech-tier-1"] = {order="zpy-02", items={"inductor1", "capacitor1", "resistor1", "formica", "pcb1", "battery-mk00", "vacuum-tube", "electronic-circuit"}, recipes={{"hotair-lens"}}},
         ["py-intermediates-2"] = {order="zpy-03", items={"empty-planter-box", "planter-box", "stopper", "flask", "lens", "equipment-chassi", "lab-instrument"}, recipes={{"hotair-lens"}, {"casting-equipment-chassi"}, {"hotair-casting-equipment-chassi"}}},
@@ -125,7 +126,11 @@ local groups = {
         ["py-intermediates-34"] = {order="zpy-49", items={"crystallographic-substrate", "proton-donor", "proton-receiver"}},
         ["py-intermediates-34b"] = {order="zpy-49b", items={"sodium-acetate", "fecl2", "fecl3", "nylon-rope", "nylon-rope-coated", "nylon-rope-uranyl-soaked", "uranyl-nitrate"}},
         ["py-nuclear"] = {order="zpy-50", items={"po-210", "pa-233", "americium-oxide", "am-241", "am-243", "uranium-oxide", "u-232", "u-233", "u-234", "u-235", "uranium-235", "u-236", "u-237", "u-238", "uranium-238", "plutonium-oxide", "plutonium-oxide-mox", "pu-238", "pu-239", "pu-240", "pu-241", "pu-242", "cm-250", "plutonium", "vitrified-glass"}, recipes={"uranium-processing"}},
+        ["recipe-py-nuclear"] = {order="zpy-50"},
+        ["py-nuclear-waste"] = {order="zpy-50b"},
+        ["recipe-py-nuclear-waste"] = {order="zpy-50b"},
         ["py-intermediates-35"] = {order="zpy-51", items={"nuclear-sample", "control-rod", "used-control-rod", "nuclear-fuel", "used-nuclear-fuel", "fuelrod-mk01", "fuelrod-mk02", "fuelrod-mk03", "fuelrod-mk04", "fuelrod-mk05", "mox-fuel-cell", "uranium-fuel-cell", "uranium-fuel-cell-mk02", "uranium-fuel-cell-mk03", "uranium-fuel-cell-mk04", "uranium-fuel-cell-mk05", "used-up-mox-fuel-cell", "depleted-uranium-fuel-cell", "used-up-uranium-fuel-cell-mk02", "used-up-uranium-fuel-cell-mk03", "used-up-uranium-fuel-cell-mk04", "used-up-uranium-fuel-cell-mk05"}},
+        ["uranium-processing"] = {order="zpy-51b"},
         ["py-intermediates-36"] = {order="zpy-52", items={"warm-stone-brick", "warmer-stone-brick", "hot-stone-brick"}, recipes={"arthurian-egg-1-hot-stones", "arthurian-egg-2-hot-stones", "arthurian-egg-3-hot-stones", "arthurian-egg-4-hot-stones"}},
         ["py-intermediates-37"] = {order="zpy-53", items={"coal-briquette", "charcoal-briquette", "rocket-fuel", "nuclear-fuel", "used-nuclear-fuel", "solid-fuel"}},
         ["py-intermediates-38"] = {order="zpy-54", items={"drill-head", "mega-drill-head"}, recipes={{"casting-drill-heads"}, {"hotair-casting-drill-heads"}}},
@@ -137,14 +142,19 @@ local groups = {
         ["py-petroleum-handling-plastic-recipes"] = {order="zpy-x"},
         ["py-hightech-kicalk"] = {order="zpy-x"},
         ["py-hightech-zipir"] = {order="zpy-x"},
+        ["recipe-py-hightech-zipir"] = {order="zpy-x"},
         ["py-hightech-ores"] = {order="zpy-x"},
         ["py-rawores-recipes"] = {order="zpy-x"},
+        ["recipe-py-rawores-recipes"] = {order="zpy-x"},
         ["py-rawores-items"] = {order="zpy-x"},
         ["py-items"] = {order="zpy-x"},
+        ["recipe-py-items"] = {order="zpy-x"},
         ["py-hightech-items"] = {order="zpy-x"},
         ["py-fusion-items"] = {order="zpy-x"},
+        ["recipe-py-fusion-items"] = {order="zpy-x"},
         ["py-alternativeenergy-items"] = {order="zpy-x"},
         ["intermediate-product"] = {order="zpy-x"},
+        ["recipe-intermediate-product"] = {order="zpy-x"},
         ["barrel"] = {order="zpy-ya"},
         ["empty-barrel"] = {order="zpy-yb"},
         ["py-cans"] = {order="zpy-yc"},
@@ -154,6 +164,7 @@ local groups = {
         ["py-rawores-natural-1"] = {order="zpy-02", items={"stone", "gravel", "sand", "pure-sand", "silicon", "kerogen", "oil-sand", "crushed-oil-sand"}, recipes={{"pa-silicon"}}},
         ["py-rawores-natural-2"] = {order="zpy-03", items={"soil", "coarse", "limestone", "lime", "calcium-carbide", "clay", "rich-clay", "ceramic"}},
         ["py-items-class"] = {order="zpy-04", items={"soot", "rich-dust", "tailings-dust"}, recipes={"soil-separation-2", "coarse-classification", "sand-classification", "ash-separation", "soot-separation", "calcinate-separation", "richdust-separation", "tailings-classification", "tailings-separation"}},
+        ["recipe-py-items-class"] = {order="zpy-04"},
         ["py-washer"] = {order="zpy-05"},
         ["py-crusher"] = {order="zpy-06"},
         ["py-rawores-iron-alloys"] = {order="zpy-08", items={"steel-plate", "stainless-steel", "super-steel", "molten-steel", "molten-stainless-steel-p1", "molten-stainless-steel-p2", "molten-stainless-steel-p3", "molten-stainless-steel", "molten-super-steel-p1", "molten-super-steel-p2", "molten-super-steel"}, recipes={{"steel-20"}, {"hotair-steel-20"}, {"hotair-stainless-steel"}, {"hotair-super-steel"}}},
@@ -173,6 +184,7 @@ local groups = {
         ["py-rawores-nexelit"] = {order="zpy-22", items={"nexelit-plate", "nexelit-ore", "clean-nexelit", "grade-1-nexelit", "grade-2-nexelit", "grade-3-nexelit", "nexelit-rejects", "fine-nexelit-powder", "nexelit-pulp-01", "nexelit-pulp-02", "nexelit-pulp-03", "nexelit-pulp-04", "nexelit-slurry", "nexelit-refined-pulp", "high-grade-nexelit", "reduced-nexelit", "sintered-nexelit", "molten-nexelit"}, recipes={{"hotair-nexelit-plate-3"}, {"mining-nexelit"}}},
         ["py-rawores-antimony"] = {order="zpy-23", items={"sb-oxide", "antimonium-ore", "sb-grade-01", "sb-grade-02", "sb-grade-03", "sb-grade-04", "sb-crushed", "sb-dust", "sb-pulp-01", "dowfroth-250", "sb-58-conc", "sb-pulp-02", "sb-pulp-03", "sb-pulp-04", "sb-low-conc", "sb-11-conc", "sb-pulp-05", "sb-final-conc", "sb-conc", "high-purified-sb"}, recipes={{"mining-antimony"}}},
         ["py-rawores-rare-earth"] = {order="zpy-24", items={"rare-earth-ore", "rare-earth-powder", "rare-earth-dust", "rare-earth-mud", "ree-slurry", "ree-solution", "ree-concentrate", "reo", "re-pulp-01", "re-precipitate-01", "re-pulp-02", "re-precipitate-02", "re-pulp-03", "re-pulp-04", "er-oxalate", "impure-er-oxide", "er-oxide", "erbium"}},
+        ["recipe-py-rawores-rare-earth"] = {order="zpy-24"},
         ["py-rawores-niobium"] = {order="zpy-25", items={"niobium-plate", "niobium-ore", "niobium-powder", "niobium-dust", "niobium-concentrate", "niobium-complex", "niobium-oxide", "nb-biomass", "lithium-niobate"}, recipes={{"mining-niobium"}}},
         ["py-rawores-molybdenum"] = {order="zpy-26", items={"molybdenum-plate", "molybdenum-ore", "crushed-molybdenite", "molybdenite-dust", "molybdenite-pulp", "molybdenum-concentrate", "molybdenum-pulp", "molybdenum-sulfide", "molybdenum-oxide"}, recipes={{"mining-molybdenum"}}},
         ["py-rawores-salt"] = {order="zpy-27", items={"salt", "nacl-biomass"}},
@@ -192,9 +204,11 @@ local groups = {
         ["py-alienlife-phytomining"] = {order="zpy-xa"},
         ["py-rawores-ores"] = {order="zpy-xb"},
         ["py-fusion-recipes"] = {order="zpy-xc"},
+        ["recipe-py-fusion-recipes"] = {order="zpy-xc"},
         ["py-extractor"] = {order="zpy-xd"},
         ["py-drilling"] = {order="zpy-xe"},
         ["py-hightech-recipes"] = {order="zpy-xf"},
+        ["recipe-transmutation"] = {order="zpy-xg"},
     },
     ["py-petroleum-handling"] = { -- renamed "fluids"
         ["py-fluids-1"] = {order="zpy-01", items={"void", "combustion-mixture1", "hot-reaction-gas", "processed-light-oil"}, recipes={"advanced-oil-processing", "coal-liquefaction"}},
@@ -241,12 +255,15 @@ local groups = {
         ["py-fluids-41"] = {order="zpy-41", items={"proto-tholins", "tholins"}},
         ["py-fluids-42"] = {order="zpy-42", recipes={"empty-processed-light-oil-canister", "empty-scrude-canister", "empty-crude-oil-canister", "empty-light-oil-canister", "empty-heavy-oil-canister", "empty-petroleum-gas-canister", "empty-condensates-canister", "empty-low-distillate-canister", "empty-medium-distillate-canister", "empty-high-distillate-canister", "empty-stripped-distillate-canister", "empty-residual-oil-canister", "empty-residual-mixture-canister", "empty-hot-residual-mixture-canister", "empty-btx-canister", "empty-fuel-oil-canister", "empty-condensed-distillate-canister", "empty-naphtha-canister", "empty-middle-oil-canister", "empty-tall-oil-canister", "empty-bitumen-canister", "empty-bio-oil-canister", "empty-kerosene-canister", "empty-gasoline-canister", "empty-diesel-canister", "empty-anthracene-oil-canister", "empty-naphthalene-oil-canister", "empty-carbolic-oil-canister", "empty-pitch-canister", "empty-acetylene-canister", "empty-aromatics-canister", "empty-coalbed-gas-canister", "empty-coal-gas-canister", "empty-syngas-canister", "empty-refsyngas-canister", "empty-dirty-syngas-canister", "empty-purified-syngas-canister", "empty-hot-syngas-canister", "empty-outlet-gas-01-canister", "empty-outlet-gas-02-canister", "empty-outlet-gas-03-canister", "empty-raw-gas-canister", "empty-natural-gas-canister", "empty-purified-natural-gas-canister", "empty-pure-natural-gas-canister", "empty-refined-natural-gas-canister", "empty-methane-canister", "empty-methanol-canister", "empty-tar-canister", "empty-benzene-canister", "empty-propene-canister", "empty-ethylene-canister", "empty-fatty-acids-canister", "empty-high-ash-fines-canister", "empty-residual-gas-canister"}},
         ["py-void-liquid"] = {order="zpy-91"},
+        ["recipe-py-void-liquid"] = {order="zpy-91"},
         ["py-void-gas"] = {order="zpy-92"},
+        ["recipe-py-void-gas"] = {order="zpy-92"},
         ["test"] = {order="zpy-xb"},
         ["fluid"] = {order="zpy-xc"},
         ["py-fluid-handling"] = {order="zpy-xd"},
         ["py-fluids"] = {order="zpy-xe"},
         ["py-quenching-ores"] = {order="zpy-xf"},
+        ["recipe-py-quenching-ores"] = {order="zpy-xf"},
         ["py-syngas"] = {order="zpy-xg"},
         ["py-methanol"] = {order="zpy-xh"},
         ["py-fusion-fluids"] = {order="zpy-xi"},
@@ -261,9 +278,9 @@ local groups = {
         ["py-petroleum-handling-tholin-recipes"] = {order="zpy-xr"},
         ["py-petroleum-handling-hot-air"] = {order="zpy-xs"},
         ["py-rawores-fluids"] = {order="zpy-xt"},
+        ["recipe-py-rawores-fluids"] = {order="zpy-xt"},
         ["py-alienlife-fluids"] = {order="zpy-xu"},
         ["py-alienlife-gases"] = {order="zpy-xv"},
-        ["py-nuclear-waste"] = {order="zpy-xw"},
         ["py-combustion"] = {order="zpy-xx"},
     },
     ["py-alienlife"] = { -- renamed "life"
@@ -283,6 +300,7 @@ local groups = {
         ["py-alienlife-used"] = {order="ba-3"},
         ["py-alienlife-replicators"] = {order="ba-4"},
         ["py-alienlife-items"] = {items={{"biocrud","8"}, {"biocarnation","9"}, {"cage","a"}, "energy-drink", "dried-meat", "bedding", "sporopollenin", "cellulose", "lignin", "fungal-substrate", "fungal-substrate-02", "fungal-substrate-03", "urea", "guano", "ammonium-nitrate", "manure", "fertilizer", "guar-gum", "stone-wool", "raw-fiber", "fiber", "powdered-ralesia-seeds", "seeds-extract-01", "starch", "blood-meal", "albumin", "sugar", "sodium-alginate", "latex-slab", "resilin", "casein", "pesticide-mk01", "pesticide-mk02", "nano-cellulose", "magnetic-beads", "hmas", "empty-neuromorphic-chip", "neuromorphic-chip", "neuroprocessor", "pheromones", "perfect-samples"}},
+        ["recipe-py-alienlife-items"] = {order="bb"},
         ["py-alienlife-biomass"] = {order="bb-2", items={"biomass", "powdered-biomass", "fine-powdered-biomass", "dried-biomass"}},
         ["py-alienlife-body-parts"] = {order="bb-3", items={{"blood","aa"}, {"arthropod-blood","ab"}, {"bones","ac"}, {"bonemeal","ac2"}, {"brain","ad"}, {"mukmoux-fat","ae"}, {"guts","af"}, {"meat","ag"}, {"skin","ah"}, {"chitin","ai"}, {"animal-eye","aj"}, "chitosan", "collagen", "nanofibrils", "bio-scafold", "bioartificial-guts", "biomimetic-skin", "in-vitro-meat", "laboratory-grown-brain", "scafold-free-bones", "tissue-engineered-fat"}},
         ["py-alienlife-science"] = {order="bc", items={"agar", "empty-petri-dish", "petri-dish", "petri-dish-bacteria", "fawogae-substrate", "ground-sample01", "bio-sample01", "bio-container", "bio-sample", "alien-sample01", "alien-sample-02", "alien-sample-03", "alien-enzymes", "animal-sample-01", "solidified-sarcorus", "paragen", "negasium", "nonconductive-phazogen", "denatured-seismite"}},
@@ -341,6 +359,53 @@ local groups = {
         ["py-alienlife-seaweed"] = {items={"seaweed", "seaweed-mk02", "seaweed-mk03", "seaweed-mk04"}},
         ["py-alienlife-sap"] = {items={"sap-tree", "sap-tree-mk02", "sap-tree-mk03", "sap-tree-mk04", "sap-seeds", "sap-seeds-mk02", "sap-seeds-mk03", "sap-seeds-mk04", "saps", "saps-mk02", "saps-mk03", "saps-mk04"}},
         ["py-alienlife-tree"] = {items={"tree-mk01", "tree-mk02", "tree-mk03", "tree-mk04", "wood-seedling", "wood-seedling-mk02", "wood-seedling-mk03", "wood-seedling-mk04", "wood-seeds", "wood-seeds-mk02", "wood-seeds-mk03", "wood-seeds-mk04", "log"}},
+        ["recipe-py-alienlife-ulric"] = {order=data.raw["item-subgroup"]["py-alienlife-ulric"].order or "e-a"},
+        ["recipe-py-alienlife-auog"] = {order=data.raw["item-subgroup"]["py-alienlife-auog"].order or "e-aa"},
+        ["recipe-py-alienlife-mukmoux"] = {order=data.raw["item-subgroup"]["py-alienlife-mukmoux"].order or "e-b"},
+        ["recipe-py-alienlife-vrauks"] = {order=data.raw["item-subgroup"]["py-alienlife-vrauks"].order or "e-ba"},
+        ["recipe-py-alienlife-arthurian"] = {order=data.raw["item-subgroup"]["py-alienlife-arthurian"].order or "e-c"},
+        ["recipe-py-alienlife-scrondrix"] = {order=data.raw["item-subgroup"]["py-alienlife-scrondrix"].order or "e-e"},
+        ["recipe-py-alienlife-phadai"] = {order=data.raw["item-subgroup"]["py-alienlife-phadai"].order or "e-f"},
+        ["recipe-py-alienlife-dingrits"] = {order=data.raw["item-subgroup"]["py-alienlife-dingrits"].order or "e-h"},
+        ["recipe-py-alienlife-kmauts"] = {order=data.raw["item-subgroup"]["py-alienlife-kmauts"].order or "e-i"},
+        ["recipe-py-alienlife-vonix"] = {order=data.raw["item-subgroup"]["py-alienlife-vonix"].order or "e-j"},
+        ["recipe-py-alienlife-phagnot"] = {order=data.raw["item-subgroup"]["py-alienlife-phagnot"].order or "e-k"},
+        ["recipe-py-alienlife-xeno"] = {order=data.raw["item-subgroup"]["py-alienlife-xeno"].order or "e-l"},
+        ["recipe-py-alienlife-simik"] = {order=data.raw["item-subgroup"]["py-alienlife-simik"].order or "e-qb"},
+        ["recipe-py-alienlife-korlex"] = {order=data.raw["item-subgroup"]["py-alienlife-korlex"].order or "e-r"},
+        ["recipe-py-alienlife-cottongut"] = {order=data.raw["item-subgroup"]["py-alienlife-cottongut"].order or "e-s"},
+        ["recipe-py-alienlife-arqad"] = {order=data.raw["item-subgroup"]["py-alienlife-arqad"].order or "e-t"},
+        ["recipe-py-alienlife-zungror"] = {order=data.raw["item-subgroup"]["py-alienlife-zungror"].order or "e-v"},
+        ["recipe-py-alienlife-antelope"] = {order=data.raw["item-subgroup"]["py-alienlife-antelope"].order or "e-w"},
+        ["recipe-py-alienlife-dhilmos"] = {order=data.raw["item-subgroup"]["py-alienlife-dhilmos"].order or "e-x[water]-1"},
+        ["recipe-py-alienlife-zipir"] = {order=data.raw["item-subgroup"]["py-alienlife-zipir"].order or "e-x[water]-2"},
+        ["recipe-py-alienlife-trits"] = {order=data.raw["item-subgroup"]["py-alienlife-trits"].order or "e-x[water]-3"},
+        ["recipe-py-alienlife-xyhiphoe"] = {order=data.raw["item-subgroup"]["py-alienlife-xyhiphoe"].order or "e-x[water]-4"},
+        ["recipe-py-alienlife-numal"] = {order=data.raw["item-subgroup"]["py-alienlife-numal"].order or "e-x[water]-5"},
+        ["recipe-py-alienlife-fish"] = {order=data.raw["item-subgroup"]["py-alienlife-fish"].order or "e-x[water]-6"},
+        ["recipe-py-alienlife-cridren"] = {order=data.raw["item-subgroup"]["py-alienlife-cridren"].order or "f-1"},
+        ["recipe-py-alienlife-plants"] = {order=data.raw["item-subgroup"]["py-alienlife-plants"].order or "f-1"},
+        ["recipe-py-alienlife-sea-sponge"] = {order=data.raw["item-subgroup"]["py-alienlife-sea-sponge"].order or "f-2"},
+        ["recipe-py-alienlife-sponge"] = {order=data.raw["item-subgroup"]["py-alienlife-sponge"].order or "f-2"},
+        --["recipe-py-alienlife-biosample"] = {order=data.raw["item-subgroup"]["py-alienlife-biosample"].order or "f-4"},
+        ["recipe-py-alienlife-ralesia"] = {order=data.raw["item-subgroup"]["py-alienlife-ralesia"].order or "f-a"},
+        ["recipe-py-alienlife-rennea"] = {order=data.raw["item-subgroup"]["py-alienlife-rennea"].order or "f-b"},
+        ["recipe-py-alienlife-yotoi"] = {order=data.raw["item-subgroup"]["py-alienlife-yotoi"].order or "f-c"},
+        ["recipe-py-alienlife-tuuphra"] = {order=data.raw["item-subgroup"]["py-alienlife-tuuphra"].order or "f-d"},
+        ["recipe-py-alienlife-grod"] = {order=data.raw["item-subgroup"]["py-alienlife-grod"].order or "f-e"},
+        ["recipe-py-alienlife-kicalk"] = {order=data.raw["item-subgroup"]["py-alienlife-kicalk"].order or "f-g"},
+        ["recipe-py-alienlife-cadaveric"] = {order=data.raw["item-subgroup"]["py-alienlife-cadaveric"].order or "f-h"},
+        ["recipe-py-alienlife-guar"] = {order=data.raw["item-subgroup"]["py-alienlife-guar"].order or "f-i"},
+        ["recipe-py-alienlife-mova"] = {order=data.raw["item-subgroup"]["py-alienlife-mova"].order or "f-j"},
+        ["recipe-py-alienlife-bhoddos"] = {order=data.raw["item-subgroup"]["py-alienlife-bhoddos"].order or "g-a"},
+        ["recipe-py-alienlife-fawogae"] = {order=data.raw["item-subgroup"]["py-alienlife-fawogae"].order or "g-b"},
+        ["recipe-py-alienlife-navens"] = {order=data.raw["item-subgroup"]["py-alienlife-navens"].order or "g-c"},
+        ["recipe-py-alienlife-yaedols"] = {order=data.raw["item-subgroup"]["py-alienlife-yaedols"].order or "g-d"},
+        ["recipe-py-alienlife-moon"] = {order=data.raw["item-subgroup"]["py-alienlife-moon"].order or "g-ea"},
+        ["recipe-py-alienlife-moss"] = {order=data.raw["item-subgroup"]["py-alienlife-moss"].order or "g-eb"},
+        ["recipe-py-alienlife-seaweed"] = {order=data.raw["item-subgroup"]["py-alienlife-seaweed"].order or "g-ec"},
+        ["recipe-py-alienlife-sap"] = {order=data.raw["item-subgroup"]["py-alienlife-sap"].order or "g-ed"},
+        ["recipe-py-alienlife-tree"] = {order=data.raw["item-subgroup"]["py-alienlife-tree"].order or "g-ed"},
     },
     ["combat"] = {
         ["tool"] = {order="1b"},
@@ -403,16 +468,7 @@ local tabs = {
     ["environment"] = {order="xd", icon="__base__/graphics/icons/nauvis.png", size=64},
     ["signals"] = {order="y", rename=true},
 }
-local new_subgroups = {
-    ["production"] = {"py-mining-mk01", "py-mining-mk02", "py-mining-mk03", "py-mining-mk04"},
-    ["py-hightech"] = {"py-alternativeenergy-parts-2", "py-alternativeenergy-parts-3", "py-alternativeenergy-parts-4", "py-intermediates-1", "py-intermediates-2", "py-intermediates-3", "py-intermediates-4", "py-intermediates-5", "py-intermediates-6", "py-intermediates-7", "py-intermediates-8", "py-intermediates-9", "py-intermediates-10", "py-intermediates-11", "py-intermediates-12", "py-intermediates-13", "py-intermediates-14", "py-intermediates-15", "py-intermediates-16", "py-intermediates-17", "py-intermediates-18", "py-intermediates-19", "py-intermediates-20", "py-intermediates-21", "py-intermediates-22", "py-intermediates-23", "py-intermediates-24", "py-intermediates-25", "py-intermediates-26", "py-intermediates-27", "py-intermediates-28", "py-intermediates-29", "py-intermediates-30", "py-intermediates-31", "py-intermediates-32", "py-intermediates-33", "py-intermediates-34", "py-intermediates-35", "py-intermediates-36", "py-intermediates-37", "py-intermediates-38", "py-intermediates-39", "py-intermediates-40", "py-intermediates-34b"},
-    ["py-petroleum-handling"] = {"py-fluids-1", "py-fluids-2", "py-fluids-3", "py-fluids-4", "py-fluids-5", "py-fluids-6", "py-fluids-7", "py-fluids-8", "py-fluids-9", "py-fluids-10", "py-fluids-11", "py-fluids-12", "py-fluids-13", "py-fluids-14", "py-fluids-15", "py-fluids-16", "py-fluids-17", "py-fluids-18", "py-fluids-19", "py-fluids-20", "py-fluids-21", "py-fluids-22", "py-fluids-23", "py-fluids-24", "py-fluids-25", "py-fluids-26", "py-fluids-27", "py-fluids-28", "py-fluids-29", "py-fluids-30", "py-fluids-31", "py-fluids-32", "py-fluids-33", "py-fluids-34", "py-fluids-35", "py-fluids-36", "py-fluids-37", "py-fluids-38", "py-fluids-39", "py-fluids-40", "py-fluids-41", "py-fluids-42", "py-fluids-27b"},
-    ["py-rawores"] = {"py-rawores-natural-1", "py-rawores-natural-2", "py-rawores-borax", "py-rawores-molybdenum", "py-rawores-salt", "py-rawores-cobalt", "py-rawores-regolite", "py-rawores-phosphate", "py-rawores-diamond", "py-resource-1", "py-void-solid"},
-    ["py-alienlife"] = {"py-alienlife-biomass", "py-alienlife-body-parts", "py-alienlife-biosample"},
-    ["combat"] = {"radar"},
-    ["environment"] = {"planets"},
-    ["signals"] = {"indicators", "planners"},
-}
+-- these recipes have multiple products and were missing a main_product to help categorize them
 local new_main_products = {
     ["basic-oil-processing"] = "petroleum-gas",
     ["heavy-oil-cracking"] = "light-oil",
@@ -563,10 +619,14 @@ local new_main_products = {
     ["yaedols-mk03"] = "yaedols-mk03",
     ["yaedols-mk04"] = "yaedols-mk04",
 }
-local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool", "mining-drill", "assembling-machine", "container", "electric-energy-interface", "simple-entity", "fire", "fish"}
+local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool", "mining-drill", "assembling-machine", "container", "electric-energy-interface", "simple-entity", "fire", "simple-entity-with-force", "fish"}
 function organize_subgroups(groups)
     for group,subgroups in pairs(groups) do
         for subgroup,details in pairs(subgroups) do
+            if not data.raw["item-subgroup"][subgroup] then
+                -- TODO: Could this cause any issues with mods such as PyBlock that expect to create their own subgroups?
+                data:extend({ {group = group, type = "item-subgroup", name = subgroup} })
+            end
             if data.raw["item-subgroup"][subgroup] then
                 data.raw["item-subgroup"][subgroup].group = group
                 if details.order then data.raw["item-subgroup"][subgroup].order = details.order end
@@ -665,14 +725,6 @@ if settings.startup["pysimple-recipe-menu"].value then
         if tab.size then data.raw["item-group"][name].icon_size = tab.size end
         if tab.order then data.raw["item-group"][name].order = tab.order end
     end
-    for group,subgroups in pairs(new_subgroups) do
-        for _,subgroup in pairs(subgroups) do
-            if not data.raw["item-subgroup"][subgroup] then
-                data:extend({ {group = group, type = "item-subgroup", name = subgroup} })
-            end
-        end
-    end
-
     for _,recipe in pairs(data.raw.recipe) do
         local multi = false
         local has_product = false
@@ -696,37 +748,44 @@ if settings.startup["pysimple-recipe-menu"].value then
     organize_subgroups(groups)
 
     local to_hide = {
-        ["simple-entity-with-force"] = {"multiblade-turbine-mk01-collision", "multiblade-turbine-mk03-collision", "sut-placement-distance"},
-        ["electric-energy-interface"] = {"multiblade-turbine-mk01-blank", "multiblade-turbine-mk03-blank"},
-        ["fire"] = {"sut-smokestack", "sut-smokestack-weak"},
-        ["tree"] = {"ninja-tree", "arum-fake", "kicalk-tree-fake", "mova-fake"},
-        ["simple-entity-with-owner"] = {},
-        ["beacon"] = {},
-        ["character-corpse"] = {"ulric-man-corpse"},
-        ["ammo-category"] = {"caravan-control", "ulric-infusion"},
+        ["hidden"] = {
+            ["simple-entity-with-force"] = {"multiblade-turbine-mk01-collision", "multiblade-turbine-mk03-collision", "sut-placement-distance"},
+            ["electric-energy-interface"] = {"multiblade-turbine-mk01-blank", "multiblade-turbine-mk03-blank"},
+            ["fire"] = {"sut-smokestack", "sut-smokestack-weak"},
+            ["tree"] = {"ninja-tree", "arum-fake", "kicalk-tree-fake", "mova-fake"},
+            ["simple-entity-with-owner"] = {},
+            ["character-corpse"] = {"ulric-man-corpse"},
+            ["ammo-category"] = {"caravan-control", "ulric-infusion"},
+        },
+        ["hidden_in_factoriopedia"] = {
+            ["beacon"] = {},
+        }
     }
     for i=0,32,1 do
-        table.insert(to_hide["simple-entity-with-owner"], "solar-tower-panel"..i)
+        table.insert(to_hide["hidden"]["simple-entity-with-owner"], "solar-tower-panel"..i)
+    end
+    for i=1,4,1 do
+        table.insert(to_hide["hidden"]["simple-entity-with-force"], "hawt-turbine-mk0"..i.."-collision")
+        table.insert(to_hide["hidden"]["simple-entity-with-force"], "vawt-turbine-mk0"..i.."-collision")
     end
     for am=1,5,1 do
         for fm=1,5,1 do
-            table.insert(to_hide["beacon"], "beacon-AM"..am.."-FM"..fm)
-            table.insert(to_hide["beacon"], "diet-beacon-AM"..am.."-FM"..fm)
+            table.insert(to_hide["hidden_in_factoriopedia"]["beacon"], "beacon-AM"..am.."-FM"..fm)
+            table.insert(to_hide["hidden_in_factoriopedia"]["beacon"], "diet-beacon-AM"..am.."-FM"..fm)
         end
     end
-    for i=1,4,1 do
-        table.insert(to_hide["simple-entity-with-force"], "hawt-turbine-mk0"..i.."-collision")
-        table.insert(to_hide["simple-entity-with-force"], "vawt-turbine-mk0"..i.."-collision")
-    end
-    for type,things in pairs(to_hide) do
-        for _,thing in pairs(things) do
-            if data.raw[type][thing] then
-                data.raw[type][thing].hidden = true
-            elseif debug_errors then
-                error("invalid thing name: "..thing)
+    for hide_type,category in pairs(to_hide) do
+        for type,things in pairs(category) do
+            for _,thing in pairs(things) do
+                if data.raw[type][thing] then
+                    data.raw[type][thing][hide_type] = true
+                elseif debug_errors then
+                    error("invalid thing name: "..thing)
+                end
             end
         end
     end
+
     if data.raw["resource"]["borax"] then data.raw["resource"]["borax"].subgroup = "py-rawores-borax" end
     if data.raw["resource"]["stone"] then data.raw["resource"]["stone"].subgroup = "py-rawores-natural-1" end
     if data.raw["character-corpse"]["ulric-man-corpse"] then data.raw["character-corpse"]["ulric-man-corpse"].subgroup = "corpses" end
@@ -734,4 +793,24 @@ if settings.startup["pysimple-recipe-menu"].value then
     if data.raw["ammo-category"]["dragon-breath"] then data.raw["ammo-category"]["dragon-breath"].subgroup = "ammo-category" end
     if data.raw["ammo-category"]["ulric-infusion"] then data.raw["ammo-category"]["ulric-infusion"].subgroup = "ammo-category" end
     if data.raw["boiler"]["lrf-panel-mk01"] then data.raw["boiler"]["lrf-panel-mk01"].subgroup = "py-alternativeenergy-thermosolar" end
+
+    local merges = {
+        ["enemies"] = {group="environment", order="zza"},
+        ["tiles"] = {group="environment", order="zzb"},
+        ["intermediate-products"] = {group="py-hightech", order="zza"},
+        ["coal-processing"] = {group="py-hightech", order="zzb"},
+        ["fusion-energy"] = {group="py-hightech", order="zzc"},
+        ["py-alternativeenergy"] = {group="py-hightech", order="zzd"},
+    }
+    -- ensures modded things in merged groups also get merged
+    for _,subgroup in pairs(data.raw["item-subgroup"]) do
+        for group,merge in pairs(merges) do
+            if subgroup.group == group then
+                subgroup.group = merge.group
+                if not subgroup.order then subgroup.order = "" end
+                subgroup.order = merge.order.."-"..group.."-"..subgroup.order
+            end
+        end
+    end
+
 end

@@ -1,12 +1,25 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.12
+Date: 2025.05.31
+  Changes:
+    - Moved several overlooked subgroups into their appropriate groups
+    - Anything still in the old merged groups (enemies, tiles, coal-processing, fusion-energy, etc) will get moved to appropriate groups
+    - Renamed brass CuZn battery to galvanic cell (the copper and zinc plates are each suspended in a sulfate, not alloyed)
+    - Moved evaporation processing 1 back to its original position in automation science to allow slaked lime to have a use before py1
+---------------------------------------------------------------------------------------------------
+Version: 1.0.11
+Date: 2025.04.09
+  Changes:
+    - Beacon variations are now only hidden in Factoriopedia, allowing them to be selected in mods such as Factory Planner or Helmod
+---------------------------------------------------------------------------------------------------
 Version: 1.0.10
 Date: 2025.04.08
   Changes:
-    - Added optional dependencies (recommendations) for RecipeBook, RateCalculator, FactorySearch, configurable-valves, HandyHandsRefactored
+    - Added optional dependencies (recommendations) for RecipeBook, RateCalculator, FactorySearch, configurable-valves, HandyHands
     - Moved ash to bottom of materials group
     - Fixed name for ree-float recipe
     - Organized unsorted/hidden things
-    - Improved compatbility with PyBlock - disabled "technology adjustments" setting, sorted mk0 items, sorted uranium ore-creation items
+    - Improved compatibility with PyBlock: disabled "technology adjustments" setting, sorted mk0 items, sorted uranium ore-creation items
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.9
 Date: 2025.02.28

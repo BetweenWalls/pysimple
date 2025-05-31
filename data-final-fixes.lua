@@ -81,7 +81,7 @@ if technology_adjustments == "3" then
     local military_groups = {
         ["py1_science"] = {
             ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}},
-            techs = {"fluid-processing-machines-1", "military", "military-2", "stone-wall", "gate"}
+            techs = {"military", "military-2", "stone-wall", "gate"}
         },
         ["military_science"] = {
             ingredients = {{"automation-science-pack", 6}, {"py-science-pack-1", 3}, {"logistic-science-pack", 2}, {"military-science-pack", 2}, {"py-science-pack-2", 1}},
@@ -99,7 +99,7 @@ if technology_adjustments == "3" then
     data.raw.technology["physical-projectile-damage-2"].unit.count = 70
     data.raw.technology["weapon-shooting-speed-2"].unit.count = 70
     data.raw.technology["stronger-explosives-1"].unit.count = 70
-    adjust_prerequisites("fluid-processing-machines-1", "py-science-pack-mk01")
+    adjust_prerequisites("military", "py-science-pack-mk01", "solder-mk01")
     adjust_prerequisites("py-asphalt", "gate", "py-science-pack-mk01")
     adjust_prerequisites("stone-wall", "py-science-pack-mk01")
     adjust_prerequisites("gun-turret", "military-science-pack")

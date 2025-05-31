@@ -1,6 +1,6 @@
 {
 	"name": "pysimple",
-	"version": "1.0.10",
+	"version": "1.0.12",
 	"title": "Pyanodons Simplified",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
@@ -8,6 +8,7 @@
 	"dependencies": [
 		"pyalternativeenergy",
 		"(?) pyhardmode",
+		"(?) tidy",
 		"? Milestones",
 		"? cybersyn",
 		"? not-enough-parameters",
