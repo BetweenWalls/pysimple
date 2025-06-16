@@ -25,7 +25,7 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-saline-water",
+        name = "pysimple-faster-recipes",
         setting_type = "startup",
         default_value = false,
         order = "d"
@@ -36,6 +36,13 @@ data:extend ({
         setting_type = "startup",
         default_value = false,
         order = "e"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-saline-water",
+        setting_type = "startup",
+        default_value = false,
+        order = "f"
     },
 })
 

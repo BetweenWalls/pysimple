@@ -1,4 +1,20 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.13
+Date: 2025.06.16
+  Changes:
+    - Added a new startup setting which increases the speed of some recipes - this mostly affects cases where more than 4-8 buildings per
+      recipe would be required for a minimal production chain, so you'll get to see more of py faster while only speeding up the most
+      repetitive parts. Specific changes are noted in recipe/entity descriptions.
+    - Moved nightvision up to be unlocked at the same stage as construction bots for accessibility reasons
+    - Moved military science technology deeper within 3rd science stage to make more logistics technologies visible simultaneously
+    - Removed redundant py2 science requirement from early military techs since they are "hidden" fine without it
+    - Reordered recipe unlocks within technologies for techs in 3rd and 4th science stages (logistics/py2)
+    - Moved biomass subgroup further down and sorted biomass recipes by how much they produce
+    - Reordered alien-life species within land/aquatic/plant groupings to be mostly based on the order they become available
+    - Reorganized some alien-life-related items/fluids and other fluids
+    - Updated "purest nitrogen" recipe name to match new "nitrogen contaminate" localisation
+    - Corrected main_product for some TURD recipes so they get organized as expected
+---------------------------------------------------------------------------------------------------
 Version: 1.0.12
 Date: 2025.05.31
   Changes:

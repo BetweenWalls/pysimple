@@ -1,12 +1,12 @@
 {
 	"name": "pysimple",
-	"version": "1.0.12",
+	"version": "1.0.13",
 	"title": "Pyanodons Simplified",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
 	"factorio_version": "2.0",
 	"dependencies": [
-		"pyalternativeenergy",
+		"pyalternativeenergy >= 3.1.20",
 		"(?) pyhardmode",
 		"(?) tidy",
 		"? Milestones",
@@ -17,8 +17,7 @@
 		"? RateCalculator",
 		"? factoryplanner",
 		"? FactorySearch",
-		"? configurable-valves",
 		"? HandyHandsRefactored"
 	],
-	"description": "Makes adjustments to the recipe menu, technology tree, and names/descriptions for improved clarity. No significant gameplay changes. Fully configurable settings."
+	"description": "Makes adjustments to the recipe menu, technology tree, and names & descriptions for improved clarity. Rebalances some recipe speeds. No major gameplay changes. Fully configurable settings."
 }
