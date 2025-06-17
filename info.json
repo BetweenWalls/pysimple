@@ -1,6 +1,6 @@
 {
 	"name": "pysimple",
-	"version": "1.0.13",
+	"version": "1.0.14",
 	"title": "Pyanodons Simplified",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
@@ -17,7 +17,19 @@
 		"? RateCalculator",
 		"? factoryplanner",
 		"? FactorySearch",
-		"? HandyHandsRefactored"
+		"? HandyHandsRefactored",
+		"? crafting-queue-enhancements",
+		"? Brighter-Lamps",
+		"? Auto-lamp",
+		"? dim_lamps",
+		"? BottleneckLite",
+		"? UndergroundIndicatorsFixed",
+		"? belt-visualizer",
+		"? PipeVisualizer-Updated",
+		"? notice-me-senpai",
+		"? FilterHelper",
+		"? force-inventory-insert",
+		"? automatic-underground-pipe-connectors"
 	],
 	"description": "Makes adjustments to the recipe menu, technology tree, and names & descriptions for improved clarity. Rebalances some recipe speeds. No major gameplay changes. Fully configurable settings."
 }

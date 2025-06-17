@@ -31,6 +31,7 @@ end
 --- @param old_tech string? if provided, recipe will be removed from this technology; if old_tech and new_tech are the same, the recipe will only be reordered (it won't be added if it wasn't already present)
 --- @param index int? if provided, recipe will be inserted into this index
 function add_unlock(recipe, new_tech, old_tech, index)
+    local added = false
     if data.raw.recipe[recipe] and (data.raw.technology[new_tech] or data.raw.technology[old_tech]) then
         if new_tech and not data.raw.technology[new_tech] then return end
         if old_tech and not data.raw.technology[old_tech] then return end
@@ -54,6 +55,7 @@ function add_unlock(recipe, new_tech, old_tech, index)
     elseif debug_errors then
         error("invalid recipe or technology: "..(recipe or "")..", "..(new_tech or "").."/"..(old_tech or ""))
     end
+    return added
 end
 
 --- Removes duplicate values from a table
@@ -444,8 +446,14 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
     if not (settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value) then tech_unlocks["py-storage-tanks"] = nil end
     for tech,unlocks in pairs(tech_unlocks) do
         if data.raw.technology[tech] then
+            local use_index = true
             for i,unlock in pairs(unlocks) do
-                add_unlock(unlock, tech, tech, i)
+                if use_index then
+                    local added = add_unlock(unlock, tech, tech, i)
+                    if not added then use_index = false end -- prevents issues due to missing recipes such as those related to "decay" which results in tables of different sizes
+                else
+                    add_unlock(unlock, tech, tech)
+                end
             end
         end
     end

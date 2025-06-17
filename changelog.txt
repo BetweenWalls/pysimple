@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.14
+Date: 2025.06.17
+  Changes:
+    - Added several quality-of-life mods as optional dependencies (recommendations)
+    - Fixed error due to missing decay-related recipes being expected
+---------------------------------------------------------------------------------------------------
 Version: 1.0.13
 Date: 2025.06.16
   Changes:
