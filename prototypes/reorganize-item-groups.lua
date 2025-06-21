@@ -17,6 +17,8 @@ local groups = {
         ["py-stations"] = {items={"roboport"}},
         ["py-robots"] = {items={"logistic-robot", "construction-robot"}},
         ["terrain"] = {items={{"stone-brick","1"}}, recipes={{"stone-brick"}, {"sand-brick"}, {"stone-brick-2"}}},
+        ["py-tiles-2"] = {items={"roboport"}},
+        ["py-asphalt-mk03"] = {"black-refined-concrete", "brown-refined-concrete", "pink-refined-concrete", "purple-refined-concrete", "red-refined-concrete", "orange-refined-concrete", "yellow-refined-concrete", "acid-refined-concrete", "green-refined-concrete", "cyan-refined-concrete", "blue-refined-concrete"},
     },
     ["production"] = {
         ["energy"] = {order="zpy[general]-a[power]-1", items={"boiler", "py-electric-boiler", "oil-boiler-mk01", "steam-engine", "steam-turbine", "accumulator", "accumulator-mk01", "accumulator-mk02", "accumulator-mk03", "py-turbine"}},
@@ -85,15 +87,15 @@ local groups = {
         ["py-intermediates-3"] = {order="zpy-09", items={"melamine", "melamine-resin", "resorcinol", "treated-wood", "sodium-bisulfate", "sodium-sulfate", "sodium-carbonate", "fiberboard"}, recipes={{"fiberboard-3"}}},
         ["py-intermediates-4"] = {order="zpy-10", items={"ticl4", "plastic-bar"}},
         ["py-intermediates-5"] = {order="zpy-11", items={"carbon-black", "latex", "rubber", "graphite", "sb-oxide", "pyrite", "iron-oxide"}},
-        ["py-intermediates-6"] = {order="zpy-12", items={"solder", "molten-solder", "duralumin", "vitreloy", "intermetallics", "fenxsb-alloy", "nichrome"}, recipes={{"solder"}, {"hotair-solder"}}},
+        ["py-intermediates-6"] = {order="zpy-12", items={"solder", "molten-solder", "duralumin", "vitreloy", "intermetallics", "fenxsb-alloy"}, recipes={{"solder"}, {"hotair-solder"}}},
         ["py-rawores-solder"] = {order="zpy-12b"},
-        ["py-intermediates-7"] = {order="zpy-13", items={"eva", "sncr-alloy", "crmoni", "nbalti", "nxsb-alloy", "pbsb-alloy", "nbfe-alloy", "fecr-alloy", "ferrite"}},
+        ["py-intermediates-7"] = {order="zpy-13", items={"nichrome", "pbsb-alloy", "nbfe-alloy", "sncr-alloy", "eva", "crmoni", "nbalti", "nxsb-alloy", "fecr-alloy", "ferrite"}},
         ["py-alternativeenergy-intermetallics-1"] = {order="zpy-14"},
         ["py-intermediates-8"] = {order="zpy-15", items={"sodium-hydroxide", "sodium-silicate", "silica-powder", "nisi", "sodium-chlorate", "ammonium-chloride"}},
         ["py-intermediates-9"] = {order="zpy-16", items={"sand-casting", "mold", "lead-container", "coated-container", "crucible", "quartz-crucible"}, recipes={{"casting-lead-container"}, {"hotair-casting-lead-container"}}},
         ["py-intermediates-10"] = {order="zpy-17", items={"phenol", "bakelite", "bisphenol-a", "epoxy", "nexelit-matrix", "nylon", "nylon-parts"}},
         ["py-intermediates-11"] = {order="zpy-18", items={"glass-core", "cladding", "cladded-core", "copper-coating", "ppd", "kevlar", "kevlar-coating", "nbfe-coating", "optical-fiber"}},
-        ["py-intermediates-12"] = {order="zpy-19", items={"eg-si", "arsenic", "zinc-acetate", "silicon-wafer", "lithium-carbonate", "lithium-hydroxide", "lithium", "p-dope", "light-n", "heavy-n"}},
+        ["py-intermediates-12"] = {order="zpy-19", items={"eg-si", "arsenic", "zinc-acetate", "silicon-wafer", "lithium-carbonate", "lithium-hydroxide", "lithium", "p-dope", "heavy-p-type", "light-n", "heavy-n"}},
         ["py-hightech-tier-2"] = {order="zpy-20", items={"crude-cermet", "cermet", "inductor2", "capacitor2", "resistor2", "transistor", "phenolicboard", "pcb2", "mosfet", "diode", "microchip", "advanced-circuit"}},
         ["py-intermediates-13"] = {order="zpy-21", items={"micro-fiber", "zinc-chloride", "active-carbon", "filtration-media"}},
         ["py-intermediates-14"] = {order="zpy-22", items={"silver-nitrate", "cerium-oxide", "polishing-wheel", "polished-glass-surface", "clean-glass-sheet", "stannous-chloride","prepared-glass", "crude-mirror", "mirror-mk01", "mirror-mk02", "mirror-mk03", "ometad", "mirror-mk04"}},
@@ -110,7 +112,7 @@ local groups = {
         ["py-intermediates-24"] = {order="zpy-33", items={"nic-core", "pdms", "pdms-graphene", "graphene-sheet", "graphene-roll", "cooling-system"}},
         ["py-intermediates-25"] = {order="zpy-34", items={"methyl-acrylate", "acrylonitrile", "acrylic", "pan", "oxidized-pan-fiber", "pre-carbon-fiber", "oxalic-acid", "ammonium-oxalate", "cf1", "cf2", "dry-cf", "cf"}},
         ["py-hightech-aerogel"] = {order="zpy-35", items={"rf-gel", "clean-rf-gel", "soaked-gel", "aerogel", "carbon-aerogel", "sub-denier-microfiber", "low-density-structure"}},
-        ["py-hightech-tier-3"] = {order="zpy-36", items={"glass-fiber", "fiberglass", "pcb3", "pcb3-2", "high-flux-core", "inductor3", "capacitor-termination", "capacitor-core", "capacitor3", "capacitor3", "resistor3", "heavy-p-type", "processor-core", "processor", "diode-core", "diode3", "processing-unit"}},
+        ["py-hightech-tier-3"] = {order="zpy-36", items={"glass-fiber", "fiberglass", "pcb3", "pcb3-2", "high-flux-core", "inductor3", "capacitor-termination", "capacitor-core", "capacitor3", "capacitor3", "resistor3", "processor-core", "processor", "diode-core", "diode3", "processing-unit"}},
         ["py-intermediates-26"] = {order="zpy-37", items={"lithium-peroxide", "nexelit-cartridge", "saturated-nexelit-cartridge", "control-unit"}},
         ["py-intermediates-27"] = {order="zpy-38", items={"magnetic-ring", "sc-wire", "hts-coil", "sc-stator", "cryocooler", "czts-slab", "czts-plate", "cryostat", "ybco-monocrystal", "rotor-m", "air-duct", "fan", "sc-engine"}},
         ["py-intermediates-28"] = {order="zpy-39", items={"ammonium-mixture", "crude-salt", "hbr", "libr", "hexafluoroacetone", "hfip", "guhcl", "rpc-mesh", "nano-mesh", "lithium-chloride", "volumetric-capacitor"}},
@@ -222,7 +224,7 @@ local groups = {
         ["py-fluids-9"] = {order="zpy-09", items={"gasoline", "kerosene", "diesel", "fuel-oil"}},
         ["py-fluids-10"] = {order="zpy-10", items={"coalbed-gas", "coal-gas", "syngas", "refsyngas", "dirty-syngas", "purified-syngas", "hot-syngas", "flue-gas"}, recipes={{"distilled-raw-coal","zpy-item-01x"}}},
         ["py-fluids-11"] = {order="zpy-11", items={"tar"}},
-        ["py-fluids-12"] = {order="zpy-12", items={"middle-oil", "creosote", "cresylic-acid", "aerofloat-15", "soda-ash", "industrial-solvent", "anthracene-oil", "naphthalene-oil", "carbolic-oil", "pitch", "dirty-water-heavy"}, recipes={{"tar-refining","zpy-item-00b"}, {"pitch-refining","zpy-item-00c"}, {"tar-refining-tops","zpy-item-01b"}}},
+        ["py-fluids-12"] = {order="zpy-12", items={"pitch", "middle-oil", "anthracene-oil", "naphthalene-oil", "carbolic-oil", "creosote", "dirty-water-heavy"}, recipes={{"tar-refining","zpy-item-00b"}, {"pitch-refining","zpy-item-00c"}, {"tar-refining-tops","zpy-item-02b"}}},
         ["py-fluids-13"] = {order="zpy-13", items={"slacked-lime", "acetylene"}},
         ["py-fluids-14"] = {order="zpy-14", items={"tall-oil", "aromatics", "polybutadiene", "black-liquor"}},
         ["py-fluids-15"] = {order="zpy-15", items={"olefin", "oleochemicals", "alamac"}},
@@ -241,7 +243,7 @@ local groups = {
         ["py-fluids-28"] = {order="zpy-28", items={"organic-solvent"}},
         ["py-fluids-29"] = {order="zpy-29", items={"vanabins", "blue-liquor", "vpulp1", "vpulp2", "vpulp3", "vpulp4", "vpulp5", "pressured-vpulp", "vpulp-precip", "vanadates", "organic-vanadate", "vanadium-solution", "vanadium-concentrate", "acid-strip-solution", "pregnant-solution", "used-solvent"}},
         ["py-fluids-30"] = {order="zpy-30", items={"phosphorous-acid", "phosphine-gas", "phosphoric-acid", "etching"}},
-        ["py-fluids-31"] = {order="zpy-31", items={"glycerol", "acrolein", "xylenol"}},
+        ["py-fluids-31"] = {order="zpy-31", items={"glycerol", "acrolein", "xylenol", "cresylic-acid", "aerofloat-15", "soda-ash", "industrial-solvent"}},
         ["py-fluids-32"] = {order="zpy-32", items={"salt-solution", "hot-solution", "mother-liquor", "teos", "silicate-solution", "filtered-silicate-solution", "anolyte", "r1", "r2", "r3", "r4"}},
         ["py-fluids-33"] = {order="zpy-33", items={"organic-pulp", "clean-organic-pulp", "middle-processed-lard", "fatty-acids", "processed-fatty-acids", "organic-acid-anhydride", "vinyl-acetate", "mutant-enzymes"}},
         ["py-fluids-34"] = {order="zpy-34", items={"xenogenic-cells", "chelator", "psc"}},
@@ -312,7 +314,7 @@ local groups = {
         ["py-alienlife-codex-mk02"] = {items={"zipir-codex-mk02", "trits-codex-mk02", "dhilmos-codex-mk02", "numal-codex-mk02", "korlex-codex-mk02", "mukmoux-codex-mk02", "scrondrix-codex-mk02", "dingrits-codex-mk02", "kmauts-codex-mk02", "phadai-codex-mk02", "simik-codex-mk02", "zungror-codex-mk02", "xeno-codex-mk02", "vonix-codex-mk02"}},
         ["py-alienlife-codex-mk03"] = {items={"zipir-codex-mk03", "trits-codex-mk03", "dhilmos-codex-mk03", "numal-codex-mk03", "korlex-codex-mk03", "mukmoux-codex-mk03", "scrondrix-codex-mk03", "dingrits-codex-mk03", "kmauts-codex-mk03", "phadai-codex-mk03", "simik-codex-mk03", "zungror-codex-mk03", "xeno-codex-mk03", "vonix-codex-mk03"}},
         ["py-alienlife-codex-mk04"] = {items={"zipir-codex-mk04", "trits-codex-mk04", "dhilmos-codex-mk04", "numal-codex-mk04", "korlex-codex-mk04", "mukmoux-codex-mk04", "scrondrix-codex-mk04", "dingrits-codex-mk04", "kmauts-codex-mk04", "phadai-codex-mk04", "simik-codex-mk04", "zungror-codex-mk04", "xeno-codex-mk04", "vonix-codex-mk04"}},
-        ["py-alienlife-vrauks"] = {order="e-a", items={"blood-caged-vrauks", "brain-caged-vrauks", "guts-caged-vrauks", "meat-caged-vrauks", "chitin-caged-vrauks", "caged-vrauks", "cocoon", "cocoon-mk02", "cocoon-mk03", "cocoon-mk04", "vrauks", "vrauks-mk02", "vrauks-mk03", "vrauks-mk04"}, recipes={{"full-render-vrauks","1"}, {"ex-blo-vrauks"}, {"ex-bra-vrauks","a03"}, {"ex-gut-vrauks"}, {"ex-me-vrauks"}, {"ex-ski-vrauks"}}},
+        ["py-alienlife-vrauks"] = {order="e-a", items={"blood-caged-vrauks", "brain-caged-vrauks", "guts-caged-vrauks", "meat-caged-vrauks", "chitin-caged-vrauks", "caged-vrauks", "cocoon", "cocoon-mk02", "cocoon-mk03", "cocoon-mk04", "vrauks", "vrauks-mk02", "vrauks-mk03", "vrauks-mk04"}, recipes={{"full-render-vrauks",""}, {"ex-blo-vrauks"}, {"ex-bra-vrauks","a03"}, {"ex-gut-vrauks"}, {"ex-me-vrauks"}, {"ex-ski-vrauks"}}},
         ["py-alienlife-auog"] = {order="e-b", items={"blood-caged-auog", "bone-caged-auog", "brain-caged-auog", "fat-caged-auog", "guts-caged-auog", "meat-caged-auog", "skin-caged-auog", {"glandular-myocluster","b2"}, "caged-auog", "auog-pup", "auog-pup-mk02", "auog-pup-mk03", "auog-pup-mk04", "charged-auog", "auog", "auog-mk02", "auog-mk03", "auog-mk04"}, recipes={{"full-render-auogs","1"}, {"ex-used-auog","2"}, {"ex-used-auog-lard","2b"}, {"ex-used-auog-music","2c"}, {"ex-used-auog-laser","2d"}, {"ex-blo-auog"}, {"ex-bon-auog"}, {"ex-bra-auog","a05"}, {"ex-fat-auog"}, {"ex-gut-auog"}, {"ex-me-auog"}, {"ex-ski-auog"}, {"extract-auog-eye"}, "auog-pooping-1", "auog-pooping-2", "auog-pooping-3", "auog-pooping-4", "auog-pooping-5"}},
         ["py-alienlife-cottongut"] = {order="e-c", items={"blood-cottongut", "bone-cottongut", "brain-cottongut", "fat-cottongut", "guts-cottongut", "meat-cottongut", "skin-cottongut", {"lcc","b"}, "cottongut-pup", "cottongut-pup-mk01", "cottongut-pup-mk02", "cottongut-pup-mk03", "cottongut-pup-mk04", "cottongut-mk01", "cottongut-mk02", "cottongut-mk03", "cottongut-mk04", "cottongut"}, recipes={{"full-render-cottongut","1"}, {"ex-blo-cot"}, {"ex-bon-cot"}, {"ex-bra-cot"}, {"ex-fat-cot"}, {"ex-gut-cot"}, {"ex-me-cot"}, {"ex-ski-cot"}}},
         ["py-alienlife-ulric"] = {order="e-d", items={"blood-caged-ulric", "bone-caged-ulric", "brain-caged-ulric", "fat-caged-ulric", "guts-caged-ulric", "meat-caged-ulric", "skin-caged-ulric", {"magnetic-organ","b2"}, "caged-ulric", "ulric-cub", "ulric-cub-mk02", "ulric-cub-mk03", "ulric-cub-mk04", "ulric", "ulric-mk02", "ulric-mk03", "ulric-mk04", "ulric-mk02-dna-sample", "ulric-mk03-dna-sample", "ulric-mk04-dna-sample", "sample-cup", "saddle"}, recipes={{"full-render-ulrics","1"}, {"ex-blo-ulr"}, {"ex-bon-ulr"}, {"ex-bra-ulr"}, {"ex-fat-ulr"}, {"ex-gut-ulr"}, {"ex-me-ulr"}, {"ex-ski-ulr"}, {"extract-ulric-eye"}, "ulric-manure-1", "ulric-manure-2", "ulric-manure-3", "ulric-manure-4"}},
@@ -329,7 +331,7 @@ local groups = {
         ["py-alienlife-vonix"] = {order="e-o", items={"blood-vonix", "brain-vonix", "fat-vonix", "guts-vonix", "meat-vonix", "skin-vonix", "vonix-eggs", "vonix-cub", "vonix", "vonix-mk02", "vonix-mk03", "vonix-mk04", "venom-gland"}, recipes={{"full-render-vonix","1"}, {"ex-blo-von"}, {"ex-bra-von"}, {"ex-fat-von"}, {"ex-gut-von","af"}, {"ex-me-von"}, {"ex-ski-von"}}},
         ["py-alienlife-zungror"] = {order="e-p", items={"blood-caged-zungror", "bone-caged-zungror", "brain-caged-zungror", "fat-caged-zungror", "guts-caged-zungror", "meat-caged-zungror", "skin-caged-zungror", {"vsk","b"}, "caged-zungror", "zungror-cocoon", "zungror", "zungror-mk02", "zungror-mk03", "zungror-mk04", {"pre-fiber-1","zpya"}, {"pre-fiber-2","zpyb"}, {"pre-fiber-3","zpyc"}}, recipes={{"full-render-zun","1"}, {"ex-blo-zun"}, {"ex-bra-zun","a04"}, {"ex-fat-zun"}, {"ex-gut-zun"}, {"ex-me-zun"}, {"ex-ski-zun"}}},
         ["py-alienlife-xeno"] = {order="e-q", items={"sulfuric-caged-xeno", "bone-caged-xeno", "brain-caged-xeno", "meat-caged-xeno", "chitin-caged-xeno", {"cognition-osteochain","b"}, "caged-xeno", "xeno-egg", "xeno", "xeno-mk02", "xeno-mk03", "xeno-mk04"}, recipes={{"full-render-xenos","1"}, {"ex-blo-xeno",}, {"ex-bon-xeno"}, {"ex-bra-xeno"}, {"ex-me-xeno"}, {"ex-chi-xeno"}}},
-        ["py-alienlife-antelope"] = {order="e-r", items={"antelope", "anti-lope", "neutra-lope", "pos-tilope", "cage-antelope", "caged-antelope", "dimensional-gastricorg", "strangelets"}, recipes={{"full-render-antelope","1"}}},
+        ["py-alienlife-antelope"] = {order="e-r", items={"antelope", "anti-lope", "neutra-lope", "pos-tilope", "cage-antelope", "caged-antelope", "dimensional-gastricorg", "strangelets"}, recipes={{"full-render-antelope","1a"}, {"full-render-antelope-existential","1b"}, {"quantum-dots-folding-1","zpy-item-01x"}, {"quantum-dots-folding-2","zpy-item-02x"}, {"quantum-dots-folding-3","zpy-item-04x"}, {"quantum-dots-folding-4","zpy-item-03x"}}},
         ["py-alienlife-zipir"] = {order="e-x[water]-1", items={"blood-zipir", "brain-zipir", "fat-zipir", "guts-zipir", "meat-zipir", "skin-zipir", {"adaptable-automucosa","b"}, "zipir-eggs", "zipir-pup", "zipir1", "zipir2", "zipir3", "zipir4", "zipir-carcass"}, recipes={{"full-render-zipir","1"}, {"rendering","1"}, {"ex-blo-zipir"}, {"ex-bra-zipir"}, {"ex-fat-zipir"}, {"ex-gut-zipir"}, {"ex-me-zipir"}, {"ex-ski-zipir"}}},
         ["py-alienlife-trits"] = {order="e-x[water]-2", items={"blood-trits", "bone-trits", "brain-trits", "fat-trits", "guts-trits", "meat-trits", "skin-trits", {"photophore","b"}, "trits-pup", "trits", "trits-mk02", "trits-mk03", "trits-mk04"}, recipes={{"full-render-trit","1"}, {"ex-blo-trit"}, {"ex-bon-trit"}, {"ex-bra-trit"}, {"ex-fat-trit"}, {"ex-gut-trit"}, {"ex-me-trit"}, {"ex-ski-trit"}}},
         ["py-alienlife-xyhiphoe"] = {order="e-x[water]-3", items={"blood-xyhiphoe", "guts-xyhiphoe", "meat-xyhiphoe", "shell-xyhiphoe", "xyhiphoe-cub", "xyhiphoe-cub-mk02", "xyhiphoe-cub-mk03", "xyhiphoe-cub-mk04", "xyhiphoe", "xyhiphoe-mk02", "xyhiphoe-mk03", "xyhiphoe-mk04", "shell"}, recipes={{"full-render-xyhiphoe","1"}, {"ex-blo-xyh"}, {"ex-gut-xyh"}, {"ex-me-xyh"}, {"ex-ski-xyh","b"}}},
@@ -343,8 +345,8 @@ local groups = {
         ["py-alienlife-biosample"] = {order="f-a", items={"native-flora", "floraspollinin"}},
         ["py-alienlife-moss"] = {order="f-b", items={"moss", "moss-mk02", "moss-mk03", "moss-mk04", "chlorinated-water"}},
         ["py-alienlife-seaweed"] = {order="f-c", items={"seaweed", "seaweed-mk02", "seaweed-mk03", "seaweed-mk04"}},
-        ["py-alienlife-tree"] = {order="f-d", items={"tree-mk01", "tree-mk02", "tree-mk03", "tree-mk04", "wood-seedling", "wood-seedling-mk02", "wood-seedling-mk03", "wood-seedling-mk04", "wood-seeds", "wood-seeds-mk02", "wood-seeds-mk03", "wood-seeds-mk04", "log"}},
-        ["py-alienlife-sap"] = {order="f-e", items={"sap-tree", "sap-tree-mk02", "sap-tree-mk03", "sap-tree-mk04", "sap-seeds", "sap-seeds-mk02", "sap-seeds-mk03", "sap-seeds-mk04", "saps", "saps-mk02", "saps-mk03", "saps-mk04"}},
+        ["py-alienlife-tree"] = {order="f-d", items={"tree-mk01", "tree-mk02", "tree-mk03", "tree-mk04", "wood-seedling", "wood-seedling-mk02", "wood-seedling-mk03", "wood-seedling-mk04", "wood-seeds", "wood-seeds-mk02", "wood-seeds-mk03", "wood-seeds-mk04", "log", "lacquer-resin", "py-sawblade-module-mk01", "py-sawblade-module-mk02", "py-sawblade-module-mk03", "py-sawblade-module-mk04"}},
+        ["py-alienlife-sap"] = {order="f-e", items={"sap-tree", "sap-tree-mk02", "sap-tree-mk03", "sap-tree-mk04", "sap-seeds", "sap-seeds-mk02", "sap-seeds-mk03", "sap-seeds-mk04", "saps", "saps-mk02", "saps-mk03", "saps-mk04"}, recipes={"sap-tree-mulch-mk01", "sap-tree-mulch-mk02", "sap-tree-mulch-mk03", "sap-tree-mulch-mk04"}},
         ["py-alienlife-moon"] = {order="f-f", items={"moondrop", "moondrop-mk02", "moondrop-mk03", "moondrop-mk04", "moondrop-seeds", "moondrop-seeds-mk02", "moondrop-seeds-mk03", "moondrop-seeds-mk04", "moondrop-fueloil", "moondrop-diesel", "moondrop-gas", "moondrop-kerosene"}},
         ["py-alienlife-ralesia"] = {order="f-g", items={"ralesia", "ralesia-mk02", "ralesia-mk03", "ralesia-mk04", "ralesia-seeds", "ralesia-seeds-mk02", "ralesia-seeds-mk03", "ralesia-seeds-mk04", "dry-ralesia", "ralesia-powder", "raw-ralesia-extract", "ralesia-extract", "paper-towel"}},
         ["py-alienlife-fawogae"] = {order="f-h", items={"fawogae", "fawogae-mk02", "fawogae-mk03", "fawogae-mk04", "fawogae-spore", "fawogae-spore-mk02", "fawogae-spore-mk03", "fawogae-spore-mk04"}},
@@ -434,6 +436,7 @@ local groups = {
         ["special-tiles"] = {order="g", items={"polluted-ground", "polluted-ground-burnt", "out-of-map"}},
         ["artificial-tiles"] = {order="h"},
         ["mineable-fluids"] = {order="i", items={"bitumen-seep", "oil-mk01", "oil-mk02", "oil-mk03", "oil-mk04", "tar-patch", "geothermal-crack"}},
+        --["mineable-materials"] = {order="i2", items={"coal-rock", "iron-rock", "copper-rock", "aluminium-rock", "tin-rock", "zinc-rock", "lead-rock", "titanium-rock", "nickel-rock", "chromium-rock", "quartz-rock", "nexelit-rock", "antimonium", "rare-earth-bolide", "niobium", "salt-rock", "sulfur-patch", "phosphate-rock-02", "uranium-rock", "volcanic-pipe", "regolites"}},
         ["enemies"] = {order="j"},
         ["creatures"] = {order="k", items={"digosaurus-mineable-proxy", "thikats-mineable-proxy", "work-o-dile-mineable-proxy"}},
     },
@@ -835,10 +838,15 @@ if settings.startup["pysimple-recipe-menu"].value then
             ["simple-entity-with-owner"] = {},
             ["character-corpse"] = {"ulric-man-corpse"},
             ["ammo-category"] = {"caravan-control", "ulric-infusion"},
+            ["solar-panel"] = {"solar-panel"},
+            ["generator"] = {"py-turbine"},
+            ["mining-drill"] = {"nexelit-mine"},
+            ["fluid"] = {"hot-reaction-gas", "processed-light-oil"},
+            ["item"] = {"solar-panel", "thorium-232", "th-233", "u-239", "u-240", "plutonium", "additional-part-mk01", "additional-part-mk02", "nexelit-mine", "py-turbine"}, -- inaccessible items
+            ["recipe"] = {"solar-panel", "oil-refinery", "pumpjack", "py-turbine", "empty-processed-light-oil-canister", "fertilizer", "fawogae", "fawogae2", "guar-01", "guar-02", "guar-03", "guar-04", "guar-05", "raw-fiber", "raw-fiber2", "raw-fiber3", "raw-fiber4", "bonemeal", "bonemeal-salt", "bonemeal2", "bonemeal3", "bonemeal4", "mukmoux-fat", "mukmoux-fat-salt", "mukmoux-fat2", "mukmoux-fat3", "arthropod-blood", "nuclear-fuel-reprocessing", "nuclear-fuel-reprocessing-mk02", "nuclear-fuel-reprocessing-mk03", "nuclear-fuel-reprocessing-mk04", "nuclear-fuel-reprocessing-mk05", "kovarex-enrichment-process", "pa-uranium-235"}, -- these recipes are unavailable - they are neither TURDs nor unlockable via any techs
         },
         ["hidden_in_factoriopedia"] = {
             ["beacon"] = {},
-            --["recipe"] = {"fawogae2", "guar-01", "guar-02", "guar-03", "guar-04", "guar-05", "raw-fiber2", "raw-fiber3", "raw-fiber4", "bonemeal-salt", "bonemeal2", "bonemeal3", "bonemeal4", "mukmoux-fat-salt", "mukmoux-fat2", "mukmoux-fat3"}, -- these seem to be deprecated recipes as they are neither TURDs nor available through any techs; TODO: double check, as some TURDs are missing the "T.U.R.D. recipe replacement" text
         }
     }
     for i=0,32,1 do
@@ -867,13 +875,47 @@ if settings.startup["pysimple-recipe-menu"].value then
     end
 
     -- exceptional cases which didn't work automatically
-    if data.raw["resource"]["borax"] then data.raw["resource"]["borax"].subgroup = "py-rawores-borax" end
-    if data.raw["resource"]["stone"] then data.raw["resource"]["stone"].subgroup = "py-rawores-natural-1" end
     if data.raw["character-corpse"]["ulric-man-corpse"] then data.raw["character-corpse"]["ulric-man-corpse"].subgroup = "corpses" end
     if data.raw["ammo-category"]["caravan-control"] then data.raw["ammo-category"]["caravan-control"].subgroup = "ammo-category" end
     if data.raw["ammo-category"]["dragon-breath"] then data.raw["ammo-category"]["dragon-breath"].subgroup = "ammo-category" end
     if data.raw["ammo-category"]["ulric-infusion"] then data.raw["ammo-category"]["ulric-infusion"].subgroup = "ammo-category" end
     if data.raw["boiler"]["lrf-panel-mk01"] then data.raw["boiler"]["lrf-panel-mk01"].subgroup = "py-alternativeenergy-thermosolar" end
+    if data.raw["resource"]["borax"] then data.raw["resource"]["borax"].subgroup = "py-rawores-borax" end
+    if data.raw["resource"]["stone"] then data.raw["resource"]["stone"].subgroup = "py-rawores-natural-1" end
+
+    -- TODO: Can resources be moved in factoriopedia or are they always stuck with their item versions if they share the same internal name? It would be nice to have them all visible from the environment tab
+    --[[
+    local resources = {
+        {"ore-bioreserve", "00a"},
+        {"stone", "00b"},
+        {"oil-sand", "00c"},
+        {"raw-coal", "00y"},
+        {"coal", "00x"},
+        {"iron-ore", "01x"},
+        {"copper-ore", "02x"},
+        {"ore-aluminium", "03x"},
+        {"ore-tin", "04x"},
+        {"ore-zinc", "05x"},
+        {"ore-lead", "06x"},
+        {"ore-titanium", "07x"},
+        {"ore-nickel", "08x"},
+        {"ore-chromium", "09x"},
+        {"ore-quartz", "10x"},
+        {"borax", "11b"},
+        {"nexelit-ore", "11x"},
+        {"ree", "13x"},
+        {"molybdenum-ore", "14x"},
+        {"ore-nexelit", "16x"},
+        {"phosphate-rock", "17x"},
+        {"uranium-ore", "18x"},
+    }
+    for _,resource in pairs(resources) do
+        if data.raw["resource"][ resource[1] ] then
+            data.raw["resource"][ resource[1] ].subgroup = "mineable-materials"
+            data.raw["resource"][ resource[1] ].order = "zpy-item-"..resource[2]
+        end
+    end
+    ]]
 
     -- ensures modded things in merged groups also get merged
     local merges = {

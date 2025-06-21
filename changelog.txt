@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.15
+Date: 2025.06.21
+  Changes:
+    - Adjusted menu positions for several items/fluids
+    - Hid several inaccessible items/recipes
+    - Adjusted rebalanced recipes speeds: reverted latex-related changes, reduced vrauks multiplier from x8 to x4, reduced fastwood log
+      multiplier from x5 to x3, reduced cottongut stud multipier from x8 to x4, reduced fish multiplier from x6 to x2, increased
+      ralesia multiplier from x4 to x8
+    - Adjusted optional dependencies (recommendations)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.14
 Date: 2025.06.17
   Changes:

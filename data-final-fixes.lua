@@ -48,8 +48,10 @@ function add_unlock(recipe, new_tech, old_tech, index)
         if found and new_tech and data.raw.technology[new_tech] and data.raw.technology[new_tech].effects and not (new_tech == old_tech and not found) then
             if index then
                 table.insert( data.raw.technology[new_tech].effects, index, {type = "unlock-recipe", recipe = recipe} )
+                added = true
             else
                 table.insert( data.raw.technology[new_tech].effects, {type = "unlock-recipe", recipe = recipe} )
+                added = true
             end
         end
     elseif debug_errors then
@@ -304,6 +306,81 @@ if settings.startup["pysimple-descriptions"].value then
         if data.raw.recipe["soot-separation"] then data.raw.recipe["soot-separation"].localised_name = {"name.recipe-soot-separation-pyblock"} end
     end
 end
+
+-- TODO: Fix TURD-related things missing the "T.U.R.D" text?
+-- locale: pysimple-turd=[font=default-semibold][color=#1aaf00]T.U.R.D.
+--[[
+recipe replacements:
+    arthurian-maturing-1-abacus (and 2,3,4)
+    bhoddos-1-meltdown (and 2,3,4)
+    bhoddos-1-exoenzymes (and 2,3,4)
+    bhoddos-spore-upgraded
+    cadaveric-arum-1-soil (and 2,3,4)
+    cadaveric-arum-1-msa (and 2,3,4)
+    caged-cottongut-1-cannibal (and 2,3,4)
+    cridren-1-neural-cranio (and 2,3,4)
+    dhilmos-1-cover (and 2,3,4)
+    dhilmos-1-skimmer (and 2,3,4)
+    dhilmos-1-double-intake (and 2,3,4)
+    dingrits-1-training (and 2,3,4)
+    fiber-dry-storage
+    log-3-cheap
+    log-6-cheap
+    fawogae-1-nitrogen (and 2,3,4,5)
+    breed-fish-egg-1-doused (and 2,3,4)
+    breed-fish-1-agressive-selection (and 2,3,4)
+    grod-1-pressured (and 2,3,4)
+    grod-1-dry (and 2,3,4)
+    guar-1-guarpulse (and 2,3,4)
+    guar-1-aquaguar (and 2,3,4)
+    bio-sample-icd
+    kicalk-1-dry (and 2,3,4,5)
+    kicalk-1-saline (and 2,3,4,5)
+    kicalk-1-rotation (and 2,3,4,5)
+    korlex-1-slowed (and 2,3,4)
+    moondrop-1-cu (and 2,3,4,5)
+    Moss-1-chlorinated (and 2,3,4,5)
+    Moss-1-without-sludge (and 2,3,4,5)
+    Moss-1-without-sludge-for-real (and 2,3,4,5)
+    mukmoux-manure-1-mukmoux-turd (and 2,3,4)
+    phagnot-1-kicalk (and 2,3,4)
+    ralesia-1-hydrogen-burn (and 2,3,4)
+    rennea-1-deadhead (and 2,3,4)
+    rennea-1-hydrophile (and 2,3,4)
+    seaweed-1-dry (and 2,3,4,5)
+    sea-sponge-1-no-zonga (and 2)
+    trits-1-dc (and 2,3,4)
+    tuuphra-1-fungicide (and 2,3,4)
+    vonix-raising-1-cancer (and 2,3,4)
+    vrauks-1-no-water (and 2,3,4,5)
+    vrauks-cocoon-1-no-water (and 2,3,4,5)
+    wood-seedling-turd
+    wood-seedling-mk02-turd (and 3,4)
+    caged-xeno-1-dna-polymerase (and 2,3,4)
+    xyhiphoe-1-hot-cold (and 2,3,4)
+    yotoi-1-free-leaves (and 2,3,4)
+    yotoi-2-nutrient (and 3,4)
+    zipir-a-1-suicide (and 2,3,4,5,6)
+    zipir-eggs-1-trits-gen (and 2,3,4,5)
+    zipir1-pyvoid-hatchery
+    zungror-raising-1-with-funny-rock (and 2,3)
+    many slaughterhouse recipes
+new recipes:
+    arthurian-cannibalism
+    kicalk-dry-bedding
+    methane-co2-with-lamp
+    moondrop-co2
+    vonix-direct-raising
+entities:
+    generator-1-turd
+    advanced-bio-reactor-mk01-turd1 (and 2,3,4)
+    advanced-bio-reactor-mk01-turd2 (and 2,3,4)
+    advanced-bio-reactor-mk01-turd3 (and 2,3,4)
+    compost-plant-mk01-turd (and 2,3,4)
+    turd-fish-farm-mk01 (and 2,3,4)
+    turd-wpu
+    turd-wpu-mk02 (and 3,4)
+]]
 
 if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or technology_adjustments ~= "1" then
     local tech_unlocks = {
