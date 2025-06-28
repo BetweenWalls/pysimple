@@ -1,12 +1,25 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.16
+Date: 2025.06.28
+  Changes:
+    - Adjusted menu organization for production buildings, colored concrete, erbium, replicators, used animals, and others
+    - Hid all remaining inaccessible items/recipes
+    - Added "T.U.R.D." text to items/entities unique to the TURD system to be consistent with recipes which do the same
+    - Moved MIBC tech from logistics to py2 science stage (it has no use til then)
+    - Fixed "rebalance recipe speeds" setting overwriting description info
+    - Compatibility patch for blueprint shotgun - its techs are available earlier and work even with the "Yes (enemies disabled)" setting
+    - Compatibility patch for cybersyn - combinator tech cost and ingredients are changed to fit py
+    - Compatibility patch for loaders modernized - tech ingredients corrected
+    - Moved valves from "valves" and "configurable-valves" mods to be organized alongside py's valves
+---------------------------------------------------------------------------------------------------
 Version: 1.0.15
 Date: 2025.06.21
   Changes:
     - Adjusted menu positions for several items/fluids
     - Hid several inaccessible items/recipes
-    - Adjusted rebalanced recipes speeds: reverted latex-related changes, reduced vrauks multiplier from x8 to x4, reduced fastwood log
-      multiplier from x5 to x3, reduced cottongut stud multipier from x8 to x4, reduced fish multiplier from x6 to x2, increased
-      ralesia multiplier from x4 to x8
+    - Adjusted "rebalance recipe speeds" setting: reverted latex-related changes, reduced vrauks multiplier from x8 to x4, reduced
+      fastwood log multiplier from x5 to x3, reduced cottongut stud multipier from x8 to x4, reduced fish multiplier from x6 to x2,
+      increased ralesia multiplier from x4 to x8 (see v1.0.13 changes)
     - Adjusted optional dependencies (recommendations)
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.14

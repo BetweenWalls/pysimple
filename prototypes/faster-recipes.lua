@@ -116,6 +116,7 @@ local recipe_speed_multipliers = {
     ["zinc-chloride"] = 2,
     ["tar-talloil"] = 2.5,
     ["tall-oil-separation"] = 5,
+    --["fluidize-coke"] = 2.5,
     ["refined-concrete"] = 3,
     ["bio-sample"] = 4,
     ["bio-sample-icd"] = 4,
@@ -658,6 +659,10 @@ local building_energy_multipliers = {
         ["fish-farm-mk02"] = 2,
         ["fish-farm-mk03"] = 2,
         ["fish-farm-mk04"] = 2,
+        ["turd-fish-farm-mk01"] = 2,
+        ["turd-fish-farm-mk02"] = 2,
+        ["turd-fish-farm-mk03"] = 2,
+        ["turd-fish-farm-mk04"] = 2,
         ["plankton-farm"] = 2,
         ["plankton-farm-mk02"] = 2,
         ["plankton-farm-mk03"] = 2,
@@ -765,41 +770,6 @@ local building_energy_multipliers = {
     },
 }
 
-local UNIT_MULTIPLIERS = {
-    [""] = 1,
-    ["k"] = 1000,
-    ["K"] = 1000,
-    ["M"] = 1000000,
-    ["G"] = 1000000000,
-    ["T"] = 1000000000000,
-    ["P"] = 1000000000000000,
-    ["E"] = 1000000000000000000,
-    ["Z"] = 1000000000000000000000,
-    ["Y"] = 1000000000000000000000000
-}
-
---- Convert an energy string to a numerical value (or nil if the string is incorrectly formatted)
-function get_energy_value(energy_string)
-    if type(energy_string) == "string" then
-        local v, _, mult, unit = string.match(energy_string, "([%-+]?[0-9]*%.?[0-9]+)((%D*)([WJ]))")
-        local value = tonumber(v)
-        if value and mult and UNIT_MULTIPLIERS[mult] then
-            value = value * UNIT_MULTIPLIERS[mult]
-            return value
-        end
-    end
-    return nil
-end
-
---- Adds a string to a recipe/entity description
-function add_to_description(group, thing, localised_string)
-    if group == "recipe" then
-        thing.localised_description = {"?", {"", {"recipe-description." .. thing.name}, "\n", localised_string}, localised_string }
-    elseif group == "entity" then
-        thing.localised_description = {"?", {"", {"entity-description." .. thing.name}, "\n", localised_string}, localised_string }
-    end
-end
-
 -- Increases speeds for recipes and energy consumption for buildings according to the above tables
 if settings.startup["pysimple-faster-recipes"].value then
     for name,mult in pairs(recipe_speed_multipliers) do
@@ -807,7 +777,7 @@ if settings.startup["pysimple-faster-recipes"].value then
         if recipe then
             if recipe.energy_required then      
                 recipe.energy_required = recipe.energy_required / mult
-                add_to_description("recipe", recipe, {"description.pysimple-speed-mult", "x"..mult})
+                py.add_to_description("recipe", recipe, {"description.pysimple-speed-mult", "x"..mult})
             end
         elseif debug_errors then
             error("invalid recipe name: "..name)
@@ -817,10 +787,10 @@ if settings.startup["pysimple-faster-recipes"].value then
         for name,mult in pairs(buildings) do
             local building = data.raw[kind][name]
             if building then
-                local energy_value = get_energy_value(building.energy_usage)
+                local energy_value = util.parse_energy(building.energy_usage) * 60
                 if energy_value then
                     building.energy_usage = energy_value * mult .. "W"
-                    add_to_description("entity", building, {"description.pysimple-consumption-mult", "x"..mult}) -- TODO: Should these description addons be toggleable via a setting?
+                    py.add_to_description("assembling-machine", building, {"description.pysimple-consumption-mult", "x"..mult}) -- TODO: Should these description addons be toggleable via a separate setting?
                 end
             elseif debug_errors then
                 error("invalid entity name: "..name)

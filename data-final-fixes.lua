@@ -107,7 +107,15 @@ if technology_adjustments == "3" then
     adjust_prerequisites("weapon-shooting-speed-1", "military-science-pack", "military")
     adjust_prerequisites("stronger-explosives-1", "military-science-pack", "military-2")
     adjust_prerequisites("military-science-pack", "py-asphalt-mk02", "logistic-science-pack")
-    --NOTE: While turrets are available very early, ammo cannot be made until after lead processing
+    -- Note: While turrets are available very early, ammo cannot be made until after lead processing
+
+    if mods["blueprint-shotgun"] then
+        table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} )
+        adjust_prerequisites("blueprint-shotgun", "electronics", "military")
+        adjust_prerequisites("blueprint-shotgun-upgrade-1", "logistics")
+        adjust_prerequisites("blueprint-shotgun-upgrade-2", "military-2", "logistic-science-pack")
+        data.raw.technology["blueprint-shotgun-upgrade-2"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}}
+    end
 end
 
 if technology_adjustments ~= "1" then
@@ -176,7 +184,26 @@ if technology_adjustments ~= "1" then
     adjust_prerequisites("night-vision-equipment", "battery-mk01", "py-science-pack-mk02")
     adjust_prerequisites("night-vision-equipment", nil, "personal-roboport-equipment")
     data.raw.technology["night-vision-equipment"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}}
-    adjust_prerequisites("py-transport-belt-capacity-1", "lubricant")
+    adjust_prerequisites("py-transport-belt-capacity-1", "fish-mk02") -- both "fish-mk02" and "lubricant" provide a recipe for lubricant which is an ingredient in stack inserters - the former is used since it is already a requirement for progression beyond logistic science
+    adjust_prerequisites("mibc", "aramid", "coal-processing-2") -- has no use til titanium-mk02
+    data.raw.technology["mibc"].unit.ingredients = {{"automation-science-pack", 6}, {"py-science-pack-1", 3}, {"logistic-science-pack", 2}, {"py-science-pack-2", 1}}
+    -- TODO: Remove "lubricant" tech prerequisite from integrated-circuits-1 since you can already make lubricant from fish oil via the fish-mk02 tech which is required to reach that point anyway?
+
+    if mods["blueprint-shotgun"] and technology_adjustments == "2" then
+        table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} )
+        adjust_prerequisites("blueprint-shotgun", "electronics", "military")
+        adjust_prerequisites("blueprint-shotgun-upgrade-1", "military")
+        adjust_prerequisites("blueprint-shotgun-upgrade-2", "military-2", "logistic-science-pack")
+        data.raw.technology["blueprint-shotgun-upgrade-2"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}}
+    end
+    if mods["cybersyn"] then
+        data.raw.technology["cybersyn-train-network"].unit.ingredients = data.raw.technology["circuit-network"].unit.ingredients
+        data.raw.technology["cybersyn-train-network"].unit.count = 275
+    end
+    if mods["loaders-modernized"] then
+        if data.raw.technology["fast-mdrn-loader"] then data.raw.technology["fast-mdrn-loader"].unit.ingredients = data.raw.technology["logistics-2"].unit.ingredients end
+        if data.raw.technology["stack-mdrn-loader"] then data.raw.technology["stack-mdrn-loader"].unit.ingredients = data.raw.technology["fast-mdrn-loader"].unit.ingredients end
+    end
 end
 
 -- adjusts balance slightly so the harder recipe isn't less efficient
@@ -237,7 +264,6 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
     end
 end
 
--- TODO: Programmatically rename multi-product recipes by combining already-existing locales for the individual items
 if settings.startup["pysimple-descriptions"].value then
     local locale_entries = {
         ["name"] = {
@@ -289,7 +315,8 @@ if settings.startup["pysimple-descriptions"].value then
         ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
     }
     -- adjusts names and descriptions for clarity, such as making multi-product recipes include each product so they can be searched the same way as other recipes
-    -- TODO: Should multi-product names including all products be an optional setting?
+    -- TODO: Should multi-product names including all products be a separate optional setting?
+    -- TODO: Programmatically rename multi-product recipes by combining already-existing locales for the individual items
     for desc,desc_groups in pairs(locale_entries) do
         for type,items in pairs(desc_groups) do
             for _,item in pairs(items) do
@@ -305,82 +332,43 @@ if settings.startup["pysimple-descriptions"].value then
         -- soot-separation is the only recipe which needs a different name as it produces nickel ore in addition to the other products
         if data.raw.recipe["soot-separation"] then data.raw.recipe["soot-separation"].localised_name = {"name.recipe-soot-separation-pyblock"} end
     end
-end
 
--- TODO: Fix TURD-related things missing the "T.U.R.D" text?
--- locale: pysimple-turd=[font=default-semibold][color=#1aaf00]T.U.R.D.
---[[
-recipe replacements:
-    arthurian-maturing-1-abacus (and 2,3,4)
-    bhoddos-1-meltdown (and 2,3,4)
-    bhoddos-1-exoenzymes (and 2,3,4)
-    bhoddos-spore-upgraded
-    cadaveric-arum-1-soil (and 2,3,4)
-    cadaveric-arum-1-msa (and 2,3,4)
-    caged-cottongut-1-cannibal (and 2,3,4)
-    cridren-1-neural-cranio (and 2,3,4)
-    dhilmos-1-cover (and 2,3,4)
-    dhilmos-1-skimmer (and 2,3,4)
-    dhilmos-1-double-intake (and 2,3,4)
-    dingrits-1-training (and 2,3,4)
-    fiber-dry-storage
-    log-3-cheap
-    log-6-cheap
-    fawogae-1-nitrogen (and 2,3,4,5)
-    breed-fish-egg-1-doused (and 2,3,4)
-    breed-fish-1-agressive-selection (and 2,3,4)
-    grod-1-pressured (and 2,3,4)
-    grod-1-dry (and 2,3,4)
-    guar-1-guarpulse (and 2,3,4)
-    guar-1-aquaguar (and 2,3,4)
-    bio-sample-icd
-    kicalk-1-dry (and 2,3,4,5)
-    kicalk-1-saline (and 2,3,4,5)
-    kicalk-1-rotation (and 2,3,4,5)
-    korlex-1-slowed (and 2,3,4)
-    moondrop-1-cu (and 2,3,4,5)
-    Moss-1-chlorinated (and 2,3,4,5)
-    Moss-1-without-sludge (and 2,3,4,5)
-    Moss-1-without-sludge-for-real (and 2,3,4,5)
-    mukmoux-manure-1-mukmoux-turd (and 2,3,4)
-    phagnot-1-kicalk (and 2,3,4)
-    ralesia-1-hydrogen-burn (and 2,3,4)
-    rennea-1-deadhead (and 2,3,4)
-    rennea-1-hydrophile (and 2,3,4)
-    seaweed-1-dry (and 2,3,4,5)
-    sea-sponge-1-no-zonga (and 2)
-    trits-1-dc (and 2,3,4)
-    tuuphra-1-fungicide (and 2,3,4)
-    vonix-raising-1-cancer (and 2,3,4)
-    vrauks-1-no-water (and 2,3,4,5)
-    vrauks-cocoon-1-no-water (and 2,3,4,5)
-    wood-seedling-turd
-    wood-seedling-mk02-turd (and 3,4)
-    caged-xeno-1-dna-polymerase (and 2,3,4)
-    xyhiphoe-1-hot-cold (and 2,3,4)
-    yotoi-1-free-leaves (and 2,3,4)
-    yotoi-2-nutrient (and 3,4)
-    zipir-a-1-suicide (and 2,3,4,5,6)
-    zipir-eggs-1-trits-gen (and 2,3,4,5)
-    zipir1-pyvoid-hatchery
-    zungror-raising-1-with-funny-rock (and 2,3)
-    many slaughterhouse recipes
-new recipes:
-    arthurian-cannibalism
-    kicalk-dry-bedding
-    methane-co2-with-lamp
-    moondrop-co2
-    vonix-direct-raising
-entities:
-    generator-1-turd
-    advanced-bio-reactor-mk01-turd1 (and 2,3,4)
-    advanced-bio-reactor-mk01-turd2 (and 2,3,4)
-    advanced-bio-reactor-mk01-turd3 (and 2,3,4)
-    compost-plant-mk01-turd (and 2,3,4)
-    turd-fish-farm-mk01 (and 2,3,4)
-    turd-wpu
-    turd-wpu-mk02 (and 3,4)
-]]
+    local turd_item = {
+        ["item"] = {"chlorinated-water", "lacquer-resin", "paper-towel", "kicalk-dry", "deadhead", "nutrient", "navens-abomination", "abacus", "cags", "saddle", "worm", "alcl3", "fungicide", "cottongut-food-03", "vonix-den-mk04"},
+        ["module"] = {"py-sawblade-module-mk01", "py-sawblade-module-mk02", "py-sawblade-module-mk03", "py-sawblade-module-mk04", "anti-lope", "neutra-lope", "pos-tilope", "dingrits-alpha"},
+        ["assembling-machine"] = {"vonix-den-mk04"},
+    }
+    local turd_replacement = {
+        ["burner-generator"] = {"generator-1-turd"},
+        ["assembling-machine"] = {
+            "advanced-bio-reactor-mk01-turd1", "advanced-bio-reactor-mk02-turd1", "advanced-bio-reactor-mk03-turd1", "advanced-bio-reactor-mk04-turd1",
+            "advanced-bio-reactor-mk01-turd2", "advanced-bio-reactor-mk02-turd2", "advanced-bio-reactor-mk03-turd2", "advanced-bio-reactor-mk04-turd2",
+            "advanced-bio-reactor-mk01-turd3", "advanced-bio-reactor-mk02-turd3", "advanced-bio-reactor-mk03-turd3", "advanced-bio-reactor-mk04-turd3",
+            "turd-fish-farm-mk01", "turd-fish-farm-mk02", "turd-fish-farm-mk03", "turd-fish-farm-mk04",
+            "turd-wpu", "turd-wpu-mk02", "turd-wpu-mk03", "turd-wpu-mk04",
+        },
+        ["furnace"] = {"compost-plant-mk01-turd", "compost-plant-mk02-turd", "compost-plant-mk03-turd", "compost-plant-mk04-turd"},
+        ["module"] = {"digosaurus-turd", "thikat-turd", "work-o-dile-turd"},
+        ["item-with-tags"] = {"caravan-turd", "flyavan-turd", "nukavan-turd"},
+        ["unit"] = {"digosaurus-turd", "thikat-turd", "work-o-dile-turd"},
+    }
+    -- adds "T.U.R.D." text to TURD-related items/entities
+    for kind,names in pairs(turd_item) do
+        for _,name in pairs(names) do
+            if data.raw[kind][name] then
+                py.add_to_description(kind, data.raw[kind][name], {"turd.font", {"description.pysimple-turd-item"}})
+            end
+        end
+    end
+    for kind,names in pairs(turd_replacement) do
+        for _,name in pairs(names) do
+            if data.raw[kind][name] then
+                py.add_to_description(kind, data.raw[kind][name], {"turd.font", {"description.pysimple-turd"}})
+            end
+        end
+    end
+    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description("recipe", data.raw.recipe["zipir1-pyvoid-hatchery"], {"turd.font", {"turd.recipe-replacement"}}) end
+end
 
 if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or technology_adjustments ~= "1" then
     local tech_unlocks = {
@@ -397,6 +385,9 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         ["wood-processing"] = {"wood-seeds", "wood-seedling", "tree", "fwf-mk01", "log1", "log2", "log3", "fiber-01", "cellulose-00"},
         ["fluid-pressurization"] = {"vacuum-pump-mk01", "vacuum", "graphite", "vacuum-tube", "saline-water", "gravel-saline-water"},
         ["electronics"] = {"battery-mk00", "capacitor1", "resistor1", "pulp-mill-mk01", "formica", "pcb-factory-mk01", "pcb1", "chipshooter-mk01", "electronic-circuit"},
+        ["plastics"] = {"biofactory-mk01", "aromatics-to-plastic", "empty-jerry-can"},
+        ["compost"] = {"biomass-cooking", "flue-gas-1", "flue-gas-3", "compost-plant-mk01"},
+        ["py-storage-tanks"] = {"py-tank-3000", "py-tank-1000", "py-tank-1500", "storage-tank", "py-tank-4000", "py-tank-7000", "py-tank-5000", "py-tank-6500", "py-tank-8000", "py-tank-9000", "py-tank-10000"},
         ["basic-substrate"] = {"micro-mine-mk01", "petri-dish-bacteria", "fawogae-substrate", "sand-void-glass"},
         ["copper-mk01"] = {"automated-screener-mk01", "grade-2-copper", "grade-1-copper-crush", "copper-plate-4"},
         ["scrude"] = {"reformer-mk01", "scrude-refining", "olefin-plant", "heavy-oil-to-kerosene"},
@@ -404,6 +395,7 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         ["rendering"] = {"slaughterhouse-mk01", "full-render-vrauks"},
 
         ["py-science-pack-mk01"] = {"stopper", "flask", "research-center-mk01", "py-science-pack-1"},
+        ["crusher-2"] = {"secondary-crusher-mk01", "limestone-void"},
         ["fluid-processing-machines-1"] = {"evaporator", "tailings-dust", "extract-sulfur"},
         ["military"] = {"submachine-gun", "shotgun", "gun-powder", "shotgun-shell", "firearm-magazine"},
         ["boron"] = {"borax-washing", "diborane", "boric-acid", "boron-trioxide"},
@@ -432,10 +424,6 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         ["wind-mk01"] = {"vawt-turbine-mk01", "vane-mk01", "tower-mk01", "blade-mk01", "rotor-mk01", "yaw-drive-mk01", "nacelle-mk01", "hawt-turbine-mk01"},
 
         ["logistic-science-pack"] = {"rich-clay", "animal-sample-01", "bone-to-bonemeal-2", "bio-sample01", "alien-sample01", "logistic-science-pack"},
-        ["crusher-2"] = {"secondary-crusher-mk01", "limestone-void"},
-        ["plastics"] = {"biofactory-mk01", "aromatics-to-plastic", "empty-jerry-can"},
-        ["compost"] = {"biomass-cooking", "flue-gas-1", "flue-gas-3", "compost-plant-mk01"},
-        ["py-storage-tanks"] = {"py-tank-3000", "py-tank-1000", "py-tank-1500", "storage-tank", "py-tank-4000", "py-tank-7000", "py-tank-5000", "py-tank-6500", "py-tank-8000", "py-tank-9000", "py-tank-10000"},
         ["wood-processing-2"] = {"log4", "log5", "log6", "co2-organics", "wood-seeds-mk02", "wood-seedling-mk02", "tree-mk02", "wood-seeds-mk02-breeder"},
         ["pyrite"] = {"pyrite-make", "pyrite-burn"},
         ["drill-head-mk01"] = {"drill-head", "drill-head-2", "drill-head-3"},
@@ -478,11 +466,11 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         ["guar"] = {"guar-sample", "guar-seeds", "guar-gum-plantation", "guar-1", "guar-gum"},
         ["moondrop-mk02"] = {"moondrop-2", "methane-py-fertilizer", "moondrop-mk02", "moondrop-seeds-mk02", "moondrop-mk02-breeder"},
         ["fertilizer-mk02"] = {"fish-hydrolysate", "fertilizer-fish-1", "fertilizer-1", "fertilizer-3"},
-        --["microfilters"] = {"fawogae-spore", "yaedols-spores", "navens-spore", "bhoddos-spore"}, -- TODO: Can productivity effects be differentiated from recipe effects?
+        --["microfilters"] = {"fawogae-spore", "yaedols-spores", "navens-spore", "bhoddos-spore"}, -- TODO: Can productivity effects be conveniently differentiated from recipe effects?
         ["hot-air-mk02"] = {"cog-void-soot", "reheat-coke-gas", "warmer-stone-brick-1", "warmer-air-2"},
         ["fuel-production"] = {"olefin", "gasoline", "gasoline-cellulose", "aromatics-to-petgas"},
         ["py-asphalt-mk02"] = {"py-quartz", "bitumen-to-asphalt", "py-coal-tile", "py-iron", "py-steel", "py-aluminium", "py-nexelit"},
-        ["py-asphalt-mk03"] = {"py-logo-15tiles", "pink-refined-concrete", "purple-refined-concrete", "red-refined-concrete", "orange-refined-concrete", "yellow-refined-concrete", "acid-refined-concrete", "green-refined-concrete", "cyan-refined-concrete", "blue-refined-concrete", "brown-refined-concrete", "black-refined-concrete"},
+        ["py-asphalt-mk03"] = {"py-logo-15tiles", "black-refined-concrete", "brown-refined-concrete", "red-refined-concrete", "orange-refined-concrete", "yellow-refined-concrete", "acid-refined-concrete", "green-refined-concrete", "cyan-refined-concrete", "blue-refined-concrete", "purple-refined-concrete", "pink-refined-concrete"},
 
         ["rennea"] = {"rennea-codex", "earth-sunflower-sample", "rennea-sample", "rennea-seeds", "rennea-plantation-mk01", "rennea-1", "sporopollenin"},
         ["trits"] = {"trits-codex", "trits", "trits-cub-1", "trits-reef-mk01", "trits-1", "full-render-trit"},
@@ -506,21 +494,20 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         ["chemical-science-pack"] = {"nuclear-sample", "chemical-science-pack"},
         ["arthurian"] = {"arthurian-codex", "earth-lizard-sample", "arthurian", "arthurian-egg-1", "arthurian-egg-incubation-01", "arthurian-pen-mk01", "arthurian-maturing-1", "caged-arthurian", "uncaged-arthurian", "full-render-arthurian"},
         ["cridren"] = {"cridren-codex", "earth-venus-fly-sample", "cridren-sample", "cridren-seeds", "cridren-enclosure-mk01", "cridren-1", "adrenal-cortex"},
-        --["dingrits"] = {"", "", "", "", ""},
-        --["dhilmos"] = {"", "", "", "", ""},
-        --["scrondrix"] = {"", "", "", "", ""},
-        --["kmauts"] = {"", "", "", "", ""},
-        --["phadai"] = {"", "", "", "", ""},
-        --["simik-mk01"] = {"", "", "", "", ""},
-        --["numal"] = {"", "", "", "", ""},
-        --["vonix"] = {"", "", "", "", ""},
-        --["zungror"] = {"", "", "", "", ""},
-        --["xeno"] = {"", "", "", "", ""},
-        --["schrodinger-antelope"] = {"", "", "", "", ""},
+        ["dingrits"] = {"dingrits-codex", "earth-wolf-sample", "dingrits", "dingrits-food-01", "dingrits-cub-1", "dingrits-pack-mk01", "dingrits-1", "caged-dingrits", "uncaged-dingrits", "full-render-dingrits"},
+        ["dhilmos"] = {"dhilmos-codex", "dhilmos", "dhilmos-egg-1", "dhilmos-pool-mk01", "dhilmos-hatching-1", "dhilmos-1", "full-render-dhilmoss"},
+        ["scrondrix"] = {"scrondrix-codex", "earth-roadrunner-sample", "scrondrix", "Scrondrix-cub-1", "scrondrix-pen-mk01", "Scrondrix-1", "Scrondrix-Manure-1", "caged-scrondrix", "uncaged-scrondrix", "full-render-scrondrixs"},
+        ["kmauts"] = {"kmauts-codex", "kmauts", "kmauts-cub-1", "kmauts-enclosure-mk01", "kmauts-1", "caged-kmauts", "uncaged-kmauts", "full-render-kmauts", "serine", "bacteria-1", "methane-from-liquid-manure"},
+        ["phadai"] = {"phadai-codex", "earth-tiger-sample", "phadai", "phadai-food-01", "phadai-pup-1", "phadai-pup-2", "phadai-enclosure-mk01", "phadai-1", "Phadai-Dance-Dance-Revolution-1", "phadai-recharge-1", "caged-phadai", "uncaged-phadai", "full-render-phadais"},
+        ["simik-mk01"] = {"simik-codex", "strorix-unknown-sample", "simik", "simik-food-01", "simik-cub-1", "simik-den-mk01", "caged-simik-1", "simik-poop-1", "caged-simik", "uncaged-simik", "full-render-simik", "simik-blood-to-tar"},
+        ["numal-mk01"] = {"numal-codex", "numal", "numal-egg-1", "numal-reef-mk01", "numal-raising-1", "full-render-num"},
+        ["vonix"] = {"vonix-codex", "vonix", "vonix-cub-1", "vonix-grow-01", "vonix-den-mk01", "vonix-raising-1", "full-render-vonix"},
+        ["zungror"] = {"zungror-codex", "earth-goat-sample", "earth-spider-sample", "zungror", "zungror-cocoon-1", "zungror-lair-mk01", "zungror-raising-1", "caged-zungror", "uncaged-zungror", "full-render-zun"},
+        ["xeno"] = {"xeno-codex", "xeno", "xeno-egg-1", "xenopen-mk01", "caged-xeno-1", "caged-xeno", "uncaged-xeno", "full-render-xenos"},
+        ["schrodinger-antelope"] = {"antelope-codex", "earth-antelope-sample", "antelope", "cage-antelope", "caged-antelope", "uncage-antelope", "antelope-enclosure-mk01", "caged-antelope-1", "caged-antelope-2", "caged-antelope-3", "caged-antelope-4", "caged-antelope-5", "caged-antelope-6", "caged-antelope-7", "caged-antelope-8", "full-render-antelope"},
     }
-
-    -- reorders recipe unlocks by priority - recipes which need to be used first will be listed first
     if not (settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value) then tech_unlocks["py-storage-tanks"] = nil end
+    -- reorders recipe unlocks by priority - recipes which need to be used first will be listed first
     for tech,unlocks in pairs(tech_unlocks) do
         if data.raw.technology[tech] then
             local use_index = true
@@ -547,6 +534,10 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         end
     end
 end
+
+-- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
+-- TODO: Adjust circuit connection points for animal/plant enclosures and other buildings (especially those which use or produce spoilable items)
+-- TODO: Add T.U.R.D. symbol to corner of TURD-related recipe icons
 
 require("prototypes/reorganize-item-groups")
 --require("prototypes/trim-tech-tree")

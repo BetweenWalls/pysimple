@@ -30,6 +30,8 @@ function validate_technology_effects()
     "electronics",
     "hot-air-mk01",
     "fluid-processing-machines-1",
+    "military",
+    "blueprint-shotgun",
   }
   for _,force in pairs(game.forces) do
     for _,tech in pairs(altered_techs) do
