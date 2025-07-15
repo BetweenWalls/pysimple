@@ -1,4 +1,35 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.17
+Date: 2025.07.15
+  Changes:
+    - Renamed from "Pyanodons Simplified" to "Pyanodons Streamlined"
+    - Differentiated icon appearance for smart farm recipes, uncaging recipes, and artificial growing recipes
+    - Organized sample recipes to be ordered at the beginning of their sections
+    - Organized artificial growing recipes and uncaging recipes to be ordered at the end of their sections
+    - Organized plant/animal turd recipes to be ordered next to their corresponding non-turd versions
+    - Added descriptions to items/recipes: wood, anthracene-gasoline-hydrogenation, syngas2, coarse-coal-to-coal
+  Balancing:
+    - Adjusted effects of "rebalance recipe speeds" setting to diminish with each successive tier - the highest tier recipes use their
+      original speeds and the highest tier plant/animal buildings use their original power consumption values
+    - Adjusted rebalanced recipe speed multipliers for tier 1 plants/animals: logs (x3 to x2), wood seeds (x2 to x1), sap (x5 to x4),
+      seaweed (x8 to x4), moondrops (x6 to x4), methane from moondrops (x6 to x2), cottonguts (x5 to x2), cottongut pups (x2 to x1),
+      cottongut studs (x4 to x3), tuuphras (x8 to x3), arqads (x2 to x1), arqad egg nests (x3 to x1), arqad honeycomb (x4 to x2),
+      kicalk (x4 to x1), kicalk fiber (x4 to x2), korlex (x3 to x2), sponges (x2 to x1), zipir (x4 to x2), xyhiphoe (x3 to x2),
+      trits (x2 to x1), yotoi fruit (x1 to x2), bhoddos (x2 to x1), cadaveric (x8 to x4), grod (x6 to x2), guar (x2 to x1),
+      arthurians (x5 to x1.5), arthurian eggs (x1 to x1.5), dhilmos (x5 to x2), dingrits (x3 to x2), cridren (x2 to x1),
+      phadai pups (x6 to x3), vonix (x8 to x2), vonix eggs (x3 to x1), zungror (x5 to x2), xenos (x4 to x2)
+    - Adjusted rebalanced recipe speed multipliers for: biosample (x4 to x2), steel-plate (x3 to x2), coke-coal (x3 to x2), 
+      clay (x2 to x1), hydrogen (x4 to x2), purest-nitrogen-gas (x4 to x2), purest-nitrogen-void (x4 to x2), pressured-air (x2 to x1),
+      muddy-sludge-void-electrolyzer (x2 to x3), distilled-raw-coal (x2 to x1), light-oil-aromatics (x2 to x1),
+      anthracene-gasoline-cracking (x2 to x1), anthracene-gasoline-hydrogenation (x2 to x1), zinc-chloride (x2 to x1),
+      tar-talloil (x2.5 to x1), tall-oil-separation (x5 to x1), syngas (x3 to x2), syngas2 (x3 to x2), warm-stone-brick-1 (x8 to x4),
+      borax-washing (x2 to x1), graphite (x4 to x2), powdered-aluminium (x2 to x1), molten-aluminium-01 (x4 to x1),
+      molten-iron-05 (x4 to x2), molten-solder-0 (x4 to x2), solder (x2 to x1), hotair-solder (x2 to x1), reheat-coke-gas (x4 to x2),
+      grade-3-copper (x4 to x2), classify-low-grade (x3 to x2), wash-coper-low-dust (x3 to x2), grade-3-nickel (x3 to x2),
+      grade-2-lead-crusher (x2 to x1), intermetallics (x2 to x1)
+  Bugfixes:
+    - Fixed "rebalance recipe speeds" setting overwriting entity description info
+---------------------------------------------------------------------------------------------------
 Version: 1.0.16
 Date: 2025.06.28
   Changes:
@@ -6,7 +37,7 @@ Date: 2025.06.28
     - Hid all remaining inaccessible items/recipes
     - Added "T.U.R.D." text to items/entities unique to the TURD system to be consistent with recipes which do the same
     - Moved MIBC tech from logistics to py2 science stage (it has no use til then)
-    - Fixed "rebalance recipe speeds" setting overwriting description info
+    - Fixed "rebalance recipe speeds" setting overwriting recipe description info
     - Compatibility patch for blueprint shotgun - its techs are available earlier and work even with the "Yes (enemies disabled)" setting
     - Compatibility patch for cybersyn - combinator tech cost and ingredients are changed to fit py
     - Compatibility patch for loaders modernized - tech ingredients corrected

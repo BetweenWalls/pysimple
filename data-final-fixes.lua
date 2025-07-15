@@ -299,7 +299,7 @@ if settings.startup["pysimple-descriptions"].value then
             ["assembling-machine"] = { "dino-dig-site", },
         },
         ["description"] = {
-            ["recipe"] = { "nexelit-battery-recharge", "quantum-battery-recharge", },
+            ["recipe"] = { "nexelit-battery-recharge", "quantum-battery-recharge", "anthracene-gasoline-hydrogenation", "syngas2", "coarse-coal-to-coal", }, -- none of these have descriptions originally (not even "affected by productivity") so nothing will be overwritten
             ["technology"] = {
                 "mining-with-fluid", "steel-processing", "ash-separation", "moss-mk01", "seaweed-mk01", "wood-processing", "fluid-handling", "solder-mk01", "alloys-mk01", "py-storage-tanks", "plastics",
                 "zoology", "boron", "nexelit-mk01", "antimony-mk01", "nickel-mk01", "chromium-mk01",
@@ -476,7 +476,7 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
         ["trits"] = {"trits-codex", "trits", "trits-cub-1", "trits-reef-mk01", "trits-1", "full-render-trit"},
         ["yotoi"] = {"yotoi-codex", "earth-tropical-tree-sample", "yotoi-sample", "yotoi-aloe-orchard-mk01", "yotoi-fruit-1", "yotoi-seeds", "yotoi-1", "yotoi-leaves", "yotoi-fiber"},
         ["cadaveric-arum"] = {"cadaveric-arum-codex", "cadaveric-arum-sample", "cadaveric-arum-seeds", "cadaveric-arum-mk01", "cadaveric-arum-1", "cadaveric-acidgas-01"},
-        ["grod"] = {"grod-codex", "earth-jute-sample", "grod-sample", "grod-seeds", "grods-swamp-mk01", "dried-grods", "dried-grods-02", "bedding"},
+        ["grod"] = {"grod-codex", "earth-jute-sample", "grod-sample", "grod-seeds", "grods-swamp-mk01", "grod-1", "dried-grods", "dried-grods-02", "bedding"},
         ["mukmoux"] = {"oleo-gasification", "bone-fat", "glycerol2", "mukmoux-codex", "mukmoux", "mukmoux-food-01", "mukmoux-calf-1", "mukmoux-pasture-mk01", "mukmoux-1", "mukmoux-manure-1", "caged-mukmoux", "uncaged-mukmoux", "full-render-mukmoux"},
         ["navens"] = {"navens-spore", "navens-codex", "navens-sample", "navens-culture-mk01", "navens-1", "naven-coal"},
         ["bhoddos"] = {"bhoddos-codex", "bhoddos-sample", "bhoddos-culture-mk01", "bhoddos-1"},
@@ -535,10 +535,13 @@ if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or 
     end
 end
 
+-- TODO: Adjust circuit connection points for animal/plant enclosures and other buildings (especially those which use or produce spoilable items since they're more likely to be connected)
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
--- TODO: Adjust circuit connection points for animal/plant enclosures and other buildings (especially those which use or produce spoilable items)
--- TODO: Add T.U.R.D. symbol to corner of TURD-related recipe icons
+-- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
+-- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
+-- TODO: Reduce volume of sap extractors, regenerative heat exchangers
 
 require("prototypes/reorganize-item-groups")
 --require("prototypes/trim-tech-tree")
+require("prototypes/distinct-icons")
 require("prototypes/faster-recipes")

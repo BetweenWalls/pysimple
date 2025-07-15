@@ -3,6 +3,7 @@
 -- The code here is copied from Tech Tree Trimmer by _CodeGreen:
 -- TODO: Update for Factorio 2.0 (new trigger technologies seem to cause issues?)
 
+--[[
 if settings.startup["pysimple-tech-tree"].value ~= "1" then
   -- fetch all science packs
   local pack_names = {} ---@type table<string, true>
@@ -179,7 +180,7 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
       for name in pairs(current_techs) do
           local technology = data.raw.technology[name]
           if not technology.prerequisites then goto continue end
-          local prerequisites = technology.prerequisites --[[@as string[] ]]
+          local prerequisites = technology.prerequisites --[ [@as string[] ] ]
           for i, prerequisite in pairs(prerequisites) do
               for _, prereq in pairs(prerequisites) do
                   if requirements[prereq] and requirements[prereq][prerequisite] then
@@ -220,3 +221,4 @@ if settings.startup["pysimple-tech-tree"].value ~= "1" then
   end
   trim_prerequisites(base_technologies)
 end
+]]
