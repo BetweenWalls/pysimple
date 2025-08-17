@@ -19,7 +19,7 @@ local recipes = {
 
 local kinds = {"item", "module"}
 
-if settings.startup["pysimple-recipe-menu"].value or settings.startup["pysimple-descriptions"].value then
+if settings.startup["pysimple-graphics"].value then
     for _,info in pairs(recipes) do
         local skip = info.skip or 0
         for i,name in pairs(info.names) do
@@ -55,12 +55,6 @@ if settings.startup["pysimple-recipe-menu"].value or settings.startup["pysimple-
                     end
                 end
                 if recipe.icons then
-                    if info.turd then -- seems unnecessary as long as the turd recipes are positioned consistently - always adjacent to the recipes they replace
-                        table.insert(recipe.icons, {icon = "__pycoalprocessinggraphics__/graphics/icons/gui/turd.png", scale = 0.34, shift = {12,12}})
-                    end
-                    if info.sample then -- some recipes are merged with their corresponding item and some aren't, so these don't show up consistently which makes them unreliable and questionable for inclusion
-                        table.insert(recipe.icons, {icon = "__pyalienlifegraphics__/graphics/icons/earth-generic-sample.png", scale = 0.16, shift = {8,8}})
-                    end
                     if info.cage then
                         table.insert(recipe.icons, {icon = "__pyalienlifegraphics__/graphics/icons/cage.png", scale = 0.2, shift = {8,8}})
                     end

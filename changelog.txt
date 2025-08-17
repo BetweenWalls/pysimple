@@ -1,4 +1,26 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.19
+Date: 2025.08.16
+  Changes:
+    - Fixed locale issue
+---------------------------------------------------------------------------------------------------
+Version: 1.0.18
+Date: 2025.08.16
+  Changes:
+    - Updated internal name references for wood processing unit, fish farm, tailings, muddy sludge
+    - Renamed "oil burner" to "oil burning boiler"
+    - Removed extra tech prerequisites from "hydrogenation and basic reforming" and "inserter capacity bonus 1" techs
+    - Moved recipe unlock for ionic upgrader to logistic science as it has no use til then
+    - Changed symbol on fish turbine entities
+    - Improved circuit connection positions for most buildings
+    - Added a new startup setting to enable/disable all graphical changes
+  Balancing:
+    - Adjusted rebalanced recipe speed multipliers for: petri-dish (x3 to x2), grade-1-tin (x3 to x2), grade-2-crush-tin (x3 to x2),
+      grade-3-tin (x5 to x3), tin-ore-rejects (x4 to x3), wash-grade-3-tin (x5 to x3), ball-grade-4-tin (x5 to x3),
+      molten-zinc-01 (x2 to x1)
+    - Adjusted rebalanced energy consumption multipliers for: automated screener (x1 to x1.5), advanced foundry (x1 to x1.5),
+      regenerative heat exchanger (x1 to x3)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.17
 Date: 2025.07.15
   Changes:

@@ -10,10 +10,17 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-descriptions",
+        name = "pysimple-graphics",
         setting_type = "startup",
         default_value = true,
         order = "b"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-descriptions",
+        setting_type = "startup",
+        default_value = true,
+        order = "c"
     },
     {
         type = "string-setting",
@@ -21,28 +28,28 @@ data:extend ({
         setting_type = "startup",
         allowed_values = {"1", "2", "3"},
         default_value = "3",
-        order = "c"
+        order = "d"
     },
     {
         type = "bool-setting",
         name = "pysimple-faster-recipes",
         setting_type = "startup",
         default_value = false,
-        order = "d"
+        order = "e"
     },
     {
         type = "bool-setting",
         name = "pysimple-storage-tanks",
         setting_type = "startup",
         default_value = false,
-        order = "e"
+        order = "f"
     },
     {
         type = "bool-setting",
         name = "pysimple-saline-water",
         setting_type = "startup",
         default_value = false,
-        order = "f"
+        order = "g"
     },
 })
 
