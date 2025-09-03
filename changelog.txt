@@ -1,4 +1,17 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.20
+Date: 2025.09.03
+  Changes:
+    - Py science packs now have names in addition to their numbers
+    - Tile map colors more closely match their in-world appearance
+    - Differentiated resource map colors slightly
+    - Niobium pipes can be upgraded via the upgrade planner
+    - Items which can't be used in rockets have their "rocket capacity" display their stack size instead of a random number or the
+      "too heavy for a rocket!" text
+    - Organized subgroups from Py Veganism
+    - Fixed error involving circuit connections
+    - Fixed error with pystellarexpedition (technology changes are disabled for now if it's enabled)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.19
 Date: 2025.08.16
   Changes:

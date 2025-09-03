@@ -273,7 +273,7 @@ if settings.startup["pysimple-graphics"].value then
     end
     for kind,buildings in pairs(untiered_circuit_buildings) do
         for name,info in pairs(buildings) do
-            if data.raw[kind][name] then
+            if data.raw[kind][name] and data.raw[kind][name].circuit_connector then
                 if #data.raw[kind][name].circuit_connector == 4 then
                     data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
                 else

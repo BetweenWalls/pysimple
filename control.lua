@@ -3,11 +3,13 @@
 script.on_init(
   function()
     validate_technology_effects()
+    rechart()
   end
 )
 script.on_configuration_changed(
   function()
     validate_technology_effects()
+    rechart()
   end
 )
 
@@ -42,6 +44,15 @@ function validate_technology_effects()
           end
         end
       end
+    end
+  end
+end
+
+--- Updates map colors for resources
+function rechart()
+  for _,force in pairs(game.forces) do
+    for _,surface in pairs(game.surfaces) do
+      force.rechart(surface)
     end
   end
 end

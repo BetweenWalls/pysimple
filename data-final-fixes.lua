@@ -76,7 +76,7 @@ function remove_duplicates(input)
 end
 
 technology_adjustments = settings.startup["pysimple-tech-tree"].value
-if mods["PyBlock"] then technology_adjustments = "1" end
+if mods["PyBlock"] or mods["pystellarexpedition"] then technology_adjustments = "1" end
 
 -- repositions military technologies deeper in the tech tree (if biters are disabled)
 if technology_adjustments == "3" then
@@ -287,8 +287,11 @@ if settings.startup["pysimple-descriptions"].value then
                 "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
                 "niobium-dust", "powdered-quartz", "grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
                 "battery-mk00", "portable-gasoline-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
-                "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "multiblade-turbine-mk01", "dino-dig-site",
+                "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "oil-boiler-mk01", "multiblade-turbine-mk01", "dino-dig-site",
+                "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "py-science-pack-1-turd", "py-science-pack-2-turd", "py-science-pack-3-turd", "py-science-pack-4-turd",
             },
+            ["technology"] = { "py-science-pack-mk01", "py-science-pack-mk02", "py-science-pack-mk03", "py-science-pack-mk04", },
+            ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
             ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
             ["wall"] = { "poorman-wood-fence", },
             ["storage-tank"] = { "tailings-pond", },
@@ -310,10 +313,11 @@ if settings.startup["pysimple-descriptions"].value then
         }
     }
     local supertypes = {
-        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["capsule"] = "item",
+        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item",
         ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["boiler"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
     }
     -- adjusts names and descriptions for clarity, such as making multi-product recipes include each product so they can be searched the same way as other recipes
+    -- TODO: Should these changes be made prior to data-final-fixes so that recipes automatically incorporate item name changes?
     -- TODO: Should multi-product names including all products be a separate optional setting?
     -- TODO: Programmatically rename multi-product recipes by combining already-existing locales for the individual items
     for desc,desc_groups in pairs(locale_entries) do
@@ -367,6 +371,18 @@ if settings.startup["pysimple-descriptions"].value then
         end
     end
     if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description("recipe", data.raw.recipe["zipir1-pyvoid-hatchery"], {"turd.font", {"turd.recipe-replacement"}}) end
+
+    -- sets "rocket capacity" to be the same as the stack size (removes "too heavy for a rocket!" text)
+    if feature_flags["space_travel"] and not (mods["space-age"] or mods["pystellarexpedition"]) then
+        local kinds = {"item", "module", "item-with-tags", "item-with-entity-data", "gun", "ammo", "capsule", "tool", "repair-tool", "rail-planner", "armor"}
+        for _,kind in pairs(kinds) do
+            for _,thing in pairs(data.raw[kind]) do
+                if thing and thing.stack_size and (thing.send_to_orbit_mode == nil or thing.send_to_orbit_mode.includes == "not-sendable") and not thing.rocket_launch_products then
+                    thing.weight = 1000000 / thing.stack_size
+                end
+            end
+        end
+    end
 end
 
 if settings.startup["pysimple-graphics"].value or technology_adjustments ~= "1" then
@@ -388,13 +404,84 @@ if settings.startup["pysimple-graphics"].value then
     if windmill then
         windmill.animations.layers[1].filename = "__pysimple__/graphics/base-fishturbine.png"
     end
+    if data.raw.recipe["molybdenum-concentrate"] then
+        data.raw.recipe["molybdenum-concentrate"].icon = data.raw.item["molybdenum-concentrate"].icon
+    end
+    local colors = {
+        ["tile"] = {
+            ["py-coal-tile"] = {0, 0, 0, 255},
+            ["py-asphalt"] = {25, 25, 25, 255},
+            ["py-steel"] = {50, 50, 50, 1},
+            ["py-limestone"] = {158, 139, 121, 1},
+            ["py-iron-oxide"] = {101, 39, 0, 1},
+            ["py-iron"] = {90, 85, 75, 1},
+            ["py-aluminium"] = {140, 133, 130, 1},
+            ["py-nexelit"] = {17, 83, 127, 1},
+            ["black-refined-concrete"] = {40, 40, 40, 127},
+            ["brown-refined-concrete"] = {73, 50, 35, 127},
+            ["pink-refined-concrete"] = {153, 107, 120, 127},
+            ["purple-refined-concrete"] = {121, 63, 140, 127},
+            ["blue-refined-concrete"] = {58, 110, 153, 127},
+            ["cyan-refined-concrete"] = {54, 153, 137, 127},
+            ["green-refined-concrete"] = {30, 153, 45, 127},
+            ["acid-refined-concrete"] = {112, 153, 19, 127},
+            ["yellow-refined-concrete"] = {153, 123, 32, 127},
+            ["orange-refined-concrete"] = {153, 95, 37, 127},
+            ["red-refined-concrete"] = {153, 41, 33, 127},
+        },
+        ["resource"] = {
+            ["ore-quartz"] = {145, 248, 240, 255},
+            ["quartz-rock"] = {145, 248, 240, 255},
+            ["ore-zinc"] = {38, 229, 135, 255},
+            ["zinc-rock"] = {38, 229, 135, 255},
+            ["ore-lead"] = {80, 80, 80, 255},
+            ["lead-rock"] = {80, 80, 80, 255},
+            ["ore-titanium"] = {161, 120, 192, 255},
+            ["titanium-rock"] = {161, 120, 192, 255},
+            ["ore-nickel"] = {3, 106, 0, 255},
+            ["nickel-rock"] = {3, 106, 0, 255},
+            ["ore-nexelit"] = {75, 178, 222, 255},
+            ["antimonium"] = {154, 20, 48, 255},
+            ["molybdenum-ore"] = {4, 66, 76, 255},
+            ["niobium"] = {35, 96, 148, 255},
+            ["ree"] = {101, 82, 0, 255},
+            ["rare-earth-bolide"] = {101, 82, 0, 255},
+            ["oil-sand"] = {113, 51, 0, 255},
+            ["uranium-rock"] = {0, 178, 0, 255},
+            ["copper-rock"] = {204, 98, 54, 255},
+            ["iron-rock"] = {105, 133, 147, 255},
+            ["salt-rock"] = {254, 254, 254, 255},
+            ["phosphate-rock"] = {195, 111, 176, 255},
+            ["phosphate-rock-02"] = {195, 111, 176, 255},
+            ["bitumen-seep"] = {116, 0, 101, 255},
+            ["tar-patch"] = {28, 73, 60, 255},
+            ["natural-gas-mk01"] = {203, 142, 11, 255},
+            ["natural-gas-mk02"] = {203, 142, 11, 255},
+            ["natural-gas-mk03"] = {203, 142, 11, 255},
+            ["natural-gas-mk04"] = {203, 142, 11, 255},
+        },
+    }
+    for kind,things in pairs(colors) do
+        for name,color in pairs(things) do
+            if data.raw[kind][name] then
+                data.raw[kind][name].map_color = color
+            end
+        end
+    end
 end
+
+if data.raw["pipe"]["niobium-pipe"] and data.raw["pipe"]["ht-pipes"] then data.raw["pipe"]["niobium-pipe"].next_upgrade = "ht-pipes" end
+if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].next_upgrade = "ht-pipes-to-ground" end
 
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
 -- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
 -- TODO: Reduce volume of sap extractors, regenerative heat exchangers
 -- TODO: Reduce overhang for: lab, smelter, chemical plant, compost plant, classifier, heavy oil refinery, solid separator, moss farm, ulric corral, spore collector, etc
+-- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
+-- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
+-- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
+-- TODO: Add a setting for additional DLC features such as toolbelt equipment, mech armor, turbo belts, tree growing/harvesting, etc ...or add compatibility for mods which implement them
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")

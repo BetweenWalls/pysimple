@@ -63,6 +63,8 @@ if data.raw["bool-setting"]["pypp-big-inventory-gui"] ~= nil then
     data.raw["bool-setting"]["pypp-big-inventory-gui"].default_value = true
 end
 
-if mods["PyBlock"] then
+if mods["PyBlock"] or mods["pystellarexpedition"] then
     data.raw["string-setting"]["pysimple-tech-tree"].hidden = true
+else
+    data.raw["string-setting"]["pysimple-tech-tree"].hidden = false
 end
