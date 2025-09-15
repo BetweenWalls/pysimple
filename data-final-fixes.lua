@@ -184,7 +184,10 @@ if technology_adjustments ~= "1" then
 
     adjust_prerequisites("py-transport-belt-capacity-1", "fish-mk02") -- both "fish-mk02" and "lubricant" provide a recipe for lubricant which is an ingredient in stack inserters - the former is used since it is already a requirement for progression beyond logistic science
     adjust_prerequisites("mibc", "aramid", "coal-processing-2") -- has no use til titanium-mk02
-    data.raw.technology["mibc"].unit.ingredients = {{"automation-science-pack", 6}, {"py-science-pack-1", 3}, {"logistic-science-pack", 2}, {"py-science-pack-2", 1}}
+    if data.raw.technology["mibc"] then
+        data.raw.technology["mibc"].unit.ingredients = {{"automation-science-pack", 6}, {"py-science-pack-1", 3}, {"logistic-science-pack", 2}, {"py-science-pack-2", 1}}
+        -- TODO: This technology no longer exists with pyalternativeenergy >= 3.1.34
+    end
     -- TODO: Remove "lubricant" tech prerequisite from integrated-circuits-1 since you can already make lubricant from fish oil via the fish-mk02 tech which is required to reach that point anyway?
 
     if mods["blueprint-shotgun"] and technology_adjustments == "2" then
@@ -297,7 +300,7 @@ if settings.startup["pysimple-descriptions"].value then
             ["storage-tank"] = { "tailings-pond", },
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
             ["boiler"] = { "oil-boiler-mk01", },
-            ["electric-energy-interface"] = { "multiblade-turbine-mk01", },
+            ["electric-energy-interface"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank", },
             ["assembling-machine"] = { "dino-dig-site", },
         },
         ["description"] = {
@@ -407,6 +410,12 @@ if settings.startup["pysimple-graphics"].value then
     if data.raw.recipe["molybdenum-concentrate"] then
         data.raw.recipe["molybdenum-concentrate"].icon = data.raw.item["molybdenum-concentrate"].icon
     end
+    if data.raw.recipe["pregnant-solution"] then
+        data.raw.recipe["pregnant-solution"].icon = data.raw.fluid["pregnant-solution"].icon
+    end
+    if data.raw.recipe["raw-ralesia-extract"] then
+        data.raw.recipe["raw-ralesia-extract"].icon = data.raw.fluid["raw-ralesia-extract"].icon
+    end
     local colors = {
         ["tile"] = {
             ["py-coal-tile"] = {0, 0, 0, 255},
@@ -430,14 +439,14 @@ if settings.startup["pysimple-graphics"].value then
             ["red-refined-concrete"] = {153, 41, 33, 127},
         },
         ["resource"] = {
-            ["ore-quartz"] = {145, 248, 240, 255},
-            ["quartz-rock"] = {145, 248, 240, 255},
+            ["ore-quartz"] = {255, 203, 251, 255},
+            ["quartz-rock"] = {255, 203, 251, 255},
             ["ore-zinc"] = {38, 229, 135, 255},
             ["zinc-rock"] = {38, 229, 135, 255},
             ["ore-lead"] = {80, 80, 80, 255},
             ["lead-rock"] = {80, 80, 80, 255},
-            ["ore-titanium"] = {161, 120, 192, 255},
-            ["titanium-rock"] = {161, 120, 192, 255},
+            ["ore-titanium"] = {135, 94, 166, 255},
+            ["titanium-rock"] = {135, 94, 166, 255},
             ["ore-nickel"] = {3, 106, 0, 255},
             ["nickel-rock"] = {3, 106, 0, 255},
             ["ore-nexelit"] = {75, 178, 222, 255},
@@ -482,6 +491,9 @@ if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-gr
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
 -- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
 -- TODO: Add a setting for additional DLC features such as toolbelt equipment, mech armor, turbo belts, tree growing/harvesting, etc ...or add compatibility for mods which implement them
+-- TODO: Biomass powerplants could say "consumes biofuel" instead of "consumes biomass"? Consider renaming the "Biomass" fuel category to not be identical to a single type of fuel
+-- TODO: Add a recipe use case for underground pipes and other upgradeable entities which have none currently (even if it's just recycling them)
+-- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")

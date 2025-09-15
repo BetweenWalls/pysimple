@@ -12,6 +12,7 @@ local recipe_speed_multipliers = {
     ["cellulose-00"] = 4,
     ["saline-water"] = 4,
     ["gravel-saline-water"] = 4,
+    ["clay"] = 2,
     ["soil"] = 2,
     ["muddy-sludge"] = 2,
     ["soil-separation-2"] = 2,
@@ -44,6 +45,14 @@ local recipe_speed_multipliers = {
     ["warm-stone-brick-1"] = 4,
     ["warmer-stone-brick-1"] = 5,
     ["reheat-coke-gas"] = 2,
+    ["cool-steam-250-to-150"] = 3,
+    ["cool-steam-500-to-250"] = 3,
+    ["cool-steam-1000-to-500"] = 3,
+    ["cool-steam-2000-to-1000"] = 3,
+    ["cool-pressured-steam-2000-to-1000"] = 3,
+    ["cool-pressured-steam-3000-to-2000"] = 3,
+    ["cool-pressured-steam-4000-to-3000"] = 3,
+    ["cool-pressured-steam-5000-to-4000"] = 3,
     -- metals:
     ["steel-plate"] = 2,
     ["iron-plate"] = 2,
@@ -241,6 +250,7 @@ local recipe_speed_multipliers = {
 -- Energy multipliers are chosen to keep power consumption values roughly linear between tiers for plant/animal buildings
 local building_energy_multipliers = {
     ["assembling-machine"] = {
+        {names={"clay-pit-mk01", "clay-pit-mk02", "clay-pit-mk03", "clay-pit-mk04"}, mult=2},
         {names={"soil-extractor-mk01", "soil-extractor-mk02", "soil-extractor-mk03", "soil-extractor-mk04"}, mult=2},
         {names={"micro-mine-mk01", "micro-mine-mk02", "micro-mine-mk03", "micro-mine-mk04"}, mult=3},
         {names={"hpf", "hpf-mk02", "hpf-mk03", "hpf-mk04"}, mult=1.5},

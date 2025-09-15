@@ -2,16 +2,38 @@
 
 script.on_init(
   function()
+    initialize()
     validate_technology_effects()
-    rechart()
   end
 )
 script.on_configuration_changed(
   function()
+    initialize()
     validate_technology_effects()
-    rechart()
   end
 )
+
+--- Saves settings and handles recharting
+function initialize()
+  if not storage.graphics then
+    storage = { graphics = {} }
+    storage.graphics = settings.startup["pysimple-graphics"].value
+    rechart()
+  end
+  if storage.graphics ~= settings.startup["pysimple-graphics"].value then
+    rechart()
+  end
+  storage.graphics = settings.startup["pysimple-graphics"].value
+end
+
+--- Updates map colors for resources
+function rechart()
+  for _,force in pairs(game.forces) do
+    for _,surface in pairs(game.surfaces) do
+      force.rechart(surface)
+    end
+  end
+end
 
 --- Enables recipes which should be enabled but aren't due to technology changes
 function validate_technology_effects()
@@ -44,15 +66,6 @@ function validate_technology_effects()
           end
         end
       end
-    end
-  end
-end
-
---- Updates map colors for resources
-function rechart()
-  for _,force in pairs(game.forces) do
-    for _,surface in pairs(game.surfaces) do
-      force.rechart(surface)
     end
   end
 end

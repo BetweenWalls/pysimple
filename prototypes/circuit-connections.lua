@@ -225,7 +225,7 @@ local untiered_circuit_buildings = {
         ["compost-plant-mk04-turd"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
     },
     ["storage-tank"] = {
-        ["py-tank-3000"] = { variation = 2, main_offset = util.by_pixel(-1.25, 1.75), shadow_offset = util.by_pixel(-1.25, 1.75), show_shadow = true },
+        ["py-tank-3000"] = { variation = 2, main_offset = util.by_pixel(-1.25, 1.75), shadow_offset = util.by_pixel(-1.25, 1.75), show_shadow = true }, -- TODO: Fix alignment for rotated version
         ["py-tank-1000"] = { variation = 27, main_offset = util.by_pixel( 9.75, -3.75), shadow_offset = util.by_pixel( 9.75, -3.75), show_shadow = true },
         ["py-tank-1500"] = { variation = 27, main_offset = util.by_pixel( 28, -29.125), shadow_offset = util.by_pixel( 28, -29.125), show_shadow = true },
         ["py-tank-7000"] = { variation = 4, main_offset = util.by_pixel( 18.5, -20.375), shadow_offset = util.by_pixel( 18.5, -20.375), show_shadow = true },

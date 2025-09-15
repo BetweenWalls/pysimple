@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.21
+Date: 2025.09.15
+  Changes:
+    - Adjusted map colors for quartz and titanium slightly
+    - Recharting map colors should now only happen when the "graphics adjustments" setting is changed
+    - Fixed inconsistent text for fish wind turbine entities
+    - Fixed error for missing mibc technology (removed in pyalternativeenergy v3.1.34)
+  Balancing:
+    - Adjusted rebalanced recipe speed multipliers for: steam cooling recipes (x1 to x3), clay (x1 to x2)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.20
 Date: 2025.09.03
   Changes:

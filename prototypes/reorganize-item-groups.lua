@@ -443,7 +443,7 @@ local groups = {
         ["creatures"] = {order="k", items={"digosaurus-mineable-proxy", "thikats-mineable-proxy", "work-o-dile-mineable-proxy"}},
     },
     ["signals"] = { -- renamed "abstract"
-        ["planners"] = {order="1", items={"blueprint", "deconstruction-planner", "upgrade-planner", "blueprint-book", "copy-paste-tool", "cut-paste-tool"}},
+        ["planners"] = {order="1", items={"blueprint", "deconstruction-planner", "upgrade-planner", "blueprint-book", "copy-paste-tool", "cut-paste-tool", "null", "atan-null", "auto-lamp-tool"}}, -- other mods: null, atan-null, auto-lamp-tool
         ["spawnables"] = {order="2"},
         --["virtual-signal-special"] = {order="a"},
         --["virtual-signal-number"] = {order="b"},
