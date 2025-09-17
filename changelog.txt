@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.22
+Date: 2025.09.17
+  Changes:
+    - Updated internal names for py science packs (fixes science tech names and some tech repositioning)
+    - Changed "rebalance saline water recipe efficiency" setting to only affect efficiency instead of efficiency and speed
+---------------------------------------------------------------------------------------------------
 Version: 1.0.21
 Date: 2025.09.15
   Changes:

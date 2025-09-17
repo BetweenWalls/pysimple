@@ -5,8 +5,8 @@ local groups = {
     ["logistics"] = {
         ["py-void"] = {order="1"},
         ["storage"] = {items={"tailings-pond", "py-gas-vent", "py-sinkhole", "py-burner"}},
-        ["py-pipes"] = {items={{"barrel-machine-mk01", "a"}, {"configurable-valve", "b[pipe]-b[configurable-valve]"}, {"valves-one_way", "b[pipe]-d[valves-one_way]"}, {"valves-overflow", "b[pipe]-d[valves-overflow]"}, {"valves-top_up", "b[pipe]-d[valves-top_up]"}, "py-check-valve", "py-overflow-valve", "py-underflow-valve", "niobium-pipe", "niobium-pipe-to-ground", "ht-pipes", "ht-pipes-to-ground"}, recipes={{"casting-niobium-pipe", "zpy-item-09b"}, {"hotair-casting-niobium-pipe", "zpy-item-09c"}, {"casting-niobium-pipe-underground", "zpy-item-10b"}, {"hotair-casting-niobium-pipe-underground", "zpy-item-10c"}, {"casting-ht-pipe", "zpy-item-11b"}, {"hotair-casting-ht-pipe", "zpy-item-11c"}, {"casting-ht-pipe-underground", "zpy-item-12b"}, {"hotair-casting-ht-pipe-underground", "zpy-item-12c"}}},
-        ["energy-pipe-distribution"] = {items={"small-electric-pole", "medium-electric-pole", "nexelit-power-pole", "big-electric-pole", "substation", "nexelit-substation", "pipe", "pipe-to-ground", "pump"}, recipes={{"casting-pipe", "zpy-item-07b"}, {"hotair-casting-pipe", "zpy-item-07c"}, {"casting-pipe-ug", "zpy-item-08b"}, {"hotair-casting-pipe-ug", "zpy-item-08c"}}},
+        ["py-pipes"] = {items={{"barrel-machine-mk01", "a"}, {"configurable-valve", "b[pipe]-b[configurable-valve]"}, {"valves-one_way", "b[pipe]-d[valves-one_way]"}, {"valves-overflow", "b[pipe]-d[valves-overflow]"}, {"valves-top_up", "b[pipe]-d[valves-top_up]"}, "py-check-valve", "py-overflow-valve", "py-underflow-valve", "niobium-pipe", "niobium-pipe-to-ground", "ht-pipes", "ht-pipes-to-ground"}},
+        ["energy-pipe-distribution"] = {items={"small-electric-pole", "medium-electric-pole", "nexelit-power-pole", "big-electric-pole", "substation", "nexelit-substation", "pipe", "pipe-to-ground", "pump"}},
         ["train-transport"] = {items={"mk02-locomotive", "mk02-wagon", "mk02-fluid-wagon", "ht-locomotive", "ht-generic-wagon", "ht-generic-fluid-wagon", "mk04-locomotive", "mk04-wagon", "mk04-fluid-wagon"}},
         ["logistic-network"] = {items={"storage-chest", "passive-provider-chest", "buffer-chest", "requester-chest", "active-provider-chest"}},
         ["py-containers-shed"] = {items={"py-shed-storage", "py-shed-passive-provider", "py-shed-buffer", "py-shed-requester", "py-shed-active-provider"}},
@@ -74,10 +74,10 @@ local groups = {
     ["py-alternativeenergy"] = {},
     ["py-hightech"] = { -- renamed "intermediate products"
         ["raw-material"] = {order="zpy-00"},
-        ["py-intermediates-1"] = {order="zpy-01", items={"raw-fish", "wood", "bolts", "small-parts-01", "small-parts-02", "small-parts-03", "iron-stick", "iron-gear-wheel", "copper-cable", "tinned-cable", "battery"}, recipes={{"casting-small-parts"}, {"hotair-casting-small-parts"}, {"casting-sticks"}, {"hotair-casting-sticks"}, {"casting-gear"}, {"hotair-casting-gear"}, {"casting-copper-cable"}, {"hotair-casting-copper-cable"}, {"casting-tin-cable"}, {"hotair-casting-tin-cable"}}},
-        ["py-hightech-tier-1"] = {order="zpy-02", items={"inductor1", "capacitor1", "resistor1", "formica", "pcb1", "battery-mk00", "vacuum-tube", "electronic-circuit"}, recipes={{"hotair-lens"}}},
-        ["py-intermediates-2"] = {order="zpy-03", items={"empty-planter-box", "planter-box", "stopper", "flask", "lens", "equipment-chassi", "lab-instrument"}, recipes={{"hotair-lens"}, {"casting-equipment-chassi"}, {"hotair-casting-equipment-chassi"}}},
-        ["py-alternativeenergy-engine-units"] = {order="zpy-04", items={"belt", "engine-unit", "rotor", "stator", "electric-engine-unit"}, recipes={{"casting-engine-unit"}, {"hotair-casting-engine-unit"}}},
+        ["py-intermediates-1"] = {order="zpy-01", items={"raw-fish", "wood", "bolts", "small-parts-01", "small-parts-02", "small-parts-03", "iron-stick", "iron-gear-wheel", "copper-cable", "tinned-cable", "battery"}},
+        ["py-hightech-tier-1"] = {order="zpy-02", items={"inductor1", "capacitor1", "resistor1", "formica", "pcb1", "battery-mk00", "vacuum-tube", "electronic-circuit"}},
+        ["py-intermediates-2"] = {order="zpy-03", items={"empty-planter-box", "planter-box", "stopper", "flask", "lens", "equipment-chassi", "lab-instrument"}},
+        ["py-alternativeenergy-engine-units"] = {order="zpy-04", items={"belt", "engine-unit", "rotor", "stator", "electric-engine-unit"}},
         ["py-alternativeenergy-parts"] = {order="zpy-05", items={"brake-mk01", "shaft-mk01", "gearbox-mk01", "utility-box-mk01", "controler-mk01", "electronics-mk01", "mechanical-parts-01", "vane-mk01", "tower-mk01", "anemometer-mk01", "blade-mk01", "rotor-mk01", "yaw-drive-mk01", "nacelle-mk01", "additional-part-mk01"}},
         ["py-alternativeenergy-parts-2"] = {order="zpy-06", items={"brake-mk02", "shaft-mk02", "gearbox-mk02", "utility-box-mk02", "controler-mk02", "electronics-mk02", "mechanical-parts-02", "vane-mk02", "tower-mk02", "anemometer-mk02", "blade-mk02", "rotor-mk02", "yaw-drive-mk02", "nacelle-mk02", "additional-part-mk02"}, recipes={{"hotair-shaft-mk02"}, {"hotair-vane-mk02"}}},
         ["py-alternativeenergy-parts-3"] = {order="zpy-07", items={"brake-mk03", "shaft-mk03", "gearbox-mk03", "utility-box-mk03", "controler-mk03", "electronics-mk03", "mechanical-parts-03", "hydraulic-system-mk01", "vane-mk03", "tower-mk03", "anemometer-mk03", "blade-mk03", "rotor-mk03", "yaw-drive-mk03", "nacelle-mk03"}, recipes={{"hotair-shaft-mk03"}}},
@@ -131,7 +131,7 @@ local groups = {
         ["uranium-processing"] = {order="zpy-54"},
         ["py-intermediates-36"] = {order="zpy-55", items={"warm-stone-brick", "warmer-stone-brick", "hot-stone-brick"}},
         ["py-intermediates-37"] = {order="zpy-56", items={"coal-briquette", "charcoal-briquette", "rocket-fuel", "nuclear-fuel", "used-nuclear-fuel", "solid-fuel"}},
-        ["py-intermediates-38"] = {order="zpy-57", items={"drill-head", "mega-drill-head"}, recipes={{"casting-drill-heads"}, {"hotair-casting-drill-heads"}}},
+        ["py-intermediates-38"] = {order="zpy-57", items={"drill-head", "mega-drill-head"}},
         ["py-intermediates-39"] = {order="zpy-58", items={"gunpowder", "explosives"}},
         ["py-intermediates-40"] = {order="zpy-59", items={"barrel", "empty-fuel-canister", "empty-gas-canister", "methanol-gas-canister", "empty-proto-tholins-vessel", "filled-proto-tholins-vessel", "filled-tholins-vessel"}, recipes={"empty-methanol-gas-canister", "barrel-milk", "empty-milk-barrel", "empty-proto-tholins-vessel", "fill-proto-tholins-vessel", "empty-tholins-vessel"}},
         ["py-intermediates-41"] = {order="zpy-60", recipes={"simik-molybdenum", "simik-coal", "simik-nickel", "cridren-sixth-layer-ethylene-chlorohydrin", "cridren-sixth-layer-organic-acid-anhydride"}},
@@ -327,7 +327,7 @@ local groups = {
         ["py-alienlife-cridren"] = {order="f-1", items={"cridren", "cridren-seeds", "adrenal-cortex"}, recipes={{"cridren-sample"}, {"cridren-1"}, {"cridren-1-neural-cranio"}, {"cridren-2"}, {"cridren-2-neural-cranio"}, {"cridren-3"}, {"cridren-3-neural-cranio"}, {"cridren-4"}, {"cridren-4-neural-cranio"}}},
         ["py-alienlife-sea-sponge"] = {order="f-2", items={"sea-sponge-sprouts", "sea-sponge-sprouts-mk02", "sea-sponge-sprouts-mk03", "sea-sponge-sprouts-mk04", "sea-sponge", "sea-sponge-mk02", "sea-sponge-mk03", "sea-sponge-mk04"}, recipes={{"sea-sponge-sprouts"}, {"sea-sponge-sprouts-flagellum"}, {"sea-sponge-sprouts-2"}, {"sea-sponge-sprouts-2-flagellum"}, {"sea-sponge-sprouts-3"}, {"sea-sponge-sprouts-3-flagellum"}, {"sea-sponge-sprouts-4"}, {"sea-sponge-sprouts-4-flagellum"}, {"sea-sponge"}, {"sea-sponge-earth-sample-turd"}, {"sea-sponge-1"}, {"sea-sponge-1-no-zonga"}, {"sea-sponge-2"}, {"sea-sponge-2-no-zonga"}}},
         ["py-alienlife-sponge"] = {order="f-3"},
-        ["py-alienlife-biosample"] = {order="f-a", items={"native-flora", "floraspollinin"}, recipes={{"deadhead-recycle"}, {"bioreserve-super-1"}, {"bioreserve-super-2"}, {"bioreserve-super-3"}, {"bioreserve-super-4"}, {"bioreserve-super-5"}, {"bioreserve-super-6"}, {"bioreserve-super-7"}, {"floraspollinin-reprocessing"}}},
+        ["py-alienlife-biosample"] = {order="f-a", items={"native-flora", "floraspollinin"}, recipes={{"deadhead-recycle"}, {"bioreserve-super-1"}, {"bioreserve-super-2"}, {"bioreserve-super-3"}, {"bioreserve-super-4"}, {"bioreserve-super-5"}, {"bioreserve-super-6"}, {"floraspollinin-reprocessing"}}},
         ["py-alienlife-moss"] = {order="f-b", items={"moss", "moss-mk02", "moss-mk03", "moss-mk04", "chlorinated-water"}},
         ["py-alienlife-seaweed"] = {order="f-c", items={"seaweed", "seaweed-mk02", "seaweed-mk03", "seaweed-mk04"}},
         ["py-alienlife-tree"] = {order="f-d", items={"tree-mk01", "tree-mk02", "tree-mk03", "tree-mk04", "wood-seedling", "wood-seedling-mk02", "wood-seedling-mk03", "wood-seedling-mk04", "wood-seeds", "wood-seeds-mk02", "wood-seeds-mk03", "wood-seeds-mk04", "log", "lacquer-resin", "py-sawblade-module-mk01", "py-sawblade-module-mk02", "py-sawblade-module-mk03", "py-sawblade-module-mk04"}, recipes={{"log7-2", "zpy-item-13x"}}},
@@ -690,7 +690,7 @@ local new_main_products = {
     ["arthurian-egg-4-hot-stones"] = "arthurian-egg",
     ["petroleum-gas2"] = "bacteria-2",
 }
-local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool", "mining-drill", "assembling-machine", "container", "electric-energy-interface", "simple-entity", "fire", "simple-entity-with-force", "fish", "furnace", "burner-generator", "tool"}
+local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool", "mining-drill", "assembling-machine", "container", "electric-energy-interface", "simple-entity", "fire", "simple-entity-with-force", "fish", "furnace", "burner-generator", "tool", "selection-tool"}
 function organize_subgroups(groups)
     for group,subgroups in pairs(groups) do
         for subgroup,details in pairs(subgroups) do
@@ -860,11 +860,11 @@ if settings.startup["pysimple-recipe-menu"].value then
             ["recipe"] = { -- these recipes are unavailable - they are neither TURDs nor unlockable via any techs
                 "solar-panel", "oil-refinery", "pumpjack", "py-turbine", "hot-reaction-gas-pyvoid-gas", "fill-processed-light-oil-canister", "empty-processed-light-oil-canister", "rendering", "zipir-carcass",
                 "fertilizer", "urea2", "fawogae", "fawogae2", "guar-01", "guar-02", "guar-03", "guar-04", "guar-05", "guar-separation", "raw-fiber", "raw-fiber2", "raw-fiber3", "raw-fiber4",
-                "bonemeal2", "bonemeal3", "bonemeal4", "mukmoux-fat", "mukmoux-fat-salt", "mukmoux-fat2", "mukmoux-fat3", "arthropod-blood", "simik-food-01a", "simik-food-02a",
+                "bonemeal2", "bonemeal3", "bonemeal4", "mukmoux-fat", "mukmoux-fat-salt", "mukmoux-fat2", "mukmoux-fat3", "arthropod-blood",
                 "nuclear-fuel-reprocessing", "nuclear-fuel-reprocessing-mk02", "nuclear-fuel-reprocessing-mk03", "nuclear-fuel-reprocessing-mk04", "nuclear-fuel-reprocessing-mk05", "kovarex-enrichment-process",
                 "antimatter-fusion", "uranium-fuel-cell-mk02", "uranium-fuel-cell-mk05", "u235-pulp-01", "pa-uranium-235", "pa-aromatics", "pa-benzene", "pa-propene", "pa-coal",
                 "msa-void-boric-acid", "scrude-to-hydrogen", "scrude-to-fuel-oil", "crude-to-fuel-oil", "steam-exchange1", "steam-exchange2", "steam-exchange3", "steam-exchange4",
-                "vonix-mk04", "zungror-mk04", "zungror-mk04r", "compile-zungror-ai", "bioreserve-super-7", "biomass-vonix-mk04",
+                "vonix-mk04", "zungror-mk04", "zungror-mk04r", "compile-zungror-ai", "biomass-vonix-mk04",
             },
         },
         ["hidden_in_factoriopedia"] = {

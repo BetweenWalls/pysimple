@@ -78,8 +78,8 @@ end
 technology_adjustments = settings.startup["pysimple-tech-tree"].value
 if mods["PyBlock"] or mods["pystellarexpedition"] then technology_adjustments = "1" end
 
--- repositions military technologies deeper in the tech tree (if biters are disabled)
-if technology_adjustments == "3" then
+if technology_adjustments == "3" then -- if "yes (enemies disabled)" option is selected for "technology adjustments"
+    -- repositions military technologies deeper in the tech tree
     local military_groups = {
         ["py1_science"] = {
             ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}},
@@ -95,12 +95,12 @@ if technology_adjustments == "3" then
             data.raw.technology[tech].unit.ingredients = group.ingredients
         end
     end
-    data.raw.technology["physical-projectile-damage-2"].unit.count = 70
-    data.raw.technology["weapon-shooting-speed-2"].unit.count = 70
-    data.raw.technology["stronger-explosives-1"].unit.count = 70
-    adjust_prerequisites("military", "py-science-pack-mk01", "solder-mk01")
-    adjust_prerequisites("py-asphalt", "gate", "py-science-pack-mk01")
-    adjust_prerequisites("stone-wall", "py-science-pack-mk01")
+    data.raw.technology["physical-projectile-damage-2"].unit.count = 240
+    data.raw.technology["weapon-shooting-speed-2"].unit.count = 240
+    data.raw.technology["stronger-explosives-1"].unit.count = 240
+    adjust_prerequisites("military", "py-science-pack-1", "solder-mk01")
+    adjust_prerequisites("py-asphalt", "gate", "py-science-pack-1")
+    adjust_prerequisites("stone-wall", "py-science-pack-1")
     adjust_prerequisites("gun-turret", "military-science-pack")
     adjust_prerequisites("heavy-armor", nil, "military")
     adjust_prerequisites("physical-projectile-damage-1", "military-science-pack", "military")
@@ -118,37 +118,24 @@ if technology_adjustments == "3" then
     end
 end
 
-if technology_adjustments ~= "1" then
-    -- Adds appropriate prerequisites to some techs so they don't appear until needed (these kind of adjustments would normally be made programmatically in trim-tech-tree.lua)
-    -- TODO: Update trim-tech-tree.lua for Factorio 2.0
-    --adjust_prerequisites("oil-gathering", "niobium")
-    --adjust_prerequisites("uranium-mining", "py-science-pack-mk02")
-    adjust_prerequisites("nexelit-mk01", "py-science-pack-mk01")
-
-    -- Fixes some technology issues new in Factorio 2.0
-    adjust_prerequisites("lamp", "glass", "automation-science-pack")
-    if data.raw.technology["vacuum-tube-electronics"] then adjust_prerequisites("radar", "vacuum-tube-electronics", "automation-science-pack") end
-    data.raw.technology["radar"].hidden = true
-    -- TODO: Remove iron stick from concrete and circuit network technologies (these lines don't work)
-    --add_unlock("iron-stick", nil, "concrete")
-    --add_unlock("iron-stick", nil, "circuit-network")
-    --add_unlock("iron-stick", nil, "railway")
-
-    -- repositions other technologies
+if technology_adjustments ~= "1" then -- if either "yes" option is selected for "technology adjustments"
+    -- repositions technologies (automation science stage)
     adjust_prerequisites("coal-processing-1", "automation")
     adjust_prerequisites("soil-washing", "steel-processing")
     adjust_prerequisites("fluid-pressurization", "ceramic")
     adjust_prerequisites("fluid-pressurization", "wood-processing", "steel-processing")
     adjust_prerequisites("moss-mk01", "mining-with-fluid", "botany-mk01")
+    adjust_prerequisites("moss-mk01", "soil-washing", "concrete")
     adjust_prerequisites("wood-processing", "botany-mk01")
-    adjust_prerequisites("acetylene", "concrete", "tar-processing")
     adjust_prerequisites("solder-mk01", "tar-processing")
     adjust_prerequisites("kerogen", "glass", "steel-processing")
-    adjust_prerequisites("syngas", "solder-mk01", "electronics")
+    adjust_prerequisites("syngas", "acetylene", "electronics")
     adjust_prerequisites("electrolysis", "alloys-mk01", "electronics")
-    adjust_prerequisites("basic-substrate", "genetics-mk01", "electronics")
+    adjust_prerequisites("basic-substrate", "xenobiology", "electronics")
     adjust_prerequisites("land-animals-mk01", "xenobiology", "alloys-mk01")
     adjust_prerequisites("vrauks", "land-animals-mk01", "xenobiology")
+    adjust_prerequisites("vrauks", "fluid-handling")
+    adjust_prerequisites("fluid-handling", "py-storage-tanks", "electronics")
 
     -- repositions recipe unlocks
     add_unlock("extract-limestone-01", "steel-processing", "coal-processing-1", 1)
@@ -165,31 +152,32 @@ if technology_adjustments ~= "1" then
     add_unlock("gravel-saline-water", "fluid-pressurization", "crusher")
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
-    add_unlock("upgrader-mk01", "petroleum-gas-mk01", "syngas")
     if technology_adjustments == "2" then add_unlock("saline-water", "fluid-processing-machines-1") end
 
-    -- more repositioning for stage 2 techs (those requiring automation science and py science 1)
-    adjust_prerequisites("microbiology-mk01", "compost")
+    -- more repositioning (second science stage and later)
+    adjust_prerequisites("hot-air-mk01", "coke-mk01", "py-science-pack-1")
+    adjust_prerequisites("aluminium-mk01", nil, "coke-mk01")
+    adjust_prerequisites("iron-mk01", nil, "coke-mk01")
+    adjust_prerequisites("lab-instrument", nil, "coke-mk01")
+    adjust_prerequisites("nexelit-mk01", "py-science-pack-1")
     adjust_prerequisites("nexelit-mk01", nil, "lead-mk01")
     adjust_prerequisites("nexelit-mk01", nil, "titanium-mk01")
     adjust_prerequisites("lead-mk02", "lead-mk01")
     adjust_prerequisites("titanium-mk02", "titanium-mk01")
-    adjust_prerequisites("lab-instrument", "py-asphalt")
     adjust_prerequisites("compost", "mycology-mk01")
+    adjust_prerequisites("microbiology-mk01", "compost")
+    adjust_prerequisites("oil-machines-mk01", "automation-2", "intermetallics-mk01")
+    adjust_prerequisites("machine-components-mk01", nil, "automation-2")
+    adjust_prerequisites("construction-robotics", nil, "water-animals-mk01")
+    adjust_prerequisites("molecular-decohesion", nil, "water-animals-mk01")
+    adjust_prerequisites("nonrenewable-mk01", "energy-1", "machine-components-mk01")
     adjust_prerequisites("fertilizer-mk01", "logistic-science-pack")
-    data.raw.technology["fertilizer-mk01"].unit.ingredients = {{"automation-science-pack", 3}, {"py-science-pack-1", 2}, {"logistic-science-pack", 1}}
-    adjust_prerequisites("night-vision-equipment", "battery-mk01", "py-science-pack-mk02")
+    if data.raw.technology["fertilizer-mk01"] then data.raw.technology["fertilizer-mk01"].unit.ingredients = {{"automation-science-pack", 3}, {"py-science-pack-1", 2}, {"logistic-science-pack", 1}} end
+    adjust_prerequisites("night-vision-equipment", "battery-mk01", "py-science-pack-2")
     adjust_prerequisites("night-vision-equipment", nil, "personal-roboport-equipment")
-    data.raw.technology["night-vision-equipment"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}}
+    if data.raw.technology["night-vision-equipment"] then data.raw.technology["night-vision-equipment"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}} end
 
-    adjust_prerequisites("py-transport-belt-capacity-1", "fish-mk02") -- both "fish-mk02" and "lubricant" provide a recipe for lubricant which is an ingredient in stack inserters - the former is used since it is already a requirement for progression beyond logistic science
-    adjust_prerequisites("mibc", "aramid", "coal-processing-2") -- has no use til titanium-mk02
-    if data.raw.technology["mibc"] then
-        data.raw.technology["mibc"].unit.ingredients = {{"automation-science-pack", 6}, {"py-science-pack-1", 3}, {"logistic-science-pack", 2}, {"py-science-pack-2", 1}}
-        -- TODO: This technology no longer exists with pyalternativeenergy >= 3.1.34
-    end
-    -- TODO: Remove "lubricant" tech prerequisite from integrated-circuits-1 since you can already make lubricant from fish oil via the fish-mk02 tech which is required to reach that point anyway?
-
+    adjust_prerequisites("elevated-rail", "logistic-science-pack")
     if mods["blueprint-shotgun"] and technology_adjustments == "2" then
         table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} )
         adjust_prerequisites("blueprint-shotgun", "electronics", "military")
@@ -199,7 +187,7 @@ if technology_adjustments ~= "1" then
     end
     if mods["cybersyn"] then
         data.raw.technology["cybersyn-train-network"].unit.ingredients = data.raw.technology["circuit-network"].unit.ingredients
-        data.raw.technology["cybersyn-train-network"].unit.count = 275
+        data.raw.technology["cybersyn-train-network"].unit.count = 300
     end
     if mods["loaders-modernized"] then
         if data.raw.technology["fast-mdrn-loader"] then data.raw.technology["fast-mdrn-loader"].unit.ingredients = data.raw.technology["logistics-2"].unit.ingredients end
@@ -214,6 +202,8 @@ if settings.startup["pysimple-saline-water"].value then
         data.raw.recipe["gravel-saline-water"].ingredients = {{type="item", name="gravel", amount=15}, {type="fluid", name="water", amount=200}}
         data.raw.recipe["saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
         data.raw.recipe["gravel-saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
+        data.raw.recipe["saline-water"].energy_required = 10
+        data.raw.recipe["gravel-saline-water"].energy_required = 10
     end
 end
 
@@ -293,7 +283,7 @@ if settings.startup["pysimple-descriptions"].value then
                 "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "oil-boiler-mk01", "multiblade-turbine-mk01", "dino-dig-site",
                 "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "py-science-pack-1-turd", "py-science-pack-2-turd", "py-science-pack-3-turd", "py-science-pack-4-turd",
             },
-            ["technology"] = { "py-science-pack-mk01", "py-science-pack-mk02", "py-science-pack-mk03", "py-science-pack-mk04", },
+            ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
             ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
             ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
             ["wall"] = { "poorman-wood-fence", },
@@ -393,7 +383,6 @@ if settings.startup["pysimple-graphics"].value or technology_adjustments ~= "1" 
         ["py-storage-tanks"] = {icon="__base__/graphics/technology/fluid-handling.png", size=256},
         ["fluid-handling"] = {icon="__base__/graphics/icons/fluid/barreling/barrel-fill.png", size=64},
     }
-    -- updates some technology icons
     for tech,info in pairs(tech_icons) do
         if data.raw.technology[tech] then
             data.raw.technology[tech].icon = info.icon
@@ -403,9 +392,8 @@ if settings.startup["pysimple-graphics"].value or technology_adjustments ~= "1" 
 end
 
 if settings.startup["pysimple-graphics"].value then
-    local windmill = data.raw["electric-energy-interface"]["multiblade-turbine-mk01"]
-    if windmill then
-        windmill.animations.layers[1].filename = "__pysimple__/graphics/base-fishturbine.png"
+    if data.raw["electric-energy-interface"]["multiblade-turbine-mk01"] then
+        data.raw["electric-energy-interface"]["multiblade-turbine-mk01"].animations.layers[1].filename = "__pysimple__/graphics/base-fishturbine.png"
     end
     if data.raw.recipe["molybdenum-concentrate"] then
         data.raw.recipe["molybdenum-concentrate"].icon = data.raw.item["molybdenum-concentrate"].icon
@@ -494,6 +482,7 @@ if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-gr
 -- TODO: Biomass powerplants could say "consumes biofuel" instead of "consumes biomass"? Consider renaming the "Biomass" fuel category to not be identical to a single type of fuel
 -- TODO: Add a recipe use case for underground pipes and other upgradeable entities which have none currently (even if it's just recycling them)
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
+-- TODO: Remove redundant iron stick recipe unlock from circuit network (and concrete?) technologies
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")
