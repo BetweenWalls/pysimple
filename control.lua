@@ -56,6 +56,8 @@ function validate_technology_effects()
     "fluid-processing-machines-1",
     "military",
     "blueprint-shotgun",
+    "niobium",
+    "coal-processing-3",
   }
   for _,force in pairs(game.forces) do
     for _,tech in pairs(altered_techs) do

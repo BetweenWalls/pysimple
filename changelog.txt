@@ -1,4 +1,22 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.23
+Date: 2025.10.06
+  Changes:
+    - The "descriptive adjustments" setting is now a dropdown setting and allows users to disable multi-product recipe name changes
+      without forgoing other descriptive changes if they desire (re-select a choice if you had this setting disabled)
+    - Renamed "biomass" and "burnable fuel" fuel categories to "biofuel" and "carbonaceous fuel"; updated "biomass" powerplant names
+    - Removed redundant iron stick recipe unlocks from concrete and circuit network technologies
+    - Reduced volume of sap extractors and regenerative heat exchangers
+    - Adjusted optional dependencies (recommendations)
+  Balancing:
+    - Renamed "rebalance saline water recipe efficiency" to "other balance changes" and fixed the values which were mistakenly multiplied
+      in the previous update; this setting now also modifies the first accumulator recipe to use 10 batteries instead of 30 and adds
+      recipes to upgrade underground pipes
+    - Adjusted rebalanced recipe speed multipliers for: tier 2 log recipes (x1.1 to x1), coalbed extractor recipes (x1 to x2),
+      extract-limestone-01 (x4 to x3), cellulose-00 (x4 to x3), water-from-oxygen-and-hydrogen (x1 to x5), waste-water-void (x1 to x5),
+      sulfur-void-water (x1 to x5), ash (x1 to x2), filtration-dirty-water (x1 to x2), reheat-outlet-gas-2 (x1 to x2),
+      sb-crushed (x1 to x2), sb-dust (x1 to x2), sb-pulp-02 (x1 to x2)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.22
 Date: 2025.09.17
   Changes:

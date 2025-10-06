@@ -138,6 +138,8 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     adjust_prerequisites("fluid-handling", "py-storage-tanks", "electronics")
 
     -- repositions recipe unlocks
+    add_unlock("iron-stick", nil, "concrete")
+    add_unlock("iron-stick", nil, "circuit-network")
     add_unlock("extract-limestone-01", "steel-processing", "coal-processing-1", 1)
     add_unlock("hpf", "concrete", nil, 1)
     add_unlock("hpf", "mining-with-fluid", "coal-processing-1")
@@ -195,19 +197,7 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     end
 end
 
--- adjusts balance slightly so the harder recipe isn't less efficient
-if settings.startup["pysimple-saline-water"].value then
-    if data.raw.recipe["saline-water"] and data.raw.recipe["gravel-saline-water"] then
-        data.raw.recipe["saline-water"].ingredients = {{type="item", name="stone", amount=20}, {type="fluid", name="water", amount=200}}
-        data.raw.recipe["gravel-saline-water"].ingredients = {{type="item", name="gravel", amount=15}, {type="fluid", name="water", amount=200}}
-        data.raw.recipe["saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
-        data.raw.recipe["gravel-saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
-        data.raw.recipe["saline-water"].energy_required = 10
-        data.raw.recipe["gravel-saline-water"].energy_required = 10
-    end
-end
-
-if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple-storage-tanks"].value then
+if settings.startup["pysimple-descriptions"].value ~= "1" or settings.startup["pysimple-storage-tanks"].value then
     local storage_tanks = {
         {id="py-tank-3000", tiles=4, original=30000, adjusted=10000, new=10000},     -- 20 iron,  30 copper,  60 aluminium,  10 lead              ...used in  6 recipes (+1 indirectly)
         {id="py-tank-1000", tiles=9, original=10000, adjusted=10000, new=25000},     -- 10 iron,  10 copper,  20 aluminium,  10 lead              ...used in  0 recipes
@@ -221,7 +211,7 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
         {id="py-tank-9000", tiles=49, original=90000, adjusted=180000, new=180000},  -- 45 iron, 110 copper, 220 aluminium,  30 lead, 35 steel    ...used in  1 recipe
         {id="py-tank-10000", tiles=64, original=100000, adjusted=250000, new=250000} -- 56 iron,  40 copper,  80 aluminium, 105 lead              ...used in  1 recipe
     }
-    -- renames and sorts storage tanks by their dimensions and capacity
+    -- renames and/or sorts storage tanks by their dimensions and capacity
     local cap = "original"
     if settings.startup["py-tank-adjust"].value then cap = "adjusted" end
     if settings.startup["pysimple-storage-tanks"].value then
@@ -255,33 +245,36 @@ if settings.startup["pysimple-descriptions"].value or settings.startup["pysimple
     end
 end
 
-if settings.startup["pysimple-descriptions"].value then
+if settings.startup["pysimple-descriptions"].value ~= "1" then
+    local multi_product_recipes = {
+        "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "soil-washing", "ash-separation", "soot-separation", "grade-1-iron-crush", "lime", "tar-distilation",
+        "pitch-refining", "tar-refining", "tar-refining-tops", "light-oil-aromatics", "tar-quenching", "tailings-dust", "acetylene", "syngas", "scrude-refining", "hydrogen", "chlorine",
+        "grade-2-copper", "grade-1-copper-crush", "uncaged-vrauks", "full-render-vrauks", "crushed-coal", "coke-coal", "borax-washing", "crushing-quartz", "grade-1-zinc", "grade-2-zinc",
+        "grade-1-tin", "grade-2-crush-tin", "grade-1-ti", "grade-2-ti-crush", "grade-3-ti", "ti-rejects-recrush", "grade-1-nickel", "sb-grade-01", "sb-grade-02", "sb-grade-03", "nexelit-ore-1",
+        "clean-nexelit", "powdered-aluminium", "grade-1-chromite", "soil-separation-2", "coarse-classification", "sand-classification", "tailings-classification", "polybutadiene", "uncaged-auog",
+        "urea-decomposition", "melamine", "fiberboard", "black-liquor", "starch", "he-01", "tar-to-carbolic", "anthracene-gasoline-cracking", "muddy-sludge-void-electrolyzer",
+        "boric-acid-hcl", "cobalt-extract", "fish-emulsion", "acidgas-2", "coal-slurry-fuel", "coalbed-gas-to-acidgas", "crude-from-manure", "eg-si", "petgas-methanol",
+        "syngas-distilation", "tall-oil-separation", "dedicated-oleochemicals", "grade-1-u", "he-02", "natural-gas-refining", "oleochemicals", "phosphoric-acid", "pressured-hydrogen",
+        "purest-nitrogen-gas", "aromatics-from-naphthalene", "hot-syngas-cooldown", "light-oil_from_syngas", "liquid-nitrogen", "natural-gas-to-syngas", "oleo-gasification", "p2s5", "p2s5-2",
+        "psc", "quench-ovengas", "syngas2", "coarse-coal", "formamide", "grade-2-iron", "low-distillate-to-heavy-oil", "middle-processed-lard", "nisi", "molten-steel", "rare-earth-beneficiation",
+        "ree-float", "refsyngas-from-meth-canister", "silicon-wafer", "trichlorosilane", "condensed-distillate-separation", "copper-rejects-recrush", "grade-2-lead", "grade-3-chromite",
+        "grade-3-copper", "grade-3-nickel", "grade-3-tin", "niobium-concentrate", "petgas-from-refsyngas", "pure-trichlorosilane", "raw-gas", "ree-slurry", "sodium-bisulfate", "vpulp3",
+        "ammonium-chloride", "classify-low-grade", "grade-4-chromite", "grade-4-copper", "quenching-dirty-syngas", "ree-solution", "sodium-sulfate", "wash-grade-3-tin", "bio-oil-1",
+        "bio-oil-2", "pyrite-burn", "ree-concentrate1", "ree-concentrate2", "ree-concentrate3", "scrubbing-purified-syngas", "sodium-carbonate-1", "crush-oil-sand", "powdered-ti",
+        "reheat-coke-gas", "vinyl-acetate", "fluorine-gas", "molybdenum-oxide", "oil-refining", "sb-dust", "ti-enriched-dust", "outlet-gas-02", "unslimed-iron", "unslimed-iron-2",
+        "wash-coper-low-dust", "residual-mixture-distillation", "used-comb-oil-recycling", "bitumen-refining", "sb-pulp-02", "classify-iron-ore-dust", "plutonium-fuel-reprocessing",
+        "high-distillate-condensing", "hot-residual-mixture-to-coke", "quench-redcoke", "plutonium-oxidation", "plutonium-seperation", "purified-ti-pulp", "fluidize-coke", "redhot-coke",
+        "tar-talloil", "concentrated-ti", "bitumen-froth", "bitumen", "split-yellowcake", "empty-methanol-gas-canister", "calcinate-separation", "richdust-separation", "tailings-separation",
+        "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
+        "niobium-dust", "powdered-quartz", "grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
+    }
     local locale_entries = {
         ["name"] = {
             ["recipe"] = {
-                "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "soil-washing", "ash-separation", "soot-separation", "grade-1-iron-crush", "lime", "tar-distilation",
-                "pitch-refining", "tar-refining", "tar-refining-tops", "light-oil-aromatics", "tar-quenching", "tailings-dust", "acetylene", "syngas", "scrude-refining", "hydrogen", "chlorine",
-                "grade-2-copper", "grade-1-copper-crush", "uncaged-vrauks", "full-render-vrauks", "crushed-coal", "coke-coal", "borax-washing", "crushing-quartz", "grade-1-zinc", "grade-2-zinc",
-                "grade-1-tin", "grade-2-crush-tin", "grade-1-ti", "grade-2-ti-crush", "grade-3-ti", "ti-rejects-recrush", "grade-1-nickel", "sb-grade-01", "sb-grade-02", "sb-grade-03", "nexelit-ore-1",
-                "clean-nexelit", "powdered-aluminium", "grade-1-chromite", "soil-separation-2", "coarse-classification", "sand-classification", "tailings-classification", "polybutadiene", "uncaged-auog",
-                "urea-decomposition", "melamine", "fiberboard", "black-liquor", "starch", "he-01", "tar-to-carbolic", "anthracene-gasoline-cracking", "muddy-sludge-void-electrolyzer",
-                "boric-acid-hcl", "cobalt-extract", "fish-emulsion", "acidgas-2", "coal-slurry-fuel", "coalbed-gas-to-acidgas", "crude-from-manure", "eg-si", "petgas-methanol",
-                "syngas-distilation", "tall-oil-separation", "dedicated-oleochemicals", "grade-1-u", "he-02", "natural-gas-refining", "oleochemicals", "phosphoric-acid", "pressured-hydrogen",
-                "purest-nitrogen-gas", "aromatics-from-naphthalene", "hot-syngas-cooldown", "light-oil_from_syngas", "liquid-nitrogen", "natural-gas-to-syngas", "oleo-gasification", "p2s5", "p2s5-2",
-                "psc", "quench-ovengas", "syngas2", "coarse-coal", "formamide", "grade-2-iron", "low-distillate-to-heavy-oil", "middle-processed-lard", "nisi", "molten-steel", "rare-earth-beneficiation",
-                "ree-float", "refsyngas-from-meth-canister", "silicon-wafer", "trichlorosilane", "condensed-distillate-separation", "copper-rejects-recrush", "grade-2-lead", "grade-3-chromite",
-                "grade-3-copper", "grade-3-nickel", "grade-3-tin", "niobium-concentrate", "petgas-from-refsyngas", "pure-trichlorosilane", "raw-gas", "ree-slurry", "sodium-bisulfate", "vpulp3",
-                "ammonium-chloride", "classify-low-grade", "grade-4-chromite", "grade-4-copper", "quenching-dirty-syngas", "ree-solution", "sodium-sulfate", "wash-grade-3-tin", "bio-oil-1",
-                "bio-oil-2", "pyrite-burn", "ree-concentrate1", "ree-concentrate2", "ree-concentrate3", "scrubbing-purified-syngas", "sodium-carbonate-1", "crush-oil-sand", "powdered-ti",
-                "reheat-coke-gas", "vinyl-acetate", "fluorine-gas", "molybdenum-oxide", "oil-refining", "sb-dust", "ti-enriched-dust", "outlet-gas-02", "unslimed-iron", "unslimed-iron-2",
-                "wash-coper-low-dust", "residual-mixture-distillation", "used-comb-oil-recycling", "bitumen-refining", "sb-pulp-02", "classify-iron-ore-dust", "plutonium-fuel-reprocessing",
-                "high-distillate-condensing", "hot-residual-mixture-to-coke", "quench-redcoke", "plutonium-oxidation", "plutonium-seperation", "purified-ti-pulp", "fluidize-coke", "redhot-coke",
-                "tar-talloil", "concentrated-ti", "bitumen-froth", "bitumen", "split-yellowcake", "empty-methanol-gas-canister", "calcinate-separation", "richdust-separation", "tailings-separation",
-                "mixed-ores", "py-sodium-hydroxide", "crusher-ree", "grade-2-crush", "grade-2-lead-crusher", "grade-2-u-crush", "powdered-phosphate-rock", "crushing-molybdenite", "milling-molybdenite",
-                "niobium-dust", "powdered-quartz", "grade-1-u-recrush", "grade-2-chromite-beneficiation", "grade-2-nickel-recrush", "milling-ree", "niobium-powder",
                 "battery-mk00", "portable-gasoline-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
                 "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "oil-boiler-mk01", "multiblade-turbine-mk01", "dino-dig-site",
                 "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "py-science-pack-1-turd", "py-science-pack-2-turd", "py-science-pack-3-turd", "py-science-pack-4-turd",
+                "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04",
             },
             ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
             ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
@@ -291,10 +284,11 @@ if settings.startup["pysimple-descriptions"].value then
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
             ["boiler"] = { "oil-boiler-mk01", },
             ["electric-energy-interface"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank", },
-            ["assembling-machine"] = { "dino-dig-site", },
+            ["assembling-machine"] = { "dino-dig-site", "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04", },
+            ["fuel-category"] = { "biomass", "chemical", },
         },
         ["description"] = {
-            ["recipe"] = { "nexelit-battery-recharge", "quantum-battery-recharge", "anthracene-gasoline-hydrogenation-new", "syngas2", "coarse-coal-to-coal", }, -- none of these have descriptions originally (not even "affected by productivity") so nothing will be overwritten
+            ["recipe"] = { "nexelit-battery-recharge", "quantum-battery-recharge", "anthracene-gasoline-hydrogenation", "syngas2", "coarse-coal-to-coal", }, -- none of these have descriptions originally (not even "affected by productivity") so nothing will be overwritten
             ["technology"] = {
                 "mining-with-fluid", "steel-processing", "ash-separation", "moss-mk01", "seaweed-mk01", "wood-processing", "fluid-handling", "solder-mk01", "alloys-mk01", "py-storage-tanks", "plastics",
                 "zoology", "boron", "nexelit-mk01", "antimony-mk01", "nickel-mk01", "chromium-mk01",
@@ -306,12 +300,16 @@ if settings.startup["pysimple-descriptions"].value then
         }
     }
     local supertypes = {
-        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item",
+        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item", ["fuel-category"] = "fuel-category",
         ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["boiler"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
     }
+    if settings.startup["pysimple-descriptions"].value == "3" then
+        for _,recipe in pairs(multi_product_recipes) do
+            table.insert(locale_entries["name"]["recipe"], recipe)
+        end
+    end
     -- adjusts names and descriptions for clarity, such as making multi-product recipes include each product so they can be searched the same way as other recipes
     -- TODO: Should these changes be made prior to data-final-fixes so that recipes automatically incorporate item name changes?
-    -- TODO: Should multi-product names including all products be a separate optional setting?
     -- TODO: Programmatically rename multi-product recipes by combining already-existing locales for the individual items
     for desc,desc_groups in pairs(locale_entries) do
         for type,items in pairs(desc_groups) do
@@ -465,6 +463,81 @@ if settings.startup["pysimple-graphics"].value then
             end
         end
     end
+    local sounds = {
+        ["assembling-machine"] = {
+            ["rhe"] = {working=0.6, idle=0.2},
+            ["sap-extractor-mk01"] = {working=0.4, idle=0.1},
+            ["sap-extractor-mk02"] = {working=0.4, idle=0.1},
+            ["sap-extractor-mk03"] = {working=0.4, idle=0.1},
+            ["sap-extractor-mk04"] = {working=0.4, idle=0.1},
+            ["eaf-mk01"] = {working=0.7, idle=0.2},
+            ["eaf-mk02"] = {working=0.7, idle=0.2},
+            ["eaf-mk03"] = {working=0.7, idle=0.2},
+            ["eaf-mk04"] = {working=0.7, idle=0.2},
+        }
+    }
+    for kind,things in pairs(sounds) do
+        for name,details in pairs(things) do
+            if data.raw[kind][name] then
+                if data.raw[kind][name].working_sound.sound and data.raw[kind][name].working_sound.sound.volume then
+                    data.raw[kind][name].working_sound.sound.volume = details.working
+                end
+                if data.raw[kind][name].working_sound.idle_sound and data.raw[kind][name].working_sound.idle_sound.volume then
+                    data.raw[kind][name].working_sound.idle_sound.volume = details.idle
+                end
+            end
+        end
+    end
+end
+
+if settings.startup["pysimple-misc"].value then -- "other balance changes"
+    if data.raw.recipe["saline-water"] and data.raw.recipe["gravel-saline-water"] then
+        data.raw.recipe["saline-water"].ingredients = {{type="item", name="stone", amount=20}, {type="fluid", name="water", amount=200}}
+        data.raw.recipe["gravel-saline-water"].ingredients = {{type="item", name="gravel", amount=15}, {type="fluid", name="water", amount=200}}
+        data.raw.recipe["saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
+        data.raw.recipe["gravel-saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
+        data.raw.recipe["saline-water"].energy_required = 40
+        data.raw.recipe["gravel-saline-water"].energy_required = 40
+    end
+    if data.raw.recipe["accumulator"] then
+        data.raw.recipe["accumulator"].ingredients = {{type="item", name="electronic-circuit", amount=2}, {type="item", name="iron-plate", amount=2}, {type="item", name="battery-mk01", amount=10}}
+    end
+    if data.raw["pipe-to-ground"]["pipe-to-ground"] and data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then
+        data:extend({
+            {
+                type = "recipe",
+                name = "niobium-pipe-to-ground-upgrading",
+                enabled = false,
+                energy_required = 4,
+                crafting_categories = {"crafting"},
+                ingredients = {     
+                    { type = "item", name = "pipe-to-ground", amount = 2 },
+                    { type = "item", name = "niobium-plate", amount = 5 },
+                },
+                results = {
+                    { type = "item", name = "niobium-pipe-to-ground", amount = 2 }
+                }
+            },
+            {
+                type = "recipe",
+                name = "ht-pipe-to-ground-upgrading",
+                enabled = false,
+                energy_required = 4,
+                crafting_categories = {"crafting"},
+                ingredients = {
+                    { type = "item", name = "niobium-pipe-to-ground", amount = 2 },
+                    { type = "item", name = "titanium-plate", amount = 3 },
+                    { type = "item", name = "plastic-bar", amount = 3 },
+                    { type = "item", name = "rubber", amount = 13 },
+                },
+                results = {
+                    { type = "item", name = "ht-pipes-to-ground", amount = 2 }
+                }
+            },
+        })
+        table.insert( data.raw.technology["niobium"].effects, {type = "unlock-recipe", recipe = "niobium-pipe-to-ground-upgrading"} )
+        table.insert( data.raw.technology["coal-processing-3"].effects, {type = "unlock-recipe", recipe = "ht-pipe-to-ground-upgrading"} )
+    end
 end
 
 if data.raw["pipe"]["niobium-pipe"] and data.raw["pipe"]["ht-pipes"] then data.raw["pipe"]["niobium-pipe"].next_upgrade = "ht-pipes" end
@@ -472,17 +545,13 @@ if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-gr
 
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
--- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
--- TODO: Reduce volume of sap extractors, regenerative heat exchangers
 -- TODO: Reduce overhang for: lab, smelter, chemical plant, compost plant, classifier, heavy oil refinery, solid separator, moss farm, ulric corral, spore collector, etc
--- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
 -- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
--- TODO: Add a setting for additional DLC features such as toolbelt equipment, mech armor, turbo belts, tree growing/harvesting, etc ...or add compatibility for mods which implement them
--- TODO: Biomass powerplants could say "consumes biofuel" instead of "consumes biomass"? Consider renaming the "Biomass" fuel category to not be identical to a single type of fuel
--- TODO: Add a recipe use case for underground pipes and other upgradeable entities which have none currently (even if it's just recycling them)
+-- TODO: Aerial turbines show up incorrectly in the electric network info graphs
+-- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
--- TODO: Remove redundant iron stick recipe unlock from circuit network (and concrete?) technologies
+-- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")

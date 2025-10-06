@@ -1,6 +1,6 @@
 {
 	"name": "pysimple",
-	"version": "1.0.22",
+	"version": "1.0.23",
 	"title": "Pyanodons Streamlined",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
@@ -15,20 +15,19 @@
 		"? RecipeBook",
 		"? blueprint-sandboxes",
 		"? RateCalculator",
-		"? factoryplanner",
 		"? FactorySearch",
 		"? FilterHelper",
 		"? CopyPasteModules",
 		"? HandyHandsRefactored",
 		"? crafting-queue-enhancements",
-		"? Brighter-Lamps",
 		"? dim_lamps",
-		"? BottleneckLite",
+		"? Brighter-Lamps",
 		"? UndergroundIndicatorsFixed",
 		"? belt-visualizer",
 		"? PipeVisualizer-Updated",
 		"? force-inventory-insert",
-		"? automatic-underground-pipe-connectors"
+		"? automatic-underground-pipe-connectors",
+		"? preserve-products-produced"
 	],
 	"description": "Provides settings to make Py a more polished experience. Organizes menus, updates graphics, alters names & descriptions for improved searchability and clarity, adjusts the tech tree to be less cluttered, rebalances recipe speeds to make scaling up more gradual, and more. All changes are fully configurable via the settings."
 }
