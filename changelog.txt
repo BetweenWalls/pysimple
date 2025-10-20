@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.24
+Date: 2025.10.20
+  Changes:
+    - Electricity generating structures now all use the same map color
+    - Renamed "portable gas generator" to "portable gas-fed generator"
+    - Fixed missing recipe unlock for high pressure furnace in concrete technology
+    - Fixed TURD-related recipes being re-highlighted as new in some cases
+    - Fixed circuit connection placement for overlooked entities: py-tank-3000, mixer, nuclear reactor, pumpjack, cooling tower
+  Balancing:
+    - Adjusted rebalanced recipe speed multipliers for: moondrops (x4 to x3), seaweed (x4 to x3), sap (x4 to x3),
+      bricks-to-stone (x2 to x1)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.23
 Date: 2025.10.06
   Changes:

@@ -16,17 +16,25 @@ script.on_configuration_changed(
 --- Saves settings and handles recharting
 function initialize()
   if not storage.graphics then
-    storage = { graphics = {} }
+    storage = { graphics = {}, version = 1 }
     storage.graphics = settings.startup["pysimple-graphics"].value
     rechart()
   end
   if storage.graphics ~= settings.startup["pysimple-graphics"].value then
     rechart()
   end
+  if not storage.version then
+    storage.version = 1
+    rechart()
+  end
+  if storage.version ~= 1 then
+    storage.version = 1
+    rechart()
+  end
   storage.graphics = settings.startup["pysimple-graphics"].value
 end
 
---- Updates map colors for resources
+--- Updates map colors
 function rechart()
   for _,force in pairs(game.forces) do
     for _,surface in pairs(game.surfaces) do
@@ -64,7 +72,9 @@ function validate_technology_effects()
       if force.technologies[tech] and force.technologies[tech].researched then
         for _,effect in pairs(force.technologies[tech].prototype.effects) do
           if effect.type == "unlock-recipe" and force.recipes[effect.recipe] and not force.recipes[effect.recipe].enabled then
-            force.recipes[effect.recipe].enabled = true
+            if not (effect.recipe == "fwf-mk01" or effect.recipe == "log3" or effect.recipe == "fiber-01") then -- these recipes could be replaced with TURDs and be intentionally inaccessible
+              force.recipes[effect.recipe].enabled = true
+            end
           end
         end
       end

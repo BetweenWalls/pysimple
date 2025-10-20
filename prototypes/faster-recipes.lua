@@ -4,7 +4,6 @@ local debug_errors = false
 
 local recipe_speed_multipliers = {
     ["stone-brick"] = 2,
-    ["bricks-to-stone"] = 2,
     ["stone-to-gravel"] = 2,
     ["gravel-to-sand"] = 2,
     ["sand-washing"] = 2,
@@ -136,18 +135,19 @@ local recipe_speed_multipliers = {
     ["fiber-01"] = 5,
     ["fiber-dry-storage"] = 5,
     ["kicalk-fiber"] = 2,
-    ["sap-01"] = 4,
-    {names={"moondrop-1", "moondrop-1-cu"}, mult=4},
-    {names={"moondrop-2", "moondrop-2-cu"}, mult=3.25},
-    {names={"moondrop-3", "moondrop-3-cu"}, mult=2.5},
-    {names={"moondrop-4", "moondrop-4-cu"}, mult=1.75},
+    ["sap-01"] = 3,
+    ["sap-mk02"] = 1.8,
+    ["sap-mk03"] = 1.3,
+    {names={"moondrop-1", "moondrop-1-cu"}, mult=3},
+    {names={"moondrop-2", "moondrop-2-cu"}, mult=2.5},
+    {names={"moondrop-3", "moondrop-3-cu"}, mult=2},
+    {names={"moondrop-4", "moondrop-4-cu"}, mult=1.5},
     ["methane-co2"] = 2,
     ["methane-co2-with-lamp"] = 2,
-    ["moondrop-co2"] = 2,
-    {names={"seaweed-1", "seaweed-1-dry"}, mult=4},
-    {names={"seaweed-2", "seaweed-2-dry"}, mult=3.25},
-    {names={"seaweed-3", "seaweed-3-dry"}, mult=2.5},
-    {names={"seaweed-4", "seaweed-4-dry"}, mult=1.75},
+    {names={"seaweed-1", "seaweed-1-dry"}, mult=3},
+    {names={"seaweed-2", "seaweed-2-dry"}, mult=2.5},
+    {names={"seaweed-3", "seaweed-3-dry"}, mult=2},
+    {names={"seaweed-4", "seaweed-4-dry"}, mult=1.5},
     {names={"vrauks-cocoon-1", "vrauks-cocoon-1-no-water", "vrauks-1", "vrauks-1-no-water"}, mult=4},
     {names={"vrauks-cocoon-2", "vrauks-cocoon-2-no-water", "vrauks-2", "vrauks-2-no-water"}, mult=3.25},
     {names={"vrauks-cocoon-3", "vrauks-cocoon-3-no-water", "vrauks-3", "vrauks-3-no-water"}, mult=2.5},
@@ -276,15 +276,15 @@ local building_energy_multipliers = {
         {names={"slaughterhouse-mk01", "slaughterhouse-mk02", "slaughterhouse-mk03", "slaughterhouse-mk04"}, mult=2},
         {names={"plankton-farm", "plankton-farm-mk02", "plankton-farm-mk03", "plankton-farm-mk04"}, mult=2},
         ["moss-farm-mk01"] = 4,
-        ["sap-extractor-mk01"] = 4,
+        ["sap-extractor-mk01"] = 3,
         ["fwf-mk01"] = 2,
         ["fawogae-plantation-mk01"] = 3,
-        ["moondrop-greenhouse-mk01"] = 4,
-        ["moondrop-greenhouse-mk02"] = 2.2,
-        ["moondrop-greenhouse-mk03"] = 1.3,
-        ["seaweed-crop-mk01"] = 4,
-        ["seaweed-crop-mk02"] = 1.25,
-        ["seaweed-crop-mk03"] = 1.07,
+        ["moondrop-greenhouse-mk01"] = 3,
+        ["moondrop-greenhouse-mk02"] = 1.9,
+        ["moondrop-greenhouse-mk03"] = 1.23,
+        ["seaweed-crop-mk01"] = 3,
+        ["seaweed-crop-mk02"] = 1.1,
+        ["seaweed-crop-mk03"] = 1.03,
         ["vrauks-paddock-mk01"] = 4,
         ["vrauks-paddock-mk02"] = 1.66,
         ["vrauks-paddock-mk03"] = 1.16,
@@ -354,7 +354,7 @@ function multiply_recipe_speed(name, mult)
     if recipe then
         if recipe.energy_required then
             recipe.energy_required = recipe.energy_required / mult
-            py.add_to_description("recipe", recipe, {"description.pysimple-speed-mult", "x"..mult})
+            py.add_to_description("recipe", recipe, {"description.pysimple-speed-mult", "×"..mult})
         end
     elseif debug_errors then
         error("invalid recipe name: "..name)
@@ -368,7 +368,7 @@ function multiply_entity_consumption(kind, name, mult)
         local energy_value = util.parse_energy(building.energy_usage) * 60
         if energy_value then
             building.energy_usage = energy_value * mult .. "W"
-            py.add_to_description("entity", building, {"description.pysimple-consumption-mult", "x"..mult})
+            py.add_to_description("entity", building, {"description.pysimple-consumption-mult", "×"..mult})
         end
     elseif debug_errors then
         error("invalid entity name: "..name)

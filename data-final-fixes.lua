@@ -45,6 +45,7 @@ function add_unlock(recipe, new_tech, old_tech, index)
             end
             if debug_errors and not found then error("incorrect recipe assumption: "..recipe) end
         end
+        if not old_tech then found = true end
         if found and new_tech and data.raw.technology[new_tech] and data.raw.technology[new_tech].effects and not (new_tech == old_tech and not found) then
             if index then
                 table.insert( data.raw.technology[new_tech].effects, index, {type = "unlock-recipe", recipe = recipe} )
@@ -279,6 +280,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
             ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
             ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
             ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
+            ["generator-equipment"] = { "portable-gasoline-generator" },
             ["wall"] = { "poorman-wood-fence", },
             ["storage-tank"] = { "tailings-pond", },
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
@@ -300,7 +302,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
         }
     }
     local supertypes = {
-        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item", ["fuel-category"] = "fuel-category",
+        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item", ["fuel-category"] = "fuel", ["generator-equipment"] = "equipment",
         ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["boiler"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
     }
     if settings.startup["pysimple-descriptions"].value == "3" then
@@ -423,6 +425,7 @@ if settings.startup["pysimple-graphics"].value then
             ["yellow-refined-concrete"] = {153, 123, 32, 127},
             ["orange-refined-concrete"] = {153, 95, 37, 127},
             ["red-refined-concrete"] = {153, 41, 33, 127},
+            ["sut-panel"] = {0, 127, 160, 255},
         },
         ["resource"] = {
             ["ore-quartz"] = {255, 203, 251, 255},
@@ -454,6 +457,50 @@ if settings.startup["pysimple-graphics"].value then
             ["natural-gas-mk02"] = {203, 142, 11, 255},
             ["natural-gas-mk03"] = {203, 142, 11, 255},
             ["natural-gas-mk04"] = {203, 142, 11, 255},
+        },
+        ["electric-energy-interface"] = {
+            ["solar-panel-mk02"] = {0, 127, 160, 255},
+            ["solar-panel-mk03"] = {0, 127, 160, 255},
+            ["multiblade-turbine-mk01"] = {0, 127, 160, 255},
+            ["multiblade-turbine-mk03"] = {0, 127, 160, 255},
+            ["multiblade-turbine-mk01-blank"] = {0, 127, 160, 255},
+            ["multiblade-turbine-mk03-blank"] = {0, 127, 160, 255},
+            ["vawt-turbine-mk01"] = {0, 127, 160, 255},
+            ["vawt-turbine-mk02"] = {0, 127, 160, 255},
+            ["vawt-turbine-mk03"] = {0, 127, 160, 255},
+            ["vawt-turbine-mk04"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk01"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk02"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk03"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk04"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk01-blank"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk02-blank"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk03-blank"] = {0, 127, 160, 255},
+            ["hawt-turbine-mk04-blank"] = {0, 127, 160, 255},
+            ["microwave-receiver"] = {0, 127, 160, 255},
+            ["sut"] = {0, 127, 160, 255},
+        },
+        ["solar-panel"] = {
+            ["solar-panel-mk01"] = {0, 127, 160, 255},
+            ["solar-panel-mk02"] = {0, 127, 160, 255},
+            ["solar-panel-mk03"] = {0, 127, 160, 255},
+            ["solar-panel-mk04"] = {0, 127, 160, 255},
+            ["tidal-mk01-solar"] = {0, 127, 160, 255},
+            ["tidal-mk02-solar"] = {0, 127, 160, 255},
+            ["tidal-mk03-solar"] = {0, 127, 160, 255},
+            ["tidal-mk04-solar"] = {0, 127, 160, 255},
+            ["anti-solar"] = {0, 127, 160, 255},
+        },
+        ["simple-entity-with-owner"] = {
+            ["tidal-mk01"] = {0, 127, 160, 255},
+            ["tidal-mk02"] = {0, 127, 160, 255},
+            ["tidal-mk03"] = {0, 127, 160, 255},
+            ["tidal-mk04"] = {0, 127, 160, 255},
+        },
+        ["burner-generator"] = {
+            ["generator-1"] = {0, 127, 160, 255},
+            ["generator-2"] = {0, 127, 160, 255},
+            ["py-rtg"] = {0, 127, 160, 255},
         },
     }
     for kind,things in pairs(colors) do
@@ -510,7 +557,7 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
                 enabled = false,
                 energy_required = 4,
                 crafting_categories = {"crafting"},
-                ingredients = {     
+                ingredients = {
                     { type = "item", name = "pipe-to-ground", amount = 2 },
                     { type = "item", name = "niobium-plate", amount = 5 },
                 },
@@ -545,10 +592,12 @@ if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-gr
 
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
--- TODO: Reduce overhang for: lab, smelter, chemical plant, compost plant, classifier, heavy oil refinery, solid separator, moss farm, ulric corral, spore collector, etc
+-- TODO: Reduce overhang ambiguity for: lab, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, etc
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
--- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
 -- TODO: Aerial turbines show up incorrectly in the electric network info graphs
+-- TODO: TURD recipes get re-enabled and re-highlighted upon loading after mods/settings are updated
+-- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
+-- TODO: Biosample TURD recipe incorrectly includes (0 ×) in the name
 -- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
 -- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
