@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.25
+Date: 2025.11.06
+  Changes:
+    - Updated vertical drawing extensions for entities so they don't get cutoff when viewed in the tooltip or factoriopedia
+    - Fixed error involving mods which remove military technologies
+  Balancing:
+    - Adjusted rebalanced recipe speed multipliers for: xyhiphoes (x2 to x1)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.24
 Date: 2025.10.20
   Changes:

@@ -93,12 +93,14 @@ if technology_adjustments == "3" then -- if "yes (enemies disabled)" option is s
     }
     for _,group in pairs(military_groups) do
         for _,tech in pairs(group.techs) do
-            data.raw.technology[tech].unit.ingredients = group.ingredients
+            if data.raw.technology[tech] then
+                data.raw.technology[tech].unit.ingredients = group.ingredients
+            end
         end
     end
-    data.raw.technology["physical-projectile-damage-2"].unit.count = 240
-    data.raw.technology["weapon-shooting-speed-2"].unit.count = 240
-    data.raw.technology["stronger-explosives-1"].unit.count = 240
+    if data.raw.technology["physical-projectile-damage-2"] then data.raw.technology["physical-projectile-damage-2"].unit.count = 240 end
+    if data.raw.technology["weapon-shooting-speed-2"] then data.raw.technology["weapon-shooting-speed-2"].unit.count = 240 end
+    if data.raw.technology["stronger-explosives-1"] then data.raw.technology["stronger-explosives-1"].unit.count = 240 end
     adjust_prerequisites("military", "py-science-pack-1", "solder-mk01")
     adjust_prerequisites("py-asphalt", "gate", "py-science-pack-1")
     adjust_prerequisites("stone-wall", "py-science-pack-1")
@@ -111,11 +113,11 @@ if technology_adjustments == "3" then -- if "yes (enemies disabled)" option is s
     -- Note: While turrets are available very early, ammo cannot be made until after lead processing
 
     if mods["blueprint-shotgun"] then
-        table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} )
+        if data.raw.technology["blueprint-shotgun"] then table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} ) end
         adjust_prerequisites("blueprint-shotgun", "electronics", "military")
         adjust_prerequisites("blueprint-shotgun-upgrade-1", "logistics")
         adjust_prerequisites("blueprint-shotgun-upgrade-2", "military-2", "logistic-science-pack")
-        data.raw.technology["blueprint-shotgun-upgrade-2"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}}
+        if data.raw.technology["blueprint-shotgun-upgrade-2"] then data.raw.technology["blueprint-shotgun-upgrade-2"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}} end
     end
 end
 
@@ -182,15 +184,17 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
 
     adjust_prerequisites("elevated-rail", "logistic-science-pack")
     if mods["blueprint-shotgun"] and technology_adjustments == "2" then
-        table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} )
+        if data.raw.technology["blueprint-shotgun"] then table.insert( data.raw.technology["blueprint-shotgun"].effects, {type = "unlock-recipe", recipe = "shotgun"} ) end
         adjust_prerequisites("blueprint-shotgun", "electronics", "military")
         adjust_prerequisites("blueprint-shotgun-upgrade-1", "military")
         adjust_prerequisites("blueprint-shotgun-upgrade-2", "military-2", "logistic-science-pack")
-        data.raw.technology["blueprint-shotgun-upgrade-2"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}}
+        if data.raw.technology["blueprint-shotgun-upgrade-2"] then data.raw.technology["blueprint-shotgun-upgrade-2"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}} end
     end
     if mods["cybersyn"] then
-        data.raw.technology["cybersyn-train-network"].unit.ingredients = data.raw.technology["circuit-network"].unit.ingredients
-        data.raw.technology["cybersyn-train-network"].unit.count = 300
+        if data.raw.technology["cybersyn-train-network"] then
+            data.raw.technology["cybersyn-train-network"].unit.ingredients = data.raw.technology["circuit-network"].unit.ingredients
+            data.raw.technology["cybersyn-train-network"].unit.count = 300
+        end
     end
     if mods["loaders-modernized"] then
         if data.raw.technology["fast-mdrn-loader"] then data.raw.technology["fast-mdrn-loader"].unit.ingredients = data.raw.technology["logistics-2"].unit.ingredients end
@@ -606,5 +610,6 @@ require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")
 --require("prototypes/trim-tech-tree")
 require("prototypes/circuit-connections")
+require("prototypes/drawing-box-extensions")
 require("prototypes/distinct-icons")
 require("prototypes/faster-recipes")

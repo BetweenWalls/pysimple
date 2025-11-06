@@ -870,8 +870,7 @@ if settings.startup["pysimple-recipe-menu"].value then
             },
             ["recipe"] = { -- these recipes are unavailable - they are neither TURDs nor unlockable via any techs
                 "solar-panel", "oil-refinery", "pumpjack", "py-turbine", "hot-reaction-gas-pyvoid-gas", "fill-processed-light-oil-canister", "empty-processed-light-oil-canister", "rendering", "zipir-carcass",
-                "fertilizer", "urea2", "fawogae", "fawogae2", "guar-01", "guar-02", "guar-03", "guar-04", "guar-05", "guar-separation", "raw-fiber", "raw-fiber2", "raw-fiber3", "raw-fiber4",
-                "bonemeal2", "bonemeal3", "bonemeal4", "mukmoux-fat", "mukmoux-fat-salt", "mukmoux-fat2", "mukmoux-fat3", "arthropod-blood",
+                "fertilizer", "fawogae", "fawogae2", "guar-01", "guar-02", "guar-03", "guar-04", "guar-05", "guar-separation", "raw-fiber", "raw-fiber2", "raw-fiber3", "raw-fiber4", "mukmoux-fat", "arthropod-blood",
                 "nuclear-fuel-reprocessing", "nuclear-fuel-reprocessing-mk02", "nuclear-fuel-reprocessing-mk03", "nuclear-fuel-reprocessing-mk04", "nuclear-fuel-reprocessing-mk05", "kovarex-enrichment-process",
                 "antimatter-fusion", "uranium-fuel-cell-mk02", "uranium-fuel-cell-mk05", "u235-pulp-01", "pa-uranium-235", "pa-aromatics", "pa-benzene", "pa-propene", "pa-coal",
                 "msa-void-boric-acid", "scrude-to-hydrogen", "scrude-to-fuel-oil", "crude-to-fuel-oil", "steam-exchange1", "steam-exchange2", "steam-exchange3", "steam-exchange4",
