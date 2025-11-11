@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.26
+Date: 2025.11.11
+  Changes:
+    - Added a new map generation preset with slightly more frequent and/or richer iron, copper, stone, and salt
+    - Hid quality "diamonds" when quality mod is not enabled
+    - Fixed missing nil check for working_sound
+---------------------------------------------------------------------------------------------------
 Version: 1.0.25
 Date: 2025.11.06
   Changes:

@@ -281,28 +281,28 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
                 "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "py-science-pack-1-turd", "py-science-pack-2-turd", "py-science-pack-3-turd", "py-science-pack-4-turd",
                 "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04",
             },
-            ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
-            ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", },
-            ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", },
+            ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "biomassplant-mk01", "biomassplant-mk02", "biomassplant-mk03", "biomassplant-mk04" },
+            ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4" },
+            ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery" },
             ["generator-equipment"] = { "portable-gasoline-generator" },
-            ["wall"] = { "poorman-wood-fence", },
-            ["storage-tank"] = { "tailings-pond", },
-            ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner", },
-            ["boiler"] = { "oil-boiler-mk01", },
-            ["electric-energy-interface"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank", },
-            ["assembling-machine"] = { "dino-dig-site", "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04", },
-            ["fuel-category"] = { "biomass", "chemical", },
+            ["wall"] = { "poorman-wood-fence" },
+            ["storage-tank"] = { "tailings-pond" },
+            ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner" },
+            ["boiler"] = { "oil-boiler-mk01" },
+            ["electric-energy-interface"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank" },
+            ["assembling-machine"] = { "dino-dig-site", "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04" },
+            ["fuel-category"] = { "biomass", "chemical" },
         },
         ["description"] = {
-            ["recipe"] = { "nexelit-battery-recharge", "quantum-battery-recharge", "anthracene-gasoline-hydrogenation", "syngas2", "coarse-coal-to-coal", }, -- none of these have descriptions originally (not even "affected by productivity") so nothing will be overwritten
+            ["recipe"] = { "nexelit-battery-recharge", "quantum-battery-recharge", "anthracene-gasoline-hydrogenation", "syngas2", "coarse-coal-to-coal" }, -- none of these have descriptions originally (not even "affected by productivity") so nothing will be overwritten
             ["technology"] = {
                 "mining-with-fluid", "steel-processing", "ash-separation", "moss-mk01", "seaweed-mk01", "wood-processing", "fluid-handling", "solder-mk01", "alloys-mk01", "py-storage-tanks", "plastics",
                 "zoology", "boron", "nexelit-mk01", "antimony-mk01", "nickel-mk01", "chromium-mk01",
             },
-            ["mining-drill"] = { "burner-mining-drill", "fluid-drill-mk01", "borax-mine", },
-            ["storage-tank"] = { "tailings-pond", },
-            ["radar"] = { "py-local-radar", "radar", },
-            ["assembling-machine"] = { "data-array", },
+            ["mining-drill"] = { "burner-mining-drill", "fluid-drill-mk01", "borax-mine" },
+            ["storage-tank"] = { "tailings-pond" },
+            ["radar"] = { "py-local-radar", "radar" },
+            ["assembling-machine"] = { "data-array" },
         }
     }
     local supertypes = {
@@ -396,6 +396,9 @@ if settings.startup["pysimple-graphics"].value or technology_adjustments ~= "1" 
 end
 
 if settings.startup["pysimple-graphics"].value then
+    if not mods["quality"] and data.raw.sprite["quality_info"] then -- hides irrelevant quality diamonds (they are shown if any feature flag is enabled, not just if the quality mod is enabled)
+        data.raw.sprite["quality_info"].filename = "__core__/graphics/empty.png"
+    end
     if data.raw["electric-energy-interface"]["multiblade-turbine-mk01"] then
         data.raw["electric-energy-interface"]["multiblade-turbine-mk01"].animations.layers[1].filename = "__pysimple__/graphics/base-fishturbine.png"
     end
@@ -529,7 +532,7 @@ if settings.startup["pysimple-graphics"].value then
     }
     for kind,things in pairs(sounds) do
         for name,details in pairs(things) do
-            if data.raw[kind][name] then
+            if data.raw[kind][name] and data.raw[kind][name].working_sound then
                 if data.raw[kind][name].working_sound.sound and data.raw[kind][name].working_sound.sound.volume then
                     data.raw[kind][name].working_sound.sound.volume = details.working
                 end
@@ -594,12 +597,21 @@ end
 if data.raw["pipe"]["niobium-pipe"] and data.raw["pipe"]["ht-pipes"] then data.raw["pipe"]["niobium-pipe"].next_upgrade = "ht-pipes" end
 if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].next_upgrade = "ht-pipes-to-ground" end
 
+if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new map generation preset
+    data.raw["map-gen-presets"]["default"]["py-streamlined"] = table.deepcopy(data.raw["map-gen-presets"]["default"]["py-recommended"])
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].order = "i"
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["iron-ore"] = { frequency = 0.5, size = 0.75, richness = 6 }
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["copper-ore"] = { frequency = 0.33, size = 0.75, richness = 6 }
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["stone"] = { frequency = 1, size = 0.75, richness = 6 }
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["salt-rock"] = { frequency = 0.5, richness = 5 }
+end
+
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
 -- TODO: Reduce overhang ambiguity for: lab, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, etc
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
 -- TODO: Aerial turbines show up incorrectly in the electric network info graphs
--- TODO: TURD recipes get re-enabled and re-highlighted upon loading after mods/settings are updated
+-- TODO: TURD recipes get re-enabled and re-highlighted upon loading after mods/settings are updated or synced
 -- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
 -- TODO: Biosample TURD recipe incorrectly includes (0 ×) in the name
 -- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
