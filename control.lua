@@ -66,6 +66,7 @@ function validate_technology_effects()
     "blueprint-shotgun",
     "niobium",
     "coal-processing-3",
+    "uranium-processing",
   }
   for _,force in pairs(game.forces) do
     for _,tech in pairs(altered_techs) do

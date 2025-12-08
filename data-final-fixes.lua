@@ -158,6 +158,13 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
     if technology_adjustments == "2" then add_unlock("saline-water", "fluid-processing-machines-1") end
+    add_unlock("cool-steam-500-to-250", "nonrenewable-mk01", "nonrenewable-mk02")
+    add_unlock("cool-steam-1000-to-500", "nonrenewable-mk02", "nonrenewable-mk03")
+    add_unlock("cool-steam-2000-to-1000", "nonrenewable-mk03", "nonrenewable-mk04")
+    add_unlock("cool-pressured-steam-2000-to-1000", "nonrenewable-mk02", "nonrenewable-mk01")
+    add_unlock("cool-pressured-steam-3000-to-2000", "nonrenewable-mk03", "nonrenewable-mk02")
+    add_unlock("cool-pressured-steam-4000-to-3000", "nonrenewable-mk04", "nonrenewable-mk03")
+    add_unlock("nuclear-sample", "uranium-processing", "chemical-science-pack")
 
     -- more repositioning (second science stage and later)
     adjust_prerequisites("hot-air-mk01", "coke-mk01", "py-science-pack-1")
@@ -245,6 +252,34 @@ if settings.startup["pysimple-descriptions"].value ~= "1" or settings.startup["p
                 order = "a-c[py-storage]-"..order
                 data.raw.recipe[tank.id].order = order
                 data.raw.item[tank.id].order = order
+            end
+        end
+    end
+end
+
+if settings.startup["pysimple-storage-chests"].value and not mods["pyhardmode"] then
+    local storage_chests = {
+        ["container"] = {
+            ["py-shed-basic"] = 100,
+            ["py-storehouse-basic"] = 250,
+        },
+        ["logistic-container"] = {
+            ["py-shed-storage"] = 100,
+            ["py-shed-passive-provider"] = 100,
+            ["py-shed-buffer"] = 100,
+            ["py-shed-requester"] = 100,
+            ["py-shed-active-provider"] = 100,
+            ["py-storehouse-storage"] = 250,
+            ["py-storehouse-passive-provider"] = 250,
+            ["py-storehouse-buffer"] = 250,
+            ["py-storehouse-requester"] = 250,
+            ["py-storehouse-active-provider"] = 250,
+        },
+    }
+    for kind,things in pairs(storage_chests) do
+        for name,size in pairs(things) do
+            if data.raw[kind][name] then
+                data.raw[kind][name].inventory_size = size
             end
         end
     end
@@ -411,6 +446,37 @@ if settings.startup["pysimple-graphics"].value then
     if data.raw.recipe["raw-ralesia-extract"] then
         data.raw.recipe["raw-ralesia-extract"].icon = data.raw.fluid["raw-ralesia-extract"].icon
     end
+    if data.raw.recipe["myoglobin"] then
+        data.raw.recipe["myoglobin"].icon = data.raw.item["myoglobin"].icon
+    end
+    local layers = {
+        ["py-steel"] = 7,
+        ["py-asphalt"] = 8,
+        ["py-coal-tile"] = 9,
+        ["lab-white"] = 10,
+        ["py-iron-oxide"] = 23,
+        ["py-nexelit"] = 24,
+        ["py-iron"] = 25,
+        ["py-aluminium"] = 26,
+        ["py-limestone"] = 27,
+        ["black-refined-concrete"] = 28,
+        ["brown-refined-concrete"] = 29,
+        ["red-refined-concrete"] = 30,
+        ["orange-refined-concrete"] = 31,
+        ["yellow-refined-concrete"] = 32,
+        ["acid-refined-concrete"] = 33,
+        ["green-refined-concrete"] = 34,
+        ["cyan-refined-concrete"] = 35,
+        ["blue-refined-concrete"] = 36,
+        ["purple-refined-concrete"] = 37,
+        ["pink-refined-concrete"] = 38,
+    }
+    for name,layer in pairs(layers) do
+        if data.raw.tile[name] then
+            data.raw.tile[name].layer = layer
+            data.raw.tile[name].transition_overlay_layer_offset = 0
+        end
+    end
     local colors = {
         ["tile"] = {
             ["py-coal-tile"] = {0, 0, 0, 255},
@@ -423,15 +489,15 @@ if settings.startup["pysimple-graphics"].value then
             ["py-nexelit"] = {17, 83, 127, 1},
             ["black-refined-concrete"] = {40, 40, 40, 127},
             ["brown-refined-concrete"] = {73, 50, 35, 127},
-            ["pink-refined-concrete"] = {153, 107, 120, 127},
-            ["purple-refined-concrete"] = {121, 63, 140, 127},
-            ["blue-refined-concrete"] = {58, 110, 153, 127},
-            ["cyan-refined-concrete"] = {54, 153, 137, 127},
-            ["green-refined-concrete"] = {30, 153, 45, 127},
-            ["acid-refined-concrete"] = {112, 153, 19, 127},
-            ["yellow-refined-concrete"] = {153, 123, 32, 127},
-            ["orange-refined-concrete"] = {153, 95, 37, 127},
             ["red-refined-concrete"] = {153, 41, 33, 127},
+            ["orange-refined-concrete"] = {153, 95, 37, 127},
+            ["yellow-refined-concrete"] = {153, 123, 32, 127},
+            ["acid-refined-concrete"] = {112, 153, 19, 127},
+            ["green-refined-concrete"] = {30, 153, 45, 127},
+            ["cyan-refined-concrete"] = {54, 153, 137, 127},
+            ["blue-refined-concrete"] = {58, 110, 153, 127},
+            ["purple-refined-concrete"] = {121, 63, 140, 127},
+            ["pink-refined-concrete"] = {153, 107, 120, 127},
             ["sut-panel"] = {0, 127, 160, 255},
         },
         ["resource"] = {
@@ -544,6 +610,26 @@ if settings.startup["pysimple-graphics"].value then
     end
 end
 
+if settings.startup["pysimple-brains"].value then -- "rebalance brains"
+    local cartridge_recipes = {["brain-cartridge-01"]=5, ["brain-cartridge-02"]=10, ["brain-cartridge-04"]=20}
+    for recipe,amount in pairs(cartridge_recipes) do
+        if data.raw.recipe[recipe] then
+            for _,ingredient in pairs(data.raw.recipe[recipe].ingredients) do
+                if ingredient.name == "brain" then
+                    ingredient.amount = amount
+                end
+            end
+        end
+    end
+    if data.raw.recipe["bio-scafold"] then
+        for _,ingredient in pairs(data.raw.recipe["bio-scafold"].ingredients) do
+            if ingredient.name == "chitin" then
+                ingredient.amount = 2
+            end
+        end
+    end
+end
+
 if settings.startup["pysimple-misc"].value then -- "other balance changes"
     if data.raw.recipe["saline-water"] and data.raw.recipe["gravel-saline-water"] then
         data.raw.recipe["saline-water"].ingredients = {{type="item", name="stone", amount=20}, {type="fluid", name="water", amount=200}}
@@ -608,8 +694,9 @@ end
 
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
--- TODO: Reduce overhang ambiguity for: lab, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, etc
+-- TODO: Reduce overhang ambiguity for: lab, barreling machine, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, zungror lair, xeno pen, moss farm, etc
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
+-- TODO: Fix layering issue for HAWT MK1 (it appears on top of objects in front of it)
 -- TODO: Aerial turbines show up incorrectly in the electric network info graphs
 -- TODO: TURD recipes get re-enabled and re-highlighted upon loading after mods/settings are updated or synced
 -- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
@@ -617,10 +704,16 @@ end
 -- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
 -- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
+-- TODO: Put "fenix alloy" in the name of that one intermetallic with a long name
+
+-- Potential balance changes:
+-- TODO: The "chitin" middle oil recipe seems worse than the regular version, incentivizing burning/boiling/composting the chitin instead
+-- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired
+-- TODO: Make shell -> lime recipe available earlier? or make the composting recipe better for it?
+-- TODO: Rebalance biomass amounts for many items (e.g. different tiers of the same item should not produce the same amount of biomass)
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")
---require("prototypes/trim-tech-tree")
 require("prototypes/circuit-connections")
 require("prototypes/drawing-box-extensions")
 require("prototypes/distinct-icons")

@@ -40,17 +40,31 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-faster-recipes",
+        name = "pysimple-storage-chests",
         setting_type = "startup",
         default_value = false,
         order = "f"
     },
     {
         type = "bool-setting",
-        name = "pysimple-misc",
+        name = "pysimple-faster-recipes",
         setting_type = "startup",
         default_value = false,
         order = "g"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-brains",
+        setting_type = "startup",
+        default_value = false,
+        order = "h"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-misc",
+        setting_type = "startup",
+        default_value = false,
+        order = "i"
     },
 })
 
@@ -68,4 +82,10 @@ if mods["PyBlock"] or mods["pystellarexpedition"] then
     data.raw["string-setting"]["pysimple-tech-tree"].hidden = true
 else
     data.raw["string-setting"]["pysimple-tech-tree"].hidden = false
+end
+
+if mods["pyhardmode"] then
+    data.raw["bool-setting"]["pysimple-storage-chests"].hidden = true
+else
+    data.raw["bool-setting"]["pysimple-storage-chests"].hidden = false
 end

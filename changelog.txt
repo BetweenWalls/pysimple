@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.27
+Date: 2025.12.08
+  Changes:
+    - Updated colored concrete layer priorities to be ordered chromatically and positioned above other tiles
+    - Rearranged steam cooling recipes slightly to better match when they become useful
+    - Made nuclear sample recipe available slightly earlier alongside its ingredients since those ingredients are spoilable
+  Balancing:
+    - Added new startup setting to rebalance shed and storehouse capacities from 75 -> 100 and from 150 -> 250
+    - Added new startup setting to rebalance brains (affects vatbrain cartridge and bioscaffold recipes)
+    - Adjusted rebalanced recipe speed multipliers for: stage 1 bioprinting recipes (x1 to x2), meat/lard xenogenic recipes (x1 to x2),
+      plutonium shuffle recipes (x1 to x4), zipirs (x2 to x3)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.26
 Date: 2025.11.11
   Changes:
