@@ -47,7 +47,7 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-faster-recipes",
+        name = "pysimple-energy",
         setting_type = "startup",
         default_value = false,
         order = "g"
@@ -61,10 +61,17 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-misc",
+        name = "pysimple-faster-recipes",
         setting_type = "startup",
         default_value = false,
         order = "i"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-misc",
+        setting_type = "startup",
+        default_value = false,
+        order = "j"
     },
 })
 

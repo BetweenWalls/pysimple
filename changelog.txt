@@ -1,4 +1,27 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.28
+Date: 2026.06.25
+  Changes:
+    - Removed redundant changes for iron stick recipe unlocks & steam cooling recipe speeds since they were updated in pyAE 3.1.38
+    - Fixed high pressure furnace being unlocked later than new recipes for it (they were overlooked after the auto tech update)
+    - TURD notifications no longer reset when changing mods or settings
+    - Updated name for iron nexelit antimony special alloy to also include "fenix"
+    - Added German locale (thanks to Spunk)
+    - Updated Russian locale (thanks to Average Enjoyer)
+    - The "Production Rates Calculator Extreme" mod is now recommended instead of "Rate Calculator" as it works with ghosts and provides
+      more useful info for complex selections
+  Balancing:
+    - Added a "rebalance module energy" setting which makes mk2+ modules increase electricity consumption
+    - Reduced ambiguity of description for "rebalance storage tank capacities" setting and made it also change fluid caravan outposts
+      to have a volume of 40k
+    - The "other balance changes" setting now also increases the amount of iron slime produced by the iron oxide recipe by 5x,
+      reduces the amount of oxygen & hot air needed for coalbed gas recipes by 3-5x, and doubles the fuel value of auogs
+    - The "rebalance brains" setting now reduces the chitin cost for bioscaffolds to 3 (instead of 2)
+    - The "rebalanced recipe speed" setting now adjusts the energy consumption of the following buildings to make the difference between
+      each tier more consistent: filters, hydroclassifiers, compressors, olefin plants, desulfurizators, mukmoux pastures, centrifuges
+    - Adjusted rebalanced recipe speed multipliers for: coalbed methane recipes (x2 to x1), vitreloy (x2 to x1), kmauts (x1 to x2),
+      rennea (x5 to x4), fish t2, cadaveric arum t2, ralesia t2-3, yotoi t2-3
+---------------------------------------------------------------------------------------------------
 Version: 1.0.27
 Date: 2025.12.08
   Changes:

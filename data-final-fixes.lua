@@ -141,13 +141,10 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     adjust_prerequisites("fluid-handling", "py-storage-tanks", "electronics")
 
     -- repositions recipe unlocks
-    add_unlock("iron-stick", nil, "concrete")
-    add_unlock("iron-stick", nil, "circuit-network")
     add_unlock("extract-limestone-01", "steel-processing", "coal-processing-1", 1)
-    add_unlock("hpf", "concrete", nil, 1)
-    add_unlock("hpf", "mining-with-fluid", "coal-processing-1")
     add_unlock("coke-co2", "mining-with-fluid", "coal-processing-1")
     add_unlock("tinned-cable", "petri-dish", "mining-with-fluid", 1)
+    add_unlock("slacked-lime-void", "acetylene", "fluid-processing-machines-1")
     add_unlock("zinc-plate-1", "solder-mk01", "electronics", 1)
     add_unlock("methanal", "moondrop", "electronics")
     add_unlock("cellulose-00", "wood-processing", "electronics")
@@ -167,10 +164,6 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     add_unlock("nuclear-sample", "uranium-processing", "chemical-science-pack")
 
     -- more repositioning (second science stage and later)
-    adjust_prerequisites("hot-air-mk01", "coke-mk01", "py-science-pack-1")
-    adjust_prerequisites("aluminium-mk01", nil, "coke-mk01")
-    adjust_prerequisites("iron-mk01", nil, "coke-mk01")
-    adjust_prerequisites("lab-instrument", nil, "coke-mk01")
     adjust_prerequisites("nexelit-mk01", "py-science-pack-1")
     adjust_prerequisites("nexelit-mk01", nil, "lead-mk01")
     adjust_prerequisites("nexelit-mk01", nil, "titanium-mk01")
@@ -185,8 +178,7 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     adjust_prerequisites("nonrenewable-mk01", "energy-1", "machine-components-mk01")
     adjust_prerequisites("fertilizer-mk01", "logistic-science-pack")
     if data.raw.technology["fertilizer-mk01"] then data.raw.technology["fertilizer-mk01"].unit.ingredients = {{"automation-science-pack", 3}, {"py-science-pack-1", 2}, {"logistic-science-pack", 1}} end
-    adjust_prerequisites("night-vision-equipment", "battery-mk01", "py-science-pack-2")
-    adjust_prerequisites("night-vision-equipment", nil, "personal-roboport-equipment")
+    adjust_prerequisites("night-vision-equipment", nil, "py-science-pack-2")
     if data.raw.technology["night-vision-equipment"] then data.raw.technology["night-vision-equipment"].unit.ingredients = {{"automation-science-pack", 2}, {"py-science-pack-1", 1}} end
 
     adjust_prerequisites("elevated-rail", "logistic-science-pack")
@@ -200,7 +192,7 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     if mods["cybersyn"] then
         if data.raw.technology["cybersyn-train-network"] then
             data.raw.technology["cybersyn-train-network"].unit.ingredients = data.raw.technology["circuit-network"].unit.ingredients
-            data.raw.technology["cybersyn-train-network"].unit.count = 300
+            data.raw.technology["cybersyn-train-network"].unit.count = 250
         end
     end
     if mods["loaders-modernized"] then
@@ -221,7 +213,8 @@ if settings.startup["pysimple-descriptions"].value ~= "1" or settings.startup["p
         {id="py-tank-6500", tiles=25, original=65000, adjusted=75000, new=75000},    -- 51 iron,                             60 lead              ...used in  7 recipes
         {id="py-tank-8000", tiles=36, original=80000, adjusted=125000, new=125000},  -- 60 iron,                             70 lead              ...used in 10 recipes
         {id="py-tank-9000", tiles=49, original=90000, adjusted=180000, new=180000},  -- 45 iron, 110 copper, 220 aluminium,  30 lead, 35 steel    ...used in  1 recipe
-        {id="py-tank-10000", tiles=64, original=100000, adjusted=250000, new=250000} -- 56 iron,  40 copper,  80 aluminium, 105 lead              ...used in  1 recipe
+        {id="py-tank-10000", tiles=64, original=100000, adjusted=250000, new=250000},-- 56 iron,  40 copper,  80 aluminium, 105 lead              ...used in  1 recipe
+        --{id="outpost-fluid", tiles=36, original=40000, adjusted=27500, new=40000} -- caravans themselves seem to use py-tank-4000 internally
     }
     -- renames and/or sorts storage tanks by their dimensions and capacity
     local cap = "original"
@@ -232,6 +225,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" or settings.startup["p
         data.raw["storage-tank"]["py-tank-1500"].localised_description = {"description.medium-tank"}
         data.raw["storage-tank"]["storage-tank"].localised_description = {"description.medium-tank"}
         data.raw["storage-tank"]["py-tank-5000"].localised_description = {"description.good-tank"}
+        data.raw["storage-tank"]["outpost-fluid"].fluid_box.volume = 40000
     end
     for i,tank in pairs(storage_tanks) do
         if data.raw["storage-tank"][tank.id] then
@@ -312,13 +306,13 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
         ["name"] = {
             ["recipe"] = {
                 "battery-mk00", "portable-gasoline-generator", "nexelit-battery-recharge", "nexelit-battery", "quantum-battery-recharge", "quantum-battery", "poorman-wood-fence",
-                "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "oil-boiler-mk01", "multiblade-turbine-mk01", "dino-dig-site",
+                "py-gas-vent", "py-sinkhole", "py-burner", "tailings-pond", "oil-boiler-mk01", "multiblade-turbine-mk01", "dino-dig-site", "fenxsb-alloy-2",
                 "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "py-science-pack-1-turd", "py-science-pack-2-turd", "py-science-pack-3-turd", "py-science-pack-4-turd",
                 "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04",
             },
             ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "biomassplant-mk01", "biomassplant-mk02", "biomassplant-mk03", "biomassplant-mk04" },
             ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4" },
-            ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery" },
+            ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", "fenxsb-alloy" },
             ["generator-equipment"] = { "portable-gasoline-generator" },
             ["wall"] = { "poorman-wood-fence" },
             ["storage-tank"] = { "tailings-pond" },
@@ -338,11 +332,12 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
             ["storage-tank"] = { "tailings-pond" },
             ["radar"] = { "py-local-radar", "radar" },
             ["assembling-machine"] = { "data-array" },
+            ["container"] = { "py-storehouse-basic" },
         }
     }
     local supertypes = {
         ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item", ["fuel-category"] = "fuel", ["generator-equipment"] = "equipment",
-        ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["boiler"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity",
+        ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["boiler"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity", ["container"] = "entity",
     }
     if settings.startup["pysimple-descriptions"].value == "3" then
         for _,recipe in pairs(multi_product_recipes) do
@@ -621,10 +616,13 @@ if settings.startup["pysimple-brains"].value then -- "rebalance brains"
             end
         end
     end
-    if data.raw.recipe["bio-scafold"] then
-        for _,ingredient in pairs(data.raw.recipe["bio-scafold"].ingredients) do
-            if ingredient.name == "chitin" then
-                ingredient.amount = 2
+    local bioscaffold_recipes = {"bio-scafold", "bio-scafold-with-lamp"}
+    for _,recipe in pairs(bioscaffold_recipes) do
+        if data.raw.recipe[recipe] then
+            for _,ingredient in pairs(data.raw.recipe[recipe].ingredients) do
+                if ingredient.name == "chitin" then
+                    ingredient.amount = 3
+                end
             end
         end
     end
@@ -639,9 +637,51 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
         data.raw.recipe["saline-water"].energy_required = 40
         data.raw.recipe["gravel-saline-water"].energy_required = 40
     end
+
     if data.raw.recipe["accumulator"] then
         data.raw.recipe["accumulator"].ingredients = {{type="item", name="electronic-circuit", amount=2}, {type="item", name="iron-plate", amount=2}, {type="item", name="battery-mk01", amount=10}}
     end
+
+    if data.raw.recipe["iron-slime"] then
+        data.raw.recipe["iron-slime"].results = {{type="fluid", name="iron-slime", amount=250}}
+    end
+
+    if data.raw.module["auog"] and data.raw.item["charged-auog"] then
+        local energy_value = util.parse_energy(data.raw.module["auog"].fuel_value) * 60
+        data.raw.module["auog"].fuel_value = energy_value * 2 .. "W"
+        energy_value = util.parse_energy(data.raw.module["auog-mk02"].fuel_value) * 60
+        data.raw.module["auog-mk02"].fuel_value = energy_value * 2 .. "W"
+        energy_value = util.parse_energy(data.raw.module["auog-mk03"].fuel_value) * 60
+        data.raw.module["auog-mk03"].fuel_value = energy_value * 2 .. "W"
+        energy_value = util.parse_energy(data.raw.module["auog-mk04"].fuel_value) * 60
+        data.raw.module["auog-mk04"].fuel_value = energy_value * 2 .. "W"
+        energy_value = util.parse_energy(data.raw.item["charged-auog"].fuel_value) * 60
+        data.raw.item["charged-auog"].fuel_value = energy_value * 2 .. "W"
+    end
+
+    local coalbed_changes = {
+        ["minor-extract-gas-from-coalbed-3"] = {ing="oxygen", div=5},
+        ["extract-gas-from-coalbed-3"] = {ing="oxygen", div=5},
+        ["extract-gas-from-coalbed-4"] = {ing="oxygen", div=5},
+        ["coalbed-gas-to-co2"] = {ing="hot-air", div=5},
+        ["coalbed-gas-to-hydrogen"] = {ing="hot-air", div=5},
+        ["coalbed-gas-to-syngas"] = {ing="hot-air", div=5},
+        ["coalbed-gas-to-acidgas"] = {ing="hot-air", div=5},
+        ["coalbed-gas-to-refsyngas"] = {ing="hot-air", div=3},
+    }
+    for name,info in pairs(coalbed_changes) do
+        local recipe = data.raw.recipe[name]
+        if recipe and recipe.ingredients then
+            for i,ingredient in pairs(recipe.ingredients) do
+                if ingredient.name == info.ing then
+                    recipe.ingredients[i].amount = math.floor(recipe.ingredients[i].amount / info.div)
+                end
+            end
+        elseif debug_errors then
+            error("invalid recipe name: "..name)
+        end
+    end
+
     if data.raw["pipe-to-ground"]["pipe-to-ground"] and data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then
         data:extend({
             {
@@ -680,15 +720,17 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
     end
 end
 
+if data.raw["pipe"]["pipe"] and data.raw["pipe"]["niobium-pipe"] then data.raw["pipe"]["pipe"].next_upgrade = "niobium-pipe" end
+if data.raw["pipe-to-ground"]["pipe-to-ground"] and data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] then data.raw["pipe-to-ground"]["pipe-to-ground"].next_upgrade = "niobium-pipe-to-ground" end
 if data.raw["pipe"]["niobium-pipe"] and data.raw["pipe"]["ht-pipes"] then data.raw["pipe"]["niobium-pipe"].next_upgrade = "ht-pipes" end
 if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].next_upgrade = "ht-pipes-to-ground" end
 
 if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new map generation preset
     data.raw["map-gen-presets"]["default"]["py-streamlined"] = table.deepcopy(data.raw["map-gen-presets"]["default"]["py-recommended"])
     data.raw["map-gen-presets"]["default"]["py-streamlined"].order = "i"
-    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["iron-ore"] = { frequency = 0.5, size = 0.75, richness = 6 }
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["iron-ore"] = { frequency = 0.33, size = 0.75, richness = 6 }
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["copper-ore"] = { frequency = 0.33, size = 0.75, richness = 6 }
-    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["stone"] = { frequency = 1, size = 0.75, richness = 6 }
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["stone"] = { frequency = 0.75, size = 0.75, richness = 6 }
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["salt-rock"] = { frequency = 0.5, richness = 5 }
 end
 
@@ -696,21 +738,21 @@ end
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
 -- TODO: Reduce overhang ambiguity for: lab, barreling machine, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, zungror lair, xeno pen, moss farm, etc
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
--- TODO: Fix layering issue for HAWT MK1 (it appears on top of objects in front of it)
+-- TODO: Fix layering issues for HAWT MK1-MK4 (they appear on top of objects in front of them)
 -- TODO: Aerial turbines show up incorrectly in the electric network info graphs
--- TODO: TURD recipes get re-enabled and re-highlighted upon loading after mods/settings are updated or synced
--- TODO: Quantity is shown twice in factoriopedia when item & recipe are combined
--- TODO: Biosample TURD recipe incorrectly includes (0 ×) in the name
--- TODO: Rename "Rare-earth" mining drills to be "Rare earth" instead to be consistent with other names
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
 -- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
--- TODO: Put "fenix alloy" in the name of that one intermetallic with a long name
+-- TODO: Remove spaces & extra leading zeros from names (e.g. MK 02 -> MK2)
 
 -- Potential balance changes:
--- TODO: The "chitin" middle oil recipe seems worse than the regular version, incentivizing burning/boiling/composting the chitin instead
--- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired
+-- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)
+-- TODO: Make fluid caravan volume a consistent amount (40k?) instead of 25k or 27.5k due to optional setting
+-- TODO: The "chitin" middle oil recipe seems worse than the regular version, incentivizing burning/boiling/composting the chitin instead (this recipe is better in hard mode?)
 -- TODO: Make shell -> lime recipe available earlier? or make the composting recipe better for it?
--- TODO: Rebalance biomass amounts for many items (e.g. different tiers of the same item should not produce the same amount of biomass)
+-- TODO: Add setting to balance ingredient amounts for some early recipes? - some (alien life) recipes are weak compared to alternatives
+-- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired
+-- TODO: Make phagnots (gas bladders) more useful before lategame
+-- TODO: Rebalance research upgrade TURD to provide greater benefits to earlier science recipes
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")
@@ -718,3 +760,4 @@ require("prototypes/circuit-connections")
 require("prototypes/drawing-box-extensions")
 require("prototypes/distinct-icons")
 require("prototypes/faster-recipes")
+require("prototypes/energy-changes")
