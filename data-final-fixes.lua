@@ -143,7 +143,7 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     -- repositions recipe unlocks
     add_unlock("extract-limestone-01", "steel-processing", "coal-processing-1", 1)
     add_unlock("coke-co2", "mining-with-fluid", "coal-processing-1")
-    add_unlock("tinned-cable", "petri-dish", "mining-with-fluid", 1)
+    add_unlock("tinned-cable", "moondrop", "mining-with-fluid", 1)
     add_unlock("slacked-lime-void", "acetylene", "fluid-processing-machines-1")
     add_unlock("zinc-plate-1", "solder-mk01", "electronics", 1)
     add_unlock("methanal", "moondrop", "electronics")
@@ -162,6 +162,9 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     add_unlock("cool-pressured-steam-3000-to-2000", "nonrenewable-mk03", "nonrenewable-mk02")
     add_unlock("cool-pressured-steam-4000-to-3000", "nonrenewable-mk04", "nonrenewable-mk03")
     add_unlock("nuclear-sample", "uranium-processing", "chemical-science-pack")
+    add_unlock("bio-oil-2", "bioprocessing", "light-oil-mk02")
+    add_unlock("resorcinol", "collagen", "epoxy")
+    add_unlock("sodium-chlorate", "additives", "salts")
 
     -- more repositioning (second science stage and later)
     adjust_prerequisites("nexelit-mk01", "py-science-pack-1")
@@ -176,6 +179,9 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     adjust_prerequisites("construction-robotics", nil, "water-animals-mk01")
     adjust_prerequisites("molecular-decohesion", nil, "water-animals-mk01")
     adjust_prerequisites("nonrenewable-mk01", "energy-1", "machine-components-mk01")
+    adjust_prerequisites("collagen", nil, "epoxy")
+    adjust_prerequisites("aerogel", "collagen", "epoxy")
+    adjust_prerequisites("vanadium-processing-2", "additives", "chemical-science-pack")
     adjust_prerequisites("fertilizer-mk01", "logistic-science-pack")
     if data.raw.technology["fertilizer-mk01"] then data.raw.technology["fertilizer-mk01"].unit.ingredients = {{"automation-science-pack", 3}, {"py-science-pack-1", 2}, {"logistic-science-pack", 1}} end
     adjust_prerequisites("night-vision-equipment", nil, "py-science-pack-2")
@@ -585,10 +591,10 @@ if settings.startup["pysimple-graphics"].value then
             ["sap-extractor-mk02"] = {working=0.4, idle=0.1},
             ["sap-extractor-mk03"] = {working=0.4, idle=0.1},
             ["sap-extractor-mk04"] = {working=0.4, idle=0.1},
-            ["eaf-mk01"] = {working=0.7, idle=0.2},
-            ["eaf-mk02"] = {working=0.7, idle=0.2},
-            ["eaf-mk03"] = {working=0.7, idle=0.2},
-            ["eaf-mk04"] = {working=0.7, idle=0.2},
+            ["eaf-mk01"] = {working=0.8, idle=0.2},
+            ["eaf-mk02"] = {working=0.8, idle=0.2},
+            ["eaf-mk03"] = {working=0.8, idle=0.2},
+            ["eaf-mk04"] = {working=0.8, idle=0.2},
         }
     }
     for kind,things in pairs(sounds) do
@@ -646,17 +652,13 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
         data.raw.recipe["iron-slime"].results = {{type="fluid", name="iron-slime", amount=250}}
     end
 
-    if data.raw.module["auog"] and data.raw.item["charged-auog"] then
-        local energy_value = util.parse_energy(data.raw.module["auog"].fuel_value) * 60
-        data.raw.module["auog"].fuel_value = energy_value * 2 .. "W"
-        energy_value = util.parse_energy(data.raw.module["auog-mk02"].fuel_value) * 60
-        data.raw.module["auog-mk02"].fuel_value = energy_value * 2 .. "W"
-        energy_value = util.parse_energy(data.raw.module["auog-mk03"].fuel_value) * 60
-        data.raw.module["auog-mk03"].fuel_value = energy_value * 2 .. "W"
-        energy_value = util.parse_energy(data.raw.module["auog-mk04"].fuel_value) * 60
-        data.raw.module["auog-mk04"].fuel_value = energy_value * 2 .. "W"
-        energy_value = util.parse_energy(data.raw.item["charged-auog"].fuel_value) * 60
-        data.raw.item["charged-auog"].fuel_value = energy_value * 2 .. "W"
+    local auogs = {["module"] = {"auog", "auog-mk02", "auog-mk03", "auog-mk04"}, ["item"] = {"charged-auog"}}
+    for kind,names in pairs(auogs) do
+        for _,auog in pairs(names) do
+            if data.raw[kind][auog] then
+                data.raw[kind][auog].fuel_value = util.parse_energy(data.raw[kind][auog].fuel_value) * 60 * 2 .. "W"
+            end
+        end
     end
 
     local coalbed_changes = {
@@ -739,10 +741,12 @@ end
 -- TODO: Reduce overhang ambiguity for: lab, barreling machine, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, zungror lair, xeno pen, moss farm, etc
 -- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
 -- TODO: Fix layering issues for HAWT MK1-MK4 (they appear on top of objects in front of them)
--- TODO: Aerial turbines show up incorrectly in the electric network info graphs
+-- TODO: Fix crackling sound artifacts from seaweed crop facility
+-- TODO: Aerial turbines don't appear correctly in the electric network info graphs (production doesn't show more than 1 for total amount, accumulator charge doesn't list them at all)
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
 -- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
 -- TODO: Remove spaces & extra leading zeros from names (e.g. MK 02 -> MK2)
+-- TODO: Move gold tech deeper?
 
 -- Potential balance changes:
 -- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)
@@ -751,6 +755,7 @@ end
 -- TODO: Make shell -> lime recipe available earlier? or make the composting recipe better for it?
 -- TODO: Add setting to balance ingredient amounts for some early recipes? - some (alien life) recipes are weak compared to alternatives
 -- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired
+-- TODO: Make worker's food recipe produce more
 -- TODO: Make phagnots (gas bladders) more useful before lategame
 -- TODO: Rebalance research upgrade TURD to provide greater benefits to earlier science recipes
 

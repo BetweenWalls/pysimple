@@ -53,7 +53,7 @@ function validate_technology_effects()
     "mining-with-fluid",
     "tar-processing",
     "acetylene",
-    "petri-dish",
+    "moondrop",
     "solder-mk01",
     "moondrop",
     "wood-processing",
@@ -66,11 +66,18 @@ function validate_technology_effects()
     "blueprint-shotgun",
     "niobium",
     "coal-processing-3",
+    "bioprocessing",
+    "light-oil-mk02",
+    "chemical-science-pack",
+    "uranium-processing",
+    "epoxy",
+    "collagen",
+    "salts",
+    "additives",
     "nonrenewable-mk01",
     "nonrenewable-mk02",
     "nonrenewable-mk03",
     "nonrenewable-mk04",
-    "uranium-processing",
   }
   for _,force in pairs(game.forces) do
     for _,tech in pairs(altered_techs) do

@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.29
+Date: 2026.07.07
+  Changes:
+    - Reordered more recipe unlocks within their respective technologies
+    - Moved tin cable 1 tech deeper to be grouped alongside the first codex which uses it
+    - Moved bio oil distillates recipe up 1 tech to be grouped with other bio oil related recipes
+    - Moved sodium chlorate recipe deeper into the tech tree where it becomes useable and adjusted prerequisites accordingly
+    - Moved resorcinol recipe deeper into the tech tree where it becomes useable and adjusted prerequisites accordingly
+  Balancing:
+    - Adjusted rebalanced recipe speed multipliers for: improved slaughtering recipes, antimony phosphate (x1 to x2)
+---------------------------------------------------------------------------------------------------
 Version: 1.0.28
 Date: 2026.06.25
   Changes:

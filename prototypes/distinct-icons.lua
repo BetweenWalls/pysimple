@@ -69,6 +69,7 @@ if settings.startup["pysimple-graphics"].value then
                             table.insert(recipe.icons, {icon = "__pyalienlifegraphics__/graphics/icons/0.png", scale = 0.25, shift = {8,8}})
                         end
                     end
+                    -- TODO: Differentiate icons for "RecA" and "growth factor" rendering preparation recipes?
                 elseif debug_errors then
                     error("missing icon list: "..name)
                 end
