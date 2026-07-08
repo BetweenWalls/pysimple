@@ -4,6 +4,7 @@ local tech_unlocks = {
     ["automation-science-pack"] = {"flora-collector-mk01", "soil-extractor-mk01", "wpu-mk01", "soil", "empty-planter-box", "planter-box", "automation-science-pack", "lab"},
     ["coal-processing-1"] = {"distilator", "distilled-raw-coal", "coal-gas", "coal-gas-from-coke", "coal-gas-from-wood", "iron-oxide-smelting", "tar-to-carbolic", "tailings-pond", "py-gas-vent", "hpf", "coal-gas-void", "ash"},
     ["steel-processing"] = {"advanced-foundry-mk01", "extract-limestone-01", "steel-plate", "steel-chest", "multiblade-turbine-mk01", "py-sinkhole"},
+    ["mining-with-fluid"] = {"fluid-drill-mk01", "aluminium-plate-1", "tinned-plate-1", "tinned-cable"},
     ["ceramic"] = {"clay-pit-mk01", "clay", "ceramic", "electronics-factory-mk01", "inductor1"},
     ["crusher"] = {"jaw-crusher", "bricks-to-stone", "stone-to-gravel", "gravel-to-sand", "grade-1-iron-crush", "low-grade-smelting-iron"},
     ["concrete"] = {"hpf", "lime", "concrete", "hazard-concrete", "refined-concrete", "refined-hazard-concrete"},

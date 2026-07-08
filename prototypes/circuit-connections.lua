@@ -136,6 +136,7 @@ local tiered_circuit_buildings = {
         ["particle-accelerator-mk0"] = { variation = 34, main_offset = util.by_pixel( 149.875, 69.25), shadow_offset = util.by_pixel( 149.875, 69.25), show_shadow = true },
         ["tholin-plant-mk0"] = { variation = 0, main_offset = util.by_pixel( 5.125, -68.5), shadow_offset = util.by_pixel( 5.125, -68.5), show_shadow = true },
         ["mixer-mk0"] = { variation = 31, main_offset = util.by_pixel(-75.625, 17.125), shadow_offset = util.by_pixel(-75.625, 17.125), show_shadow = true },
+        ["numal-reef-mk0"] = {},
     },
     ["furnace"] = {
         ["compost-plant-mk0"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
@@ -150,6 +151,7 @@ local untiered_circuit_buildings = {
         ["oil-derrick-mk04"] = { variation = 39, main_offset = util.by_pixel(-42, -121.875), shadow_offset = util.by_pixel(-42, -121.875), show_shadow = true },
     },
     ["assembling-machine"] = {
+        ["py-electric-boiler"] = { variation = 18, main_offset = util.by_pixel( 33.125,  24.75), shadow_offset = util.by_pixel( 33.125,  24.75), show_shadow = true },
         ["botanical-nursery"] = { variation = 8, main_offset = util.by_pixel(-47.5, 22.75), shadow_offset = util.by_pixel(-47.5, 22.75), show_shadow = true },
         ["plankton-farm"] = { variation = 2, main_offset = util.by_pixel( 19.625, -80.75), shadow_offset = util.by_pixel( 19.625, -80.75), show_shadow = true },
         ["guar-gum-plantation"] = { variation = 0, main_offset = util.by_pixel( 5.25, 28.25), shadow_offset = util.by_pixel( 5.25, 28.25), show_shadow = true },
@@ -230,6 +232,8 @@ local untiered_circuit_buildings = {
         ["py-sinkhole"] = { variation = 34, main_offset = util.by_pixel( 35.375, 16.125), shadow_offset = util.by_pixel( 35.375, 16.125), show_shadow = true },
         ["py-burner"] = { variation = 27, main_offset = util.by_pixel( 15.5, -47.25), shadow_offset = util.by_pixel( 15.5, -47.25), show_shadow = true },
         ["co2-absorber"] = { variation = 39, main_offset = util.by_pixel(-49.75, -1.125), shadow_offset = util.by_pixel(-49.75, -1.125), show_shadow = true },
+        ["provider-tank"] = { variation =  6, main_offset = util.by_pixel(-5.625,  1.5), shadow_offset = util.by_pixel(-5.625,  1.5), show_shadow = true },
+        ["requester-tank"] = { variation =  6, main_offset = util.by_pixel(-5.625,  1.5), shadow_offset = util.by_pixel(-5.625,  1.5), show_shadow = true },
         ["compost-plant-mk01-turd"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
         ["compost-plant-mk02-turd"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
         ["compost-plant-mk03-turd"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
@@ -248,8 +252,35 @@ local untiered_circuit_buildings = {
         ["outpost-fluid"] = { variation = 33, main_offset = util.by_pixel( 46.625, 3.625), shadow_offset = util.by_pixel( 46.625, 3.625), show_shadow = true },
     },
     ["container"] = {
+        ["py-shed-basic"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
+        ["py-storehouse-basic"] = { variation =  0, main_offset = util.by_pixel( 4.625, -11.125), shadow_offset = util.by_pixel( 4.625, -11.125), show_shadow = true },
+        ["py-warehouse-basic"] = { variation =  2, main_offset = util.by_pixel(-79,  41.75), shadow_offset = util.by_pixel(-79,  41.75), show_shadow = true },
+        ["py-deposit-basic"] = { variation =  1, main_offset = util.by_pixel( 44.5,  20.375), shadow_offset = util.by_pixel( 44.5,  20.375), show_shadow = true },
         ["outpost"] = { variation = 33, main_offset = util.by_pixel( 46.625, 3.625), shadow_offset = util.by_pixel( 46.625, 3.625), show_shadow = true },
         ["outpost-aerial"] = { variation = 39, main_offset = util.by_pixel( 170.375, -190.75), shadow_offset = util.by_pixel( 170.375, -190.75), show_shadow = true },
+        --["aerial-base-chest"] = { variation =  0, main_offset = util.by_pixel( 136.75,  47.5), shadow_offset = util.by_pixel( 136.75,  47.5), show_shadow = true },
+    },
+    ["logistic-container"] = {
+        ["py-shed-storage"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
+        ["py-shed-passive-provider"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
+        ["py-shed-buffer"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
+        ["py-shed-requester"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
+        ["py-shed-active-provider"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
+        ["py-storehouse-storage"] = { variation =  0, main_offset = util.by_pixel( 4.625, -11.125), shadow_offset = util.by_pixel( 4.625, -11.125), show_shadow = true },
+        ["py-storehouse-passive-provider"] = { variation =  0, main_offset = util.by_pixel( 4.625, -11.125), shadow_offset = util.by_pixel( 4.625, -11.125), show_shadow = true },
+        ["py-storehouse-buffer"] = { variation =  0, main_offset = util.by_pixel( 4.625, -11.125), shadow_offset = util.by_pixel( 4.625, -11.125), show_shadow = true },
+        ["py-storehouse-requester"] = { variation =  0, main_offset = util.by_pixel( 4.625, -11.125), shadow_offset = util.by_pixel( 4.625, -11.125), show_shadow = true },
+        ["py-storehouse-active-provider"] = { variation =  0, main_offset = util.by_pixel( 4.625, -11.125), shadow_offset = util.by_pixel( 4.625, -11.125), show_shadow = true },
+        ["py-warehouse-storage"] = { variation =  2, main_offset = util.by_pixel(-79,  41.75), shadow_offset = util.by_pixel(-79,  41.75), show_shadow = true },
+        ["py-warehouse-passive-provider"] = { variation =  2, main_offset = util.by_pixel(-79,  41.75), shadow_offset = util.by_pixel(-79,  41.75), show_shadow = true },
+        ["py-warehouse-buffer"] = { variation =  2, main_offset = util.by_pixel(-79,  41.75), shadow_offset = util.by_pixel(-79,  41.75), show_shadow = true },
+        ["py-warehouse-requester"] = { variation =  2, main_offset = util.by_pixel(-79,  41.75), shadow_offset = util.by_pixel(-79,  41.75), show_shadow = true },
+        ["py-warehouse-active-provider"] = { variation =  2, main_offset = util.by_pixel(-79,  41.75), shadow_offset = util.by_pixel(-79,  41.75), show_shadow = true },
+        ["py-deposit-storage"] = { variation =  0, main_offset = util.by_pixel( 98,  12.375), shadow_offset = util.by_pixel( 98,  12.375), show_shadow = true },
+        ["py-deposit-passive-provider"] = { variation =  0, main_offset = util.by_pixel( 67.625, -78.625), shadow_offset = util.by_pixel( 67.625, -78.625), show_shadow = true },
+        ["py-deposit-buffer"] = { variation =  0, main_offset = util.by_pixel( 55.75,  26.75), shadow_offset = util.by_pixel( 55.75,  26.75), show_shadow = true },
+        ["py-deposit-requester"] = { variation = 34, main_offset = util.by_pixel(-22.375,  0.75), shadow_offset = util.by_pixel(-22.375,  0.75), show_shadow = true },
+        ["py-deposit-active-provider"] = { variation = 32, main_offset = util.by_pixel( 111.625, -105), shadow_offset = util.by_pixel( 111.625, -105), show_shadow = true },
     },
     ["linked-container"] = {
         ["wyrmhole"] = { variation = 7, main_offset = util.by_pixel( 100.25, -234.375), shadow_offset = util.by_pixel( 100.25, -234.375), show_shadow = true },
@@ -265,10 +296,14 @@ local untiered_circuit_buildings = {
     },
     ["accumulator"] = {
         ["accumulator-mk01"] = { variation = 2, main_offset = util.by_pixel( 24.25, 33.625), shadow_offset = util.by_pixel( 24.25, 33.625), show_shadow = true },
+        ["accumulator-mk03"] = { variation = 27, main_offset = util.by_pixel( 13.125,  13.25), shadow_offset = util.by_pixel( 13.125,  13.25), show_shadow = true },
     },
     ["radar"] = {
         ["py-local-radar"] = { variation = 2, main_offset = util.by_pixel(-22.125, 34.125), shadow_offset = util.by_pixel(-22.125, 34.125), show_shadow = true },
         ["megadar"] = { variation = 24, main_offset = util.by_pixel(-73.5, -15.75), shadow_offset = util.by_pixel(-73.5, -15.75), show_shadow = true },
+    },
+    ["rocket-silo"] = {
+        ["mega-farm"] = { variation = 27, main_offset = util.by_pixel( 50.25, -49), shadow_offset = util.by_pixel( 50.25, -49), show_shadow = true },
     },
 }
 
@@ -277,7 +312,17 @@ if settings.startup["pysimple-graphics"].value then
         for name,info in pairs(buildings) do
             for i=1,4 do
                 if data.raw[kind][name..i] then
-                    data.raw[kind][name..i].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
+                    if name == "numal-reef-mk0" then -- numal buildings have rotations without a position which works well for all versions
+                        data.raw[kind][name..i].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, {
+                            { variation =  10, main_offset = util.by_pixel(-5.875,  23), shadow_offset = util.by_pixel(-5.875,  23), show_shadow = true },
+                            { variation =  10, main_offset = util.by_pixel( 30.625,  41.125), shadow_offset = util.by_pixel( 30.625,  41.125), show_shadow = true },
+                            { variation =  10, main_offset = util.by_pixel(-10.625,  99.5), shadow_offset = util.by_pixel(-10.625,  99.5), show_shadow = true },
+                            { variation =  10, main_offset = util.by_pixel(-42.875,  44), shadow_offset = util.by_pixel(-42.875,  44), show_shadow = true },
+
+                        } )
+                    else
+                        data.raw[kind][name..i].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
+                    end
                 end
             end
         end
@@ -285,10 +330,19 @@ if settings.startup["pysimple-graphics"].value then
     for kind,buildings in pairs(untiered_circuit_buildings) do
         for name,info in pairs(buildings) do
             if data.raw[kind][name] and data.raw[kind][name].circuit_connector then
-                if #data.raw[kind][name].circuit_connector == 4 then
-                    data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
+                if kind == "container" or kind == "logistic-container" then
+                    local count = data.raw[kind][name].direction_count or 1
+                    local connections = {}
+                    for i=1,count,1 do
+                        table.insert(connections, circuit_connector_definitions.create_single( universal_connector_template, info ))
+                    end
+                    data.raw[kind][name].circuit_connector = connections
                 else
-                    data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_single( universal_connector_template, info )
+                    if #data.raw[kind][name].circuit_connector == 4 then
+                        data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
+                    else
+                        data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_single( universal_connector_template, info )
+                    end
                 end
             end
         end

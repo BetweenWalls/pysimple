@@ -1,12 +1,12 @@
 {
 	"name": "pysimple",
-	"version": "1.0.29",
+	"version": "1.1.0",
 	"title": "Pyanodons Streamlined",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
-	"factorio_version": "2.0",
+	"factorio_version": "2.1",
 	"dependencies": [
-		"pyalternativeenergy >= 3.1.38",
+		"pyalternativeenergy >= 3.2.1",
 		"(?) pyhardmode",
 		"(?) tidy",
 		"? Milestones",

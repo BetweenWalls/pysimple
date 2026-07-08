@@ -324,7 +324,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
             ["storage-tank"] = { "tailings-pond" },
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner" },
             ["boiler"] = { "oil-boiler-mk01" },
-            ["electric-energy-interface"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank" },
+            ["solar-panel"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank" },
             ["assembling-machine"] = { "dino-dig-site", "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04" },
             ["fuel-category"] = { "biomass", "chemical" },
         },
@@ -356,7 +356,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
     for desc,desc_groups in pairs(locale_entries) do
         for type,items in pairs(desc_groups) do
             for _,item in pairs(items) do
-                if data.raw[type][item] and supertypes[type] then
+                if data.raw[type] and data.raw[type][item] and supertypes[type] then
                     data.raw[type][item]["localised_"..desc] = {desc.."."..supertypes[type].."-"..item}
                 elseif debug_errors then
                     error("invalid info: "..type..", "..item)
@@ -409,9 +409,11 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
     if feature_flags["space_travel"] and not (mods["space-age"] or mods["pystellarexpedition"]) then
         local kinds = {"item", "module", "item-with-tags", "item-with-entity-data", "gun", "ammo", "capsule", "tool", "repair-tool", "rail-planner", "armor"}
         for _,kind in pairs(kinds) do
-            for _,thing in pairs(data.raw[kind]) do
-                if thing and thing.stack_size and (thing.send_to_orbit_mode == nil or thing.send_to_orbit_mode.includes == "not-sendable") and not thing.rocket_launch_products then
-                    thing.weight = 1000000 / thing.stack_size
+            if data.raw[kind] then
+                for _,thing in pairs(data.raw[kind]) do
+                    if thing and thing.stack_size and (thing.send_to_orbit_mode == nil or thing.send_to_orbit_mode.includes == "not-sendable") and not thing.rocket_launch_products then
+                        thing.weight = 1000000 / thing.stack_size
+                    end
                 end
             end
         end
@@ -434,9 +436,6 @@ end
 if settings.startup["pysimple-graphics"].value then
     if not mods["quality"] and data.raw.sprite["quality_info"] then -- hides irrelevant quality diamonds (they are shown if any feature flag is enabled, not just if the quality mod is enabled)
         data.raw.sprite["quality_info"].filename = "__core__/graphics/empty.png"
-    end
-    if data.raw["electric-energy-interface"]["multiblade-turbine-mk01"] then
-        data.raw["electric-energy-interface"]["multiblade-turbine-mk01"].animations.layers[1].filename = "__pysimple__/graphics/base-fishturbine.png"
     end
     if data.raw.recipe["molybdenum-concentrate"] then
         data.raw.recipe["molybdenum-concentrate"].icon = data.raw.item["molybdenum-concentrate"].icon
@@ -533,8 +532,19 @@ if settings.startup["pysimple-graphics"].value then
             ["natural-gas-mk04"] = {203, 142, 11, 255},
         },
         ["electric-energy-interface"] = {
+            ["microwave-receiver"] = {0, 127, 160, 255},
+            ["sut"] = {0, 127, 160, 255},
+        },
+        ["solar-panel"] = {
+            ["solar-panel-mk01"] = {0, 127, 160, 255},
             ["solar-panel-mk02"] = {0, 127, 160, 255},
             ["solar-panel-mk03"] = {0, 127, 160, 255},
+            ["solar-panel-mk04"] = {0, 127, 160, 255},
+            ["tidal-mk01-solar"] = {0, 127, 160, 255},
+            ["tidal-mk02-solar"] = {0, 127, 160, 255},
+            ["tidal-mk03-solar"] = {0, 127, 160, 255},
+            ["tidal-mk04-solar"] = {0, 127, 160, 255},
+            ["anti-solar"] = {0, 127, 160, 255},
             ["multiblade-turbine-mk01"] = {0, 127, 160, 255},
             ["multiblade-turbine-mk03"] = {0, 127, 160, 255},
             ["multiblade-turbine-mk01-blank"] = {0, 127, 160, 255},
@@ -551,19 +561,6 @@ if settings.startup["pysimple-graphics"].value then
             ["hawt-turbine-mk02-blank"] = {0, 127, 160, 255},
             ["hawt-turbine-mk03-blank"] = {0, 127, 160, 255},
             ["hawt-turbine-mk04-blank"] = {0, 127, 160, 255},
-            ["microwave-receiver"] = {0, 127, 160, 255},
-            ["sut"] = {0, 127, 160, 255},
-        },
-        ["solar-panel"] = {
-            ["solar-panel-mk01"] = {0, 127, 160, 255},
-            ["solar-panel-mk02"] = {0, 127, 160, 255},
-            ["solar-panel-mk03"] = {0, 127, 160, 255},
-            ["solar-panel-mk04"] = {0, 127, 160, 255},
-            ["tidal-mk01-solar"] = {0, 127, 160, 255},
-            ["tidal-mk02-solar"] = {0, 127, 160, 255},
-            ["tidal-mk03-solar"] = {0, 127, 160, 255},
-            ["tidal-mk04-solar"] = {0, 127, 160, 255},
-            ["anti-solar"] = {0, 127, 160, 255},
         },
         ["simple-entity-with-owner"] = {
             ["tidal-mk01"] = {0, 127, 160, 255},

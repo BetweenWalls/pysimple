@@ -73,6 +73,7 @@ local groups = {
         --["py-miscellaneous-buildings-mk03"] = {order="zpy[mk03]-h", items={"atomizer-mk03", "compost-plant-mk03", "compost-plant-mk03-turd", "bio-reactor-mk03", "advanced-bio-reactor-mk03-turd1", "advanced-bio-reactor-mk03-turd2", "advanced-bio-reactor-mk03-turd3", "biofactory-mk03", "micro-mine-mk03", "incubator-mk03", "genlab-mk03", "research-center-mk03"}},
         --["py-miscellaneous-buildings-mk04"] = {order="zpy[mk04]-h", items={"atomizer-mk04", "compost-plant-mk04", "compost-plant-mk04-turd", "bio-reactor-mk04", "advanced-bio-reactor-mk04-turd1", "advanced-bio-reactor-mk04-turd2", "advanced-bio-reactor-mk04-turd3", "biofactory-mk04", "micro-mine-mk04", "incubator-mk04", "genlab-mk04", "research-center-mk04"}},
         -- TODO: Consider moving several buildings which aren't as directly related to plants/animals from the "life" group to the "production" group (many of these have more of a science theme than a life theme)
+        -- TODO: Consider moving vatbrains to production tab
     },
     ["intermediate-products"] = {},
     ["coal-processing"] = {},
@@ -701,7 +702,7 @@ local new_main_products = {
     ["arthurian-egg-4-hot-stones"] = "arthurian-egg",
     ["petroleum-gas2"] = "bacteria-2",
 }
-local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool", "mining-drill", "assembling-machine", "container", "electric-energy-interface", "simple-entity", "fire", "simple-entity-with-force", "fish", "furnace", "burner-generator", "tool", "selection-tool"}
+local kinds = {"item", "fluid", "module", "item-with-tags", "item-with-entity-data", "capsule", "gun", "ammo", "tile", "cargo-pod", "temporary-container", "resource", "character-corpse", "planet", "tile-ghost", "entity-ghost", "item-entity", "item-request-proxy", "blueprint", "blueprint-book", "deconstruction-item", "upgrade-item", "copy-paste-tool", "mining-drill", "assembling-machine", "container", "electric-energy-interface", "simple-entity", "fire", "simple-entity-with-force", "fish", "furnace", "burner-generator", "tool", "selection-tool", "solar-panel"}
 function organize_subgroups(groups)
     for group,subgroups in pairs(groups) do
         for subgroup,details in pairs(subgroups) do
@@ -727,7 +728,7 @@ function organize_subgroups(groups)
                         end
                         local found = false
                         for _,kind in pairs(kinds) do
-                            if data.raw[kind][item] then
+                            if data.raw[kind] and data.raw[kind][item] then
                                 data.raw[kind][item].subgroup = subgroup
                                 data.raw[kind][item].order = prefix..value
                                 found = true
@@ -856,13 +857,12 @@ if settings.startup["pysimple-recipe-menu"].value then
     local to_hide = {
         ["hidden"] = {
             ["simple-entity-with-force"] = {"multiblade-turbine-mk01-collision", "multiblade-turbine-mk03-collision", "sut-placement-distance"},
-            ["electric-energy-interface"] = {"multiblade-turbine-mk01-blank", "hawt-turbine-mk01-blank", "hawt-turbine-mk02-blank", "multiblade-turbine-mk03-blank", "hawt-turbine-mk03-blank", "hawt-turbine-mk04-blank"},
             ["fire"] = {"sut-smokestack", "sut-smokestack-weak"},
             ["tree"] = {"ninja-tree", "arum-fake", "kicalk-tree-fake", "mova-fake"},
             ["simple-entity-with-owner"] = {},
             ["character-corpse"] = {"ulric-man-corpse"},
             ["ammo-category"] = {"caravan-control", "ulric-infusion"},
-            ["solar-panel"] = {"solar-panel"},
+            ["solar-panel"] = {"solar-panel", "multiblade-turbine-mk01-blank", "hawt-turbine-mk01-blank", "hawt-turbine-mk02-blank", "multiblade-turbine-mk03-blank", "hawt-turbine-mk03-blank", "hawt-turbine-mk04-blank"},
             ["generator"] = {"py-turbine"},
             ["mining-drill"] = {"nexelit-mine"},
             ["module"] = {"vonix-mk04", "zungror-mk04"},
