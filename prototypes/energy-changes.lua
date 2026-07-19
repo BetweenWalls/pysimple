@@ -53,7 +53,7 @@ if settings.startup["pysimple-energy"].value then
             local max_t4 = base_t4 + data.raw["assembling-machine"][info.buildings[4]].crafting_speed * data.raw.module[modules[4]].effect.speed * ((data.raw.module[modules[4]].effect.productivity or 0)+1) * data.raw["assembling-machine"][info.buildings[4]].module_slots
             local desired_energy = ((max_t4/min_t4) / data.raw["assembling-machine"][info.buildings[4]].module_slots)/3
             for t=2,4 do
-                data.raw.module[modules[t]].effect.consumption = math.max((t-1)*math.floor(100*desired_energy)/100, (t-1)*0.01)
+                data.raw.module[modules[t]].effect.consumption = math.max((t-1)*math.floor(100*desired_energy+0.5)/100, (t-1)*0.01)
             end
         end
     end

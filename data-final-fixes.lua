@@ -342,7 +342,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
         }
     }
     local supertypes = {
-        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item", ["fuel-category"] = "fuel", ["generator-equipment"] = "equipment",
+        ["technology"] = "technology", ["recipe"] = "recipe", ["item"] = "item", ["fluid"] = "item", ["capsule"] = "item", ["tool"] = "item", ["fuel-category"] = "fuel", ["generator-equipment"] = "equipment", ["solar-panel"] = "entity",
         ["wall"] = "entity", ["mining-drill"] = "entity", ["furnace"] = "entity", ["boiler"] = "entity", ["storage-tank"] = "entity", ["electric-energy-interface"] = "entity", ["assembling-machine"] = "entity", ["radar"] = "entity", ["container"] = "entity",
     }
     if settings.startup["pysimple-descriptions"].value == "3" then
@@ -606,6 +606,39 @@ if settings.startup["pysimple-graphics"].value then
             end
         end
     end
+
+    local tall_buildings = {
+        ["assembling-machine"] = {
+            "nuclear-reactor-mox-mk01", "nuclear-reactor-mox-mk02", "cooling-tower-mk02", "rhe", "drp",
+            "tholin-plant-mk01", "tholin-plant-mk02", "tholin-plant-mk03", "tholin-plant-mk04",
+            "neutron-absorber-mk01", "neutron-absorber-mk02", "neutron-absorber-mk03", "neutron-absorber-mk04",
+            "tholin-atm-mk01", "tholin-atm-mk02", "tholin-atm-mk03", "tholin-atm-mk04",
+            "advanced-foundry-mk01", "advanced-foundry-mk02", "advanced-foundry-mk03", "advanced-foundry-mk04",
+            "solid-separator", "solid-separator-mk02", "solid-separator-mk03", "solid-separator-mk04", "solid-separator-mk00", 
+            "centrifuge-mk01", "centrifuge-mk02", "centrifuge-mk03", "centrifuge-mk04",
+            "distilator", "distilator-mk02", "distilator-mk03", "distilator-mk04", "ddc-mk00",
+            "trits-reef-mk01", "trits-reef-mk02", "trits-reef-mk03", "trits-reef-mk04",
+        },
+        ["generator"] = {"steam-turbine-mk02", "steam-turbine-mk04"},
+        ["solar-panel"] = {"vawt-turbine-mk01"},
+        ["electric-energy-interface"] = {"sut"},
+        ["boiler"] = {"solar-tower-building"},
+        ["mining-drill"] = {"aluminium-mine", "geothermal-plant-mk01", "natural-gas-derrick-mk01", "natural-gas-derrick-mk02", "natural-gas-derrick-mk03", "natural-gas-derrick-mk04"},
+        ["furnace"] = {"compost-plant-mk00"},
+    }
+    for kind,buildings in pairs(tall_buildings) do
+        for _,name in pairs(buildings) do
+            if data.raw[kind][name] then
+                data.raw[kind][name].tall = true
+            end
+        end
+    end
+end
+
+if feature_flags["spoiling"] and settings.startup["pysimple-decay"].value then -- "rebalance decay times"
+    data.raw.item["petri-dish-bacteria"].spoil_ticks = 900
+    data.raw.item["agar"].spoil_ticks = 3600
+    data.raw.item["cellulose"].spoil_ticks = 7200
 end
 
 if settings.startup["pysimple-brains"].value then -- "rebalance brains"
@@ -632,21 +665,81 @@ if settings.startup["pysimple-brains"].value then -- "rebalance brains"
 end
 
 if settings.startup["pysimple-misc"].value then -- "other balance changes"
-    if data.raw.recipe["saline-water"] and data.raw.recipe["gravel-saline-water"] then
-        data.raw.recipe["saline-water"].ingredients = {{type="item", name="stone", amount=20}, {type="fluid", name="water", amount=200}}
-        data.raw.recipe["gravel-saline-water"].ingredients = {{type="item", name="gravel", amount=15}, {type="fluid", name="water", amount=200}}
-        data.raw.recipe["saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
-        data.raw.recipe["gravel-saline-water"].results = {{type="fluid", name="water-saline", amount=100}}
+    local recipe_changes = {
+        ["saline-water"] = {{ing="stone", mult=2}, {ing="water", mult=2}, {res="water-saline", mult=2}},
+        ["gravel-saline-water"] = {{ing="water", mult=2}, {res="water-saline", mult=2}},
+        ["workers-food"] = {{res="workers-food", mult=3}},
+        ["iron-slime"] = {{res="iron-slime", mult=5}},
+        ["chitin-void"] = {{res="carbolic-oil", mult=2}, {res="naphthalene-oil", mult=2}},
+        ["chitin-to-geothermal-water"] = {{res="geothermal-water", mult=4}},
+        ["minor-extract-gas-from-coalbed-3"] = {{ing="oxygen", mult=0.2}},
+        ["extract-gas-from-coalbed-3"] = {{ing="oxygen", mult=0.2}},
+        ["extract-gas-from-coalbed-4"] = {{ing="oxygen", mult=0.2}},
+        ["coalbed-gas-to-co2"] = {{ing="hot-air", mult=0.2}},
+        ["coalbed-gas-to-hydrogen"] = {{ing="hot-air", mult=0.2}},
+        ["coalbed-gas-to-syngas"] = {{ing="hot-air", mult=0.2}},
+        ["coalbed-gas-to-acidgas"] = {{ing="hot-air", mult=0.2}},
+        ["coalbed-gas-to-refsyngas"] = {{ing="hot-air", mult=1/3}},
+        ["full-render-phagnots"] = {{res="gas-bladder", mult=2}},
+        ["full-render-phagnots-lard"] = {{res="gas-bladder", mult=2}},
+        ["full-render-phagnots-laser"] = {{res="gas-bladder", mult=2}},
+        ["full-render-phagnots-music"] = {{res="gas-bladder", mult=2}},
+        ["ex-gut-phag"] = {{res="gas-bladder", mult=2}},
+        ["zogna-bacteria-darkness"] = {{res="zogna-bacteria", mult=1.25}},
+        ["log3-cheap"] = {{ing="ash", mult=1.5}},
+        ["log6-cheap"] = {{ing="ash", mult=1.5}},
+        ["fish-hydrolysate-cooling"] = {{res="fish-hydrolysate", mult=2}},
+        ["breed-fish-egg-1-doused"] = {{res="fish-oil", mult=4}},
+        ["breed-fish-egg-2-doused"] = {{res="fish-oil", mult=4}, {res="fish-hydrolysate", mult=4}},
+        ["breed-fish-egg-3-doused"] = {{res="fish-oil", mult=4}, {res="fish-hydrolysate", mult=4}, {res="fishmeal", mult=4}},
+        ["breed-fish-egg-4-doused"] = {{res="fish-oil", mult=4}, {res="fish-hydrolysate", mult=4}, {res="fishmeal", mult=4}, {res="fish-emulsion", mult=4}},
+        ["py-science-pack-1-turd"] = {{res="py-science-pack-1", mult=2.4}},
+        ["py-science-pack-2-turd"] = {{res="py-science-pack-2", mult=1.5}},
+    }
+    for name,infos in pairs(recipe_changes) do
+        local recipe = data.raw.recipe[name]
+        if recipe then
+            for _,info in pairs(infos) do
+                if info.ing then
+                    for i,ingredient in pairs(recipe.ingredients) do
+                        if ingredient.name == info.ing then
+                            recipe.ingredients[i].amount = math.floor(recipe.ingredients[i].amount * info.mult)
+                        end
+                    end
+                elseif info.res then
+                    for i,result in pairs(recipe.results) do
+                        if result.name == info.res then
+                            recipe.results[i].amount = math.floor(recipe.results[i].amount * info.mult)
+                        end
+                    end
+                end
+            end
+        end
+    end
+    if data.raw.recipe["saline-water"] then
         data.raw.recipe["saline-water"].energy_required = 40
         data.raw.recipe["gravel-saline-water"].energy_required = 40
     end
-
-    if data.raw.recipe["accumulator"] then
-        data.raw.recipe["accumulator"].ingredients = {{type="item", name="electronic-circuit", amount=2}, {type="item", name="iron-plate", amount=2}, {type="item", name="battery-mk01", amount=10}}
+    if data.raw.accumulator["accumulator"] then
+        data.raw.accumulator["accumulator"].energy_source.input_flow_limit = "3MW"
+        data.raw.accumulator["accumulator"].energy_source.output_flow_limit = "3MW"
     end
-
-    if data.raw.recipe["iron-slime"] then
-        data.raw.recipe["iron-slime"].results = {{type="fluid", name="iron-slime", amount=250}}
+    if data.raw.item["workers-food"] then
+        data.raw.item["workers-food"].stack_size = 40
+        data.raw.item["workers-food-02"].stack_size = 20
+        data.raw.item["workers-food-03"].stack_size = 20
+    end
+    if data.raw.module["self-generation-module-mk01"] then
+        data.raw.module["self-generation-module-mk01"].effect.productivity = 1.5
+        data.raw.module["self-generation-module-mk02"].effect.productivity = 1.5
+        data.raw.module["self-generation-module-mk03"].effect.productivity = 1.5
+        data.raw.module["self-generation-module-mk04"].effect.productivity = 1.5
+    end
+    if data.raw.module["py-sawblade-module-mk01"] then
+        data.raw.module["py-sawblade-module-mk01"].effect.productivity = 0.02
+        data.raw.module["py-sawblade-module-mk02"].effect.productivity = 0.03
+        data.raw.module["py-sawblade-module-mk03"].effect.productivity = 0.04
+        data.raw.module["py-sawblade-module-mk04"].effect.productivity = 0.05
     end
 
     local auogs = {["module"] = {"auog", "auog-mk02", "auog-mk03", "auog-mk04"}, ["item"] = {"charged-auog"}}
@@ -655,29 +748,6 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
             if data.raw[kind][auog] then
                 data.raw[kind][auog].fuel_value = util.parse_energy(data.raw[kind][auog].fuel_value) * 60 * 2 .. "W"
             end
-        end
-    end
-
-    local coalbed_changes = {
-        ["minor-extract-gas-from-coalbed-3"] = {ing="oxygen", div=5},
-        ["extract-gas-from-coalbed-3"] = {ing="oxygen", div=5},
-        ["extract-gas-from-coalbed-4"] = {ing="oxygen", div=5},
-        ["coalbed-gas-to-co2"] = {ing="hot-air", div=5},
-        ["coalbed-gas-to-hydrogen"] = {ing="hot-air", div=5},
-        ["coalbed-gas-to-syngas"] = {ing="hot-air", div=5},
-        ["coalbed-gas-to-acidgas"] = {ing="hot-air", div=5},
-        ["coalbed-gas-to-refsyngas"] = {ing="hot-air", div=3},
-    }
-    for name,info in pairs(coalbed_changes) do
-        local recipe = data.raw.recipe[name]
-        if recipe and recipe.ingredients then
-            for i,ingredient in pairs(recipe.ingredients) do
-                if ingredient.name == info.ing then
-                    recipe.ingredients[i].amount = math.floor(recipe.ingredients[i].amount / info.div)
-                end
-            end
-        elseif debug_errors then
-            error("invalid recipe name: "..name)
         end
     end
 
@@ -733,12 +803,49 @@ if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new m
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["salt-rock"] = { frequency = 0.5, richness = 5 }
 end
 
+if not data.raw["lab"]["lab"].circuit_connector then
+    data.raw["lab"]["lab"].circuit_connector = {}
+    data.raw["lab"]["lab"].draw_circuit_wires = true
+    data.raw["lab"]["lab"].circuit_wire_max_distance = 14
+end
+if not data.raw["pipe"]["niobium-pipe"].circuit_connector then
+    data.raw["pipe"]["niobium-pipe"].circuit_connector = data.raw["pipe"]["pipe"].circuit_connector
+    data.raw["pipe"]["niobium-pipe"].draw_circuit_wires = data.raw["pipe"]["pipe"].draw_circuit_wires
+    data.raw["pipe"]["niobium-pipe"].circuit_wire_max_distance = data.raw["pipe"]["pipe"].circuit_wire_max_distance
+    data.raw["pipe"]["niobium-pipe"].default_fluid_temperature_signal = data.raw["pipe"]["pipe"].default_fluid_temperature_signal
+    data.raw["pipe"]["ht-pipes"].circuit_connector = data.raw["pipe"]["pipe"].circuit_connector
+    data.raw["pipe"]["ht-pipes"].draw_circuit_wires = data.raw["pipe"]["pipe"].draw_circuit_wires
+    data.raw["pipe"]["ht-pipes"].circuit_wire_max_distance = data.raw["pipe"]["pipe"].circuit_wire_max_distance
+    data.raw["pipe"]["ht-pipes"].default_fluid_temperature_signal = data.raw["pipe"]["pipe"].default_fluid_temperature_signal
+    data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_connector = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_connector
+    data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].draw_circuit_wires = data.raw["pipe-to-ground"]["pipe-to-ground"].draw_circuit_wires
+    data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_wire_max_distance = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_wire_max_distance
+    data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].default_fluid_temperature_signal = data.raw["pipe-to-ground"]["pipe-to-ground"].default_fluid_temperature_signal
+    data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_connector = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_connector
+    data.raw["pipe-to-ground"]["ht-pipes-to-ground"].draw_circuit_wires = data.raw["pipe-to-ground"]["pipe-to-ground"].draw_circuit_wires
+    data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_wire_max_distance = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_wire_max_distance
+    data.raw["pipe-to-ground"]["ht-pipes-to-ground"].default_fluid_temperature_signal = data.raw["pipe-to-ground"]["pipe-to-ground"].default_fluid_temperature_signal
+end
+if not data.raw["boiler"]["oil-boiler-mk01"].circuit_connector then
+    data.raw["boiler"]["oil-boiler-mk01"].circuit_connector = {{},{},{},{}}
+    data.raw["boiler"]["oil-boiler-mk01"].draw_circuit_wires = true
+    data.raw["boiler"]["oil-boiler-mk01"].circuit_wire_max_distance = 14
+    data.raw["boiler"]["lrf-panel-mk01"].circuit_connector = {{},{},{},{}}
+    data.raw["boiler"]["lrf-panel-mk01"].draw_circuit_wires = true
+    data.raw["boiler"]["lrf-panel-mk01"].circuit_wire_max_distance = 14
+    data.raw["boiler"]["stirling-concentrator"].circuit_connector = {{},{},{},{}}
+    data.raw["boiler"]["stirling-concentrator"].draw_circuit_wires = true
+    data.raw["boiler"]["stirling-concentrator"].circuit_wire_max_distance = 14
+    data.raw["boiler"]["solar-tower-building"].circuit_connector = {{},{},{},{}}
+    data.raw["boiler"]["solar-tower-building"].draw_circuit_wires = true
+    data.raw["boiler"]["solar-tower-building"].circuit_wire_max_distance = 14
+end
+
+-- TODO: Pipe connection graphical issues for centrifugal pan, niobium mine, grease table, cooling tower mk2
 -- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
--- TODO: Reduce overhang ambiguity for: lab, barreling machine, electric boiler, gas processing unit, advanced foundry, smelter, chemical plant, heavy oil refinery, classifier, compost plant, zungror lair, xeno pen, moss farm, etc
--- TODO: Many buildings have graphics with inaccurate pipe locations when flipped
 -- TODO: Fix layering issues for HAWT MK1-MK4 (they appear on top of objects in front of them)
--- TODO: Fix crackling sound artifacts from seaweed crop facility
+-- TODO: Fix crackling sound artifacts from seaweed crop facility (most apparent when panning the camera)
 -- TODO: Aerial turbines don't appear correctly in the electric network info graphs (production doesn't show more than 1 for total amount, accumulator charge doesn't list them at all)
 -- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
 -- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
@@ -747,14 +854,10 @@ end
 
 -- Potential balance changes:
 -- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)
--- TODO: Make fluid caravan volume a consistent amount (40k?) instead of 25k or 27.5k due to optional setting
--- TODO: The "chitin" middle oil recipe seems worse than the regular version, incentivizing burning/boiling/composting the chitin instead (this recipe is better in hard mode?)
+-- TODO: Make fluid caravan volume a consistent amount (40k?) instead of 25k or 27.5k due to optional setting (make it based off the outpost volume instead of the volume of py-tank-4000)
 -- TODO: Make shell -> lime recipe available earlier? or make the composting recipe better for it?
 -- TODO: Add setting to balance ingredient amounts for some early recipes? - some (alien life) recipes are weak compared to alternatives
 -- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired
--- TODO: Make worker's food recipe produce more
--- TODO: Make phagnots (gas bladders) more useful before lategame
--- TODO: Rebalance research upgrade TURD to provide greater benefits to earlier science recipes
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")

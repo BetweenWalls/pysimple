@@ -13,7 +13,7 @@ local tech_unlocks = {
     ["fluid-processing-machines-1"] = {"evaporator", "tailings-dust", "tailings-classification", "extract-sulfur", "sulfur-void-tar"},
     ["botany-mk01"] = {"botanical-nursery", "floraspollinin-reprocessing"},
     ["creosote"] = {"treated-wood", "small-electric-pole-2", "carbolic-oil-creosote", "naphthalene-oil-creosote", "anthracene-oil-creosote"},
-    ["moondrop"] = {"moondrop-codex", "moondrop-sample", "moondrop-greenhouse-mk01", "moondrop-seeds", "moondrop-1", "methane-co2", "methanal"},
+    ["moondrop"] = {"tinned-cable", "moondrop-codex", "moondrop-sample", "moondrop-greenhouse-mk01", "moondrop-seeds", "moondrop-1", "methane-co2", "methanal"},
     ["sap-mk01"] = {"sap-extractor-mk01", "sap-seeds", "sap-tree", "sap-01"},
     ["wood-processing"] = {"fwf-mk01", "wood-seeds", "wood-seedling", "tree", "log1", "log2", "log3", "fiber-01", "cellulose-00"},
     ["fluid-pressurization"] = {"vacuum-pump-mk01", "vacuum", "graphite", "vacuum-tube", "saline-water", "gravel-saline-water"},
@@ -69,7 +69,7 @@ local tech_unlocks = {
     ["filtration"] = {"carbon-filter", "hydrogen-chloride", "hydrogen-chloride-void", "zinc-chloride", "active-carbon", "fiber", "micro-fiber", "sand-washing", "filtration-media", "refsyngas-from-filtered-syngas", "fluegas-to-syngas", "wastewater-filtration", "fluegas-filtration", "ash3", "ash-bone", "flue-gas-2"},
     ["coal-mk02"] = {"coarse-coal", "coarse-coal-to-coal"},
     ["coke-mk02"] = {"redhot-coke", "quench-redcoke", "biocrud-pyrolysis", "quench-ovengas", "outlet-gas-01", "outlet-gas-02"},
-    ["copper-mk02"] = {"grade-3-copper", "copper-rejects-recrush", "grade-4-copper", "classify-low-grade", "wash-coper-low-dust", "low-grade-smelting-copper", "molten-copper-04", "hotair-copper-plate-1"},
+    ["copper-mk02"] = {"grade-3-copper", "copper-rejects-recrush", "grade-4-copper", "classify-low-grade", "wash-coper-low-dust", "low-grade-smelting-copper", "molten-copper-04", "copper-plate-1", "hotair-copper-plate-1"},
     ["tin-mk02"] = {"grade-3-tin", "tin-ore-rejects", "wash-grade-3-tin", "tin-plate-4", "ball-grade-4-tin", "molten-tin-01", "tin-plate-3", "hotair-tin-plate-3"},
     ["solder-mk02"] = {"molten-solder-0", "molten-solder-1", "solder", "hotair-solder"},
     ["nickel-mk02"] = {"grade-3-nickel", "grade-2-nickel-recrush", "nickel-rejects-recrush", "grade-4-nickel", "molten-nickel-01", "nickel-plate-3", "hotair-nickel-plate-3", "tar-to-nickel"},
@@ -104,10 +104,10 @@ local tech_unlocks = {
     ["korlex"] = {"korlex-codex", "earth-cow-sample", "korlex", "ez-ranch-mk01", "korlex-food-01", "korlex-pup-1", "korlex-1", "barrel-milk", "korlex-milk-1", "milk-barrel", "empty-milk-barrel", "casein-mixture-01", "casein-mixture-02", "casein-pulp-01", "casein-pulp-02", "casein", "caged-korlex", "uncaged-korlex", "full-render-kor"},
     ["water-invertebrates-mk01"] = {"sea-sponge-codex", "earth-sea-sponge-sample", "sea-sponge", "sponge-culture-mk01", "sea-sponge-sprouts", "sea-sponge-1", "sea-sponge-sprouts-processing-01", "sea-sponge-processing-01", "zipir-codex", "earth-crustacean-sample", "xyhiphoe-codex", "xyhiphoe", "xyhiphoe-pool-mk01", "xyhiphoe-cub-1", "xyhiphoe-1", "full-render-xyhiphoe", "arthropod-blood-to-blood", "waste-water-urea"},
     ["zipir"] = {"zipir1", "zipir-reef-mk01", "stone-wool", "stone-wool2", "zipir-eggs-1", "zipir-a-1", "zipir-a-2", "full-render-zipir"},
-    ["moondrop-mk02"] = {"tinned-cable", "moondrop-2", "methane-py-fertilizer", "moondrop-mk02", "moondrop-seeds-mk02", "moondrop-mk02-breeder"},
+    ["moondrop-mk02"] = {"moondrop-2", "methane-py-fertilizer", "moondrop-mk02", "moondrop-seeds-mk02", "moondrop-mk02-breeder"},
     ["fertilizer-mk02"] = {"fish-hydrolysate", "fertilizer-fish-1", "fertilizer-1", "fertilizer-3"},
     --["microfilters"] = {"fawogae-spore", "yaedols-spores", "navens-spore", "bhoddos-spore"}, -- TODO: Can productivity effects be conveniently differentiated from recipe effects so they can be ordered here?
-    ["hot-air-mk02"] = {"cog-void-soot", "reheat-coke-gas", "warmer-stone-brick-1", "warmer-air-2"},
+    ["hot-air-mk02"] = {"reheat-coke-gas", "warmer-stone-brick-1", "warmer-air-2", "cog-void-soot"},
     ["fuel-production"] = {"olefin", "gasoline", "gasoline-cellulose", "aromatics-to-petgas"},
     ["py-asphalt-mk02"] = {"py-quartz", "bitumen-to-asphalt", "py-coal-tile", "py-iron", "py-steel", "py-aluminium", "py-nexelit"},
     ["genetics-mk03"] = {"cytostatics", "retrovirus-2", "dna-polymerase", "primers", "alien-sample-02"},
@@ -229,6 +229,8 @@ local tech_unlocks = {
 
     ["py-science-pack-3"] = {"enriched-ash", "washed-ash", "processed-ash", "advanced-substrate", "bio-ore", "biocarnation-harvesting", "py-science-pack-3"},
     ["nonrenewable-mk04"] = {"py-heat-exchanger-mk04", "steam-turbine-mk04", "cool-pressured-steam-4000-to-3000", "cool-pressured-steam-5000-to-4000", "he-05"},
+    ["tholin-mk01"] = {"tholin-atm-mk01", "tholin-plant-mk01", "proto-tholins", "empty-proto-tholins-vessel", "fill-proto-tholins-vessel", "tholins-capsule", "empty-tholins-vessel", "tholin-to-co2", "tholin-to-hydrogen", "tholin-to-nitrogen"},
+    ["nuclear-power"] = {"nuclear-reactor-mk01", "nuclear-reactor-mox-mk01", "nuclear-reactor-mox-mk01-uncraft", "pu239-uf6", "nuclear-molten-salt-01", "mox-molten-salt-01", "neutron-moderator-mk01", "control-rod", "used-control-rod", "neutron-absorbston", "thermal-neutron", "phosphorus-tricloride", "phosphoryl-chloride", "tbp-2", "lithium-salt-fuel-seperation", "waste-uranium-disolving", "purex-washing-1", "purex-washing-2", "purex-washing-4", "purex-washing-3", "purex-waste-washing-1", "purex-waste-washing-2", "purex-waste-vitrification", "purex-raffinate-vitrification", "plutonium-washing-1", "plutonium-washing-2", "plutonium-washing-3", "plutonium-peroxide", "antimony-phosphate-2", "mox-fuel-seperation", "waste-mox-disolving", "plutonium-seperation-2", "pu-241-transmutation", "pu-242-transmutation", "fuelrod-mk02", "sodium-carbonate-from-solution"},
     ["kmauts"] = {"kmauts-codex", "kmauts", "kmauts-enclosure-mk01", "kmauts-cub-1", "kmauts-1", "caged-kmauts", "uncaged-kmauts", "full-render-kmauts", "serine", "bacteria-1", "methane-from-liquid-manure"},
     ["phadai"] = {"phadai-codex", "earth-tiger-sample", "phadai", "phadai-enclosure-mk01", "phadai-food-01", "phadai-pup-1", "phadai-pup-2", "phadai-1", "Phadai-Dance-Dance-Revolution-1", "phadai-recharge-1", "caged-phadai", "uncaged-phadai", "full-render-phadais"},
     ["simik-mk01"] = {"simik-codex", "strorix-unknown-sample", "simik", "simik-den-mk01", "simik-food-01", "simik-cub-1", "caged-simik-1", "simik-poop-1", "caged-simik", "uncaged-simik", "full-render-simik", "simik-blood-to-tar"},
@@ -249,7 +251,7 @@ local tech_unlocks = {
     -- TODO: Reorder unlocks for remaining py3 technologies and beyond
 }
 
-if (settings.startup["pysimple-descriptions"].value and not mods["PyBlock"]) or technology_adjustments ~= "1" then
+if (settings.startup["pysimple-recipe-menu"].value and not mods["PyBlock"]) or technology_adjustments ~= "1" then
     if not (settings.startup["py-tank-adjust"].value or settings.startup["pysimple-storage-tanks"].value) then tech_unlocks["py-storage-tanks"] = nil end
     -- reorders recipe unlocks by priority based on the above table
     for tech,unlocks in pairs(tech_unlocks) do

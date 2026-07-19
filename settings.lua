@@ -54,24 +54,31 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-brains",
+        name = "pysimple-decay",
         setting_type = "startup",
         default_value = false,
         order = "h"
     },
     {
         type = "bool-setting",
-        name = "pysimple-faster-recipes",
+        name = "pysimple-brains",
         setting_type = "startup",
         default_value = false,
         order = "i"
     },
     {
         type = "bool-setting",
-        name = "pysimple-misc",
+        name = "pysimple-faster-recipes",
         setting_type = "startup",
         default_value = false,
         order = "j"
+    },
+    {
+        type = "bool-setting",
+        name = "pysimple-misc",
+        setting_type = "startup",
+        default_value = false,
+        order = "k"
     },
 })
 
@@ -83,6 +90,12 @@ if data.raw["bool-setting"]["future-beacons"] ~= nil then
 end
 if data.raw["bool-setting"]["pypp-big-inventory-gui"] ~= nil then
     data.raw["bool-setting"]["pypp-big-inventory-gui"].default_value = true
+end
+
+if feature_flags["spoiling"] then
+    data.raw["bool-setting"]["pysimple-decay"].hidden = false
+else
+    data.raw["bool-setting"]["pysimple-decay"].hidden = true
 end
 
 if mods["PyBlock"] or mods["pystellarexpedition"] then

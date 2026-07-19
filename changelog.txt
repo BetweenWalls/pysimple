@@ -1,4 +1,22 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.1
+Date: 2026.07.19
+  Changes:
+    - Niobium pipes, multipurpose pipes, labs, oil burning boilers, LFR panels, stirling dish concentrators, and solar tower
+      megastructures can now be connected to the circuit network
+    - Marked several additional buildings as "tall" so their visibility can be toggled
+    - Removed recommended mods which haven't been updated for Factorio 2.1
+  Balancing:
+    - Added a new startup setting which makes some items decay faster - affects cellulose, agar, and incubated petri dishes
+    - The "other balance changes" setting now changes accumulators to have a higher charge/discharge rate instead of being cheaper,
+      increases the productivity of the early chitin processing recipes and the worker's food recipe, increases the stack size of
+      worker foods, makes phagnot slaughtering recipes produce more gas bladders, and adjusts values for the following turds:
+      sawblades (wpu), internal burner (fwf), total darkness (incubator), temperature control and dosing pumps (fish),
+      unstable phosphoronium and material spectroscopy (research)
+    - Adjusted rebalanced recipe speed multipliers for: fiber-01 (x5 to x3), fine-nexelit-powder (x1 to x2), fish fertilizer recipes,
+      gas bladder recipes, animal part biomass recipes, ethylene-from-fruit (x1 to x2), xyhiphoe-single (x1 to x3),
+      spontaneous fragmentation sponge recipes (x1 to x2), quantum folding recipes (x1 to x8)
+---------------------------------------------------------------------------------------------------
 Version: 1.1.0
 Date: 2026.07.08
   Changes:

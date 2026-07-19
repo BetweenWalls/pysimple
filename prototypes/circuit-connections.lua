@@ -74,7 +74,7 @@ local tiered_circuit_buildings = {
         ["ground-borer-mk0"] = { variation = 27, main_offset = util.by_pixel(-22.625, -10.25), shadow_offset = util.by_pixel(-22.625, -10.25), show_shadow = true },
         ["spore-collector-mk0"] = { variation = 2, main_offset = util.by_pixel( 35.25, -73.5), shadow_offset = util.by_pixel( 35.25, -73.5), show_shadow = true },
         ["tholin-atm-mk0"] = { variation = 25, main_offset = util.by_pixel(-47.875, -47.25), shadow_offset = util.by_pixel(-47.875, -47.25), show_shadow = true },
-        ["jaw-crusher-mk0"] = { variation = 1, main_offset = util.by_pixel( 7.5, -9.25), shadow_offset = util.by_pixel( 7.5, -9.25), show_shadow = true },
+        ["jaw-crusher-mk0"] = { variation = 27, main_offset = util.by_pixel(-8, -30.625), shadow_offset = util.by_pixel(-8, -30.625), show_shadow = true },
         ["impact-crusher-mk0"] = { variation = 1, main_offset = util.by_pixel(-1.875, 48.25), shadow_offset = util.by_pixel(-1.875, 48.25), show_shadow = true },
         ["secondary-crusher-mk0"] = { variation = 25, main_offset = util.by_pixel(-23.25, -20.625), shadow_offset = util.by_pixel(-23.25, -20.625), show_shadow = true },
         ["ball-mill-mk0"] = { variation = 2, main_offset = util.by_pixel( 7, 39.625), shadow_offset = util.by_pixel( 7, 39.625), show_shadow = true },
@@ -86,7 +86,7 @@ local tiered_circuit_buildings = {
         ["smelter-mk0"] = { variation = 0, main_offset = util.by_pixel( 53.375, -2.75), shadow_offset = util.by_pixel( 53.375, -2.75), show_shadow = true },
         ["classifier-mk0"] = { variation = 0, main_offset = util.by_pixel( 6.375, -49.625), shadow_offset = util.by_pixel( 6.375, -49.625), show_shadow = true },
         ["hydroclassifier-mk0"] = { variation = 3, main_offset = util.by_pixel( 20.125, -73.625), shadow_offset = util.by_pixel( 20.125, -73.625), show_shadow = true },
-        ["grease-table-mk0"] = { variation = 1, main_offset = util.by_pixel(-33.25, -2.625), shadow_offset = util.by_pixel(-33.25, -2.625), show_shadow = true },
+        ["grease-table-mk0"] = { variation = 25, main_offset = util.by_pixel(-41,  4.625), shadow_offset = util.by_pixel(-41,  4.625), show_shadow = true },    
         ["flotation-cell-mk0"] = { variation = 34, main_offset = util.by_pixel( 55.75, -11.75), shadow_offset = util.by_pixel( 55.75, -11.75), show_shadow = true },
         ["leaching-station-mk0"] = { variation = 0, main_offset = util.by_pixel( 59.25, 17.875), shadow_offset = util.by_pixel( 59.25, 17.875), show_shadow = true },
         ["scrubber-mk0"] = { variation = 1, main_offset = util.by_pixel( 67.875, 14.125), shadow_offset = util.by_pixel( 67.875, 14.125), show_shadow = true },
@@ -136,7 +136,12 @@ local tiered_circuit_buildings = {
         ["particle-accelerator-mk0"] = { variation = 34, main_offset = util.by_pixel( 149.875, 69.25), shadow_offset = util.by_pixel( 149.875, 69.25), show_shadow = true },
         ["tholin-plant-mk0"] = { variation = 0, main_offset = util.by_pixel( 5.125, -68.5), shadow_offset = util.by_pixel( 5.125, -68.5), show_shadow = true },
         ["mixer-mk0"] = { variation = 31, main_offset = util.by_pixel(-75.625, 17.125), shadow_offset = util.by_pixel(-75.625, 17.125), show_shadow = true },
-        ["numal-reef-mk0"] = {},
+        ["numal-reef-mk0"] = {
+            { variation =  10, main_offset = util.by_pixel(-5.875,  23), shadow_offset = util.by_pixel(-5.875,  23), show_shadow = true },
+            { variation =  10, main_offset = util.by_pixel( 30.625,  41.125), shadow_offset = util.by_pixel( 30.625,  41.125), show_shadow = true },
+            { variation =  10, main_offset = util.by_pixel(-10.625,  99.5), shadow_offset = util.by_pixel(-10.625,  99.5), show_shadow = true },
+            { variation =  10, main_offset = util.by_pixel(-42.875,  44), shadow_offset = util.by_pixel(-42.875,  44), show_shadow = true },
+        },
     },
     ["furnace"] = {
         ["compost-plant-mk0"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
@@ -158,7 +163,7 @@ local untiered_circuit_buildings = {
         ["py-heat-exchanger"] = { variation = 1, main_offset = util.by_pixel( 37.875, -40.875), shadow_offset = util.by_pixel( 37.875, -40.875), show_shadow = true },
         ["sand-extractor"] = { variation = 1, main_offset = util.by_pixel( 14.125, 1.375), shadow_offset = util.by_pixel( 14.125, 1.375), show_shadow = true },
         ["ground-borer"] = { variation = 27, main_offset = util.by_pixel(-22.625, -10.25), shadow_offset = util.by_pixel(-22.625, -10.25), show_shadow = true },
-        ["jaw-crusher"] = { variation = 1, main_offset = util.by_pixel( 7.5, -9.25), shadow_offset = util.by_pixel( 7.5, -9.25), show_shadow = true },
+        ["jaw-crusher"] = { variation = 27, main_offset = util.by_pixel(-8, -30.625), shadow_offset = util.by_pixel(-8, -30.625), show_shadow = true },
         ["classifier"] = { variation = 0, main_offset = util.by_pixel( 6.375, -49.625), shadow_offset = util.by_pixel( 6.375, -49.625), show_shadow = true },
         ["hpf"] = { variation = 1, main_offset = util.by_pixel(-48.125, 7.875), shadow_offset = util.by_pixel(-48.125, 7.875), show_shadow = true },
         ["washer"] = { variation = 4, main_offset = util.by_pixel( 62.125, 24.75), shadow_offset = util.by_pixel( 62.125, 24.75), show_shadow = true },
@@ -232,6 +237,7 @@ local untiered_circuit_buildings = {
         ["py-sinkhole"] = { variation = 34, main_offset = util.by_pixel( 35.375, 16.125), shadow_offset = util.by_pixel( 35.375, 16.125), show_shadow = true },
         ["py-burner"] = { variation = 27, main_offset = util.by_pixel( 15.5, -47.25), shadow_offset = util.by_pixel( 15.5, -47.25), show_shadow = true },
         ["co2-absorber"] = { variation = 39, main_offset = util.by_pixel(-49.75, -1.125), shadow_offset = util.by_pixel(-49.75, -1.125), show_shadow = true },
+        ["barrel-machine-mk01"] = { variation =  0, main_offset = util.by_pixel( 5.375,  10.375), shadow_offset = util.by_pixel( 5.375,  10.375), show_shadow = true },
         ["provider-tank"] = { variation =  6, main_offset = util.by_pixel(-5.625,  1.5), shadow_offset = util.by_pixel(-5.625,  1.5), show_shadow = true },
         ["requester-tank"] = { variation =  6, main_offset = util.by_pixel(-5.625,  1.5), shadow_offset = util.by_pixel(-5.625,  1.5), show_shadow = true },
         ["compost-plant-mk01-turd"] = { variation = 2, main_offset = util.by_pixel( 71.875, -78.625), shadow_offset = util.by_pixel( 71.875, -78.625), show_shadow = true },
@@ -258,7 +264,6 @@ local untiered_circuit_buildings = {
         ["py-deposit-basic"] = { variation =  1, main_offset = util.by_pixel( 44.5,  20.375), shadow_offset = util.by_pixel( 44.5,  20.375), show_shadow = true },
         ["outpost"] = { variation = 33, main_offset = util.by_pixel( 46.625, 3.625), shadow_offset = util.by_pixel( 46.625, 3.625), show_shadow = true },
         ["outpost-aerial"] = { variation = 39, main_offset = util.by_pixel( 170.375, -190.75), shadow_offset = util.by_pixel( 170.375, -190.75), show_shadow = true },
-        --["aerial-base-chest"] = { variation =  0, main_offset = util.by_pixel( 136.75,  47.5), shadow_offset = util.by_pixel( 136.75,  47.5), show_shadow = true },
     },
     ["logistic-container"] = {
         ["py-shed-storage"] = { variation = 26, main_offset = util.by_pixel( 15.375,  4.375), shadow_offset = util.by_pixel( 15.375,  4.375), show_shadow = true },
@@ -305,6 +310,32 @@ local untiered_circuit_buildings = {
     ["rocket-silo"] = {
         ["mega-farm"] = { variation = 27, main_offset = util.by_pixel( 50.25, -49), shadow_offset = util.by_pixel( 50.25, -49), show_shadow = true },
     },
+    ["lab"] = {
+        ["lab"] = { variation =  0, main_offset = util.by_pixel( 31.875,  40.125), shadow_offset = util.by_pixel( 31.875,  40.125), show_shadow = true },
+    },
+    ["boiler"] = {
+        ["oil-boiler-mk01"] = { variation = 31, main_offset = util.by_pixel(-43.375,  29.875), shadow_offset = util.by_pixel(-43.375,  29.875), show_shadow = true },
+        ["lrf-panel-mk01"] = { variation =  0, main_offset = util.by_pixel( 4.375,  50.625), shadow_offset = util.by_pixel( 4.375,  50.625), show_shadow = true },
+        ["stirling-concentrator"] = { variation =  1, main_offset = util.by_pixel( 50.75, 0), shadow_offset = util.by_pixel( 50.75, 0), show_shadow = true },
+        ["solar-tower-building"] = { variation =  1, main_offset = util.by_pixel( 225,  222.625), shadow_offset = util.by_pixel( 225,  222.625), show_shadow = true },
+    },
+    ["pipe"] = {
+        ["ht-pipes"] = { variation =  2, main_offset = util.by_pixel(-0.25, -9.875), shadow_offset = util.by_pixel(-0.25, -9.875), show_shadow = true },
+    },
+    ["pipe-to-ground"] = {
+        ["niobium-pipe-to-ground"] = {
+            { variation =  2, main_offset = util.by_pixel( 0.25, -17.375), shadow_offset = util.by_pixel( 0.25, -17.375), show_shadow = true },
+            { variation =  8, main_offset = util.by_pixel( 6.75, -2.25), shadow_offset = util.by_pixel( 6.75, -2.25), show_shadow = true },
+            { variation =  6, main_offset = util.by_pixel(0,  3.625), shadow_offset = util.by_pixel(0,  3.625), show_shadow = true },
+            { variation = 12, main_offset = util.by_pixel(-7, -3), shadow_offset = util.by_pixel(-7, -3), show_shadow = true },
+        },
+        ["ht-pipes-to-ground"] = {
+            { variation =  2, main_offset = util.by_pixel( 0.25, -17.375), shadow_offset = util.by_pixel( 0.25, -17.375), show_shadow = true },
+            { variation =  8, main_offset = util.by_pixel(-4.125, -5.75), shadow_offset = util.by_pixel(-4.125, -5.75), show_shadow = true },
+            { variation =  6, main_offset = util.by_pixel(-0.25,  3.875), shadow_offset = util.by_pixel(-0.25,  3.875), show_shadow = true },
+            { variation = 12, main_offset = util.by_pixel( 4.125, -5), shadow_offset = util.by_pixel( 4.125, -5), show_shadow = true },
+        },
+    },
 }
 
 if settings.startup["pysimple-graphics"].value then
@@ -312,14 +343,8 @@ if settings.startup["pysimple-graphics"].value then
         for name,info in pairs(buildings) do
             for i=1,4 do
                 if data.raw[kind][name..i] then
-                    if name == "numal-reef-mk0" then -- numal buildings have rotations without a position which works well for all versions
-                        data.raw[kind][name..i].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, {
-                            { variation =  10, main_offset = util.by_pixel(-5.875,  23), shadow_offset = util.by_pixel(-5.875,  23), show_shadow = true },
-                            { variation =  10, main_offset = util.by_pixel( 30.625,  41.125), shadow_offset = util.by_pixel( 30.625,  41.125), show_shadow = true },
-                            { variation =  10, main_offset = util.by_pixel(-10.625,  99.5), shadow_offset = util.by_pixel(-10.625,  99.5), show_shadow = true },
-                            { variation =  10, main_offset = util.by_pixel(-42.875,  44), shadow_offset = util.by_pixel(-42.875,  44), show_shadow = true },
-
-                        } )
+                    if #info == 4 then
+                        data.raw[kind][name..i].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info[1], info[2], info[3], info[4] } )
                     else
                         data.raw[kind][name..i].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
                     end
@@ -337,6 +362,10 @@ if settings.startup["pysimple-graphics"].value then
                         table.insert(connections, circuit_connector_definitions.create_single( universal_connector_template, info ))
                     end
                     data.raw[kind][name].circuit_connector = connections
+                elseif kind == "pipe" then
+                    data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info, info, info, info, info, info, info, info, info, info, info, info, info } )
+                elseif #info == 4 then
+                    data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info[1], info[2], info[3], info[4] } )
                 else
                     if #data.raw[kind][name].circuit_connector == 4 then
                         data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info } )
