@@ -24,8 +24,8 @@ local tiered_circuit_buildings = {
         ["zungror-lair-mk0"] = { variation = 4, main_offset = util.by_pixel( 24.5, 127.875), shadow_offset = util.by_pixel( 24.5, 127.875), show_shadow = true },
         ["xenopen-mk0"] = { variation = 4, main_offset = util.by_pixel( 41, 147.75), shadow_offset = util.by_pixel( 41, 147.75), show_shadow = true },
         ["zipir-reef-mk0"] = { variation = 26, main_offset = util.by_pixel( 13.5, 37.875), shadow_offset = util.by_pixel( 13.5, 37.875), show_shadow = true },
-        ["trits-reef-mk0"] = { variation = 1, main_offset = util.by_pixel(-33, 4.75), shadow_offset = util.by_pixel(-33, 4.75), show_shadow = true },
         ["xyhiphoe-pool-mk0"] = { variation = 2, main_offset = util.by_pixel( 41.875, -114.25), shadow_offset = util.by_pixel( 41.875, -114.25), show_shadow = true },
+        ["trits-reef-mk0"] = { variation = 1, main_offset = util.by_pixel(-33, 4.75), shadow_offset = util.by_pixel(-33, 4.75), show_shadow = true },
         ["dhilmos-pool-mk0"] = { variation = 2, main_offset = util.by_pixel(-147.625, 54.125), shadow_offset = util.by_pixel(-147.625, 54.125), show_shadow = true },
         ["moss-farm-mk0"] = { variation = 0, main_offset = util.by_pixel( 19, -43.5), shadow_offset = util.by_pixel( 19, -43.5), show_shadow = true },
         ["seaweed-crop-mk0"] = { variation = 31, main_offset = util.by_pixel( 181, -209.5), shadow_offset = util.by_pixel( 181, -209.5), show_shadow = true },
@@ -231,6 +231,7 @@ local untiered_circuit_buildings = {
         ["advanced-bio-reactor-mk04-turd1"] = { variation = 35, main_offset = util.by_pixel( 22, 26.5), shadow_offset = util.by_pixel( 22, 26.5), show_shadow = true },
         ["advanced-bio-reactor-mk04-turd2"] = { variation = 35, main_offset = util.by_pixel( 22, 26.5), shadow_offset = util.by_pixel( 22, 26.5), show_shadow = true },
         ["advanced-bio-reactor-mk04-turd3"] = { variation = 35, main_offset = util.by_pixel( 22, 26.5), shadow_offset = util.by_pixel( 22, 26.5), show_shadow = true },
+        ["oil-boiler-mk01"] = { variation = 31, main_offset = util.by_pixel(-43.375,  29.875), shadow_offset = util.by_pixel(-43.375,  29.875), show_shadow = true },
     },
     ["furnace"] = {
         ["py-gas-vent"] = { variation = 27, main_offset = util.by_pixel( 11.5, -13.5), shadow_offset = util.by_pixel( 11.5, -13.5), show_shadow = true },
@@ -315,6 +316,7 @@ local untiered_circuit_buildings = {
     },
     ["boiler"] = {
         ["oil-boiler-mk01"] = { variation = 31, main_offset = util.by_pixel(-43.375,  29.875), shadow_offset = util.by_pixel(-43.375,  29.875), show_shadow = true },
+        ["oil-boiler-mk01-legacy"] = { variation = 31, main_offset = util.by_pixel(-43.375,  29.875), shadow_offset = util.by_pixel(-43.375,  29.875), show_shadow = true },
         ["lrf-panel-mk01"] = { variation =  0, main_offset = util.by_pixel( 4.375,  50.625), shadow_offset = util.by_pixel( 4.375,  50.625), show_shadow = true },
         ["stirling-concentrator"] = { variation =  1, main_offset = util.by_pixel( 50.75, 0), shadow_offset = util.by_pixel( 50.75, 0), show_shadow = true },
         ["solar-tower-building"] = { variation =  1, main_offset = util.by_pixel( 225,  222.625), shadow_offset = util.by_pixel( 225,  222.625), show_shadow = true },

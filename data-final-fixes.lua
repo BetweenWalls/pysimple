@@ -325,7 +325,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
             ["furnace"] = { "py-gas-vent", "py-sinkhole", "py-burner" },
             ["boiler"] = { "oil-boiler-mk01" },
             ["solar-panel"] = { "multiblade-turbine-mk01", "multiblade-turbine-mk01-blank" },
-            ["assembling-machine"] = { "dino-dig-site", "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04" },
+            ["assembling-machine"] = { "dino-dig-site", "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04", "oil-boiler-mk01" },
             ["fuel-category"] = { "biomass", "chemical" },
         },
         ["description"] = {
@@ -459,17 +459,17 @@ if settings.startup["pysimple-graphics"].value then
         ["py-iron"] = 25,
         ["py-aluminium"] = 26,
         ["py-limestone"] = 27,
-        ["black-refined-concrete"] = 28,
-        ["brown-refined-concrete"] = 29,
-        ["red-refined-concrete"] = 30,
-        ["orange-refined-concrete"] = 31,
-        ["yellow-refined-concrete"] = 32,
-        ["acid-refined-concrete"] = 33,
-        ["green-refined-concrete"] = 34,
-        ["cyan-refined-concrete"] = 35,
-        ["blue-refined-concrete"] = 36,
-        ["purple-refined-concrete"] = 37,
-        ["pink-refined-concrete"] = 38,
+        ["red-refined-concrete"] = 28,
+        ["orange-refined-concrete"] = 29,
+        ["yellow-refined-concrete"] = 30,
+        ["acid-refined-concrete"] = 31,
+        ["green-refined-concrete"] = 32,
+        ["cyan-refined-concrete"] = 33,
+        ["blue-refined-concrete"] = 34,
+        ["purple-refined-concrete"] = 35,
+        ["pink-refined-concrete"] = 36,
+        ["brown-refined-concrete"] = 37,
+        ["black-refined-concrete"] = 38,
     }
     for name,layer in pairs(layers) do
         if data.raw.tile[name] then
@@ -614,7 +614,7 @@ if settings.startup["pysimple-graphics"].value then
             "neutron-absorber-mk01", "neutron-absorber-mk02", "neutron-absorber-mk03", "neutron-absorber-mk04",
             "tholin-atm-mk01", "tholin-atm-mk02", "tholin-atm-mk03", "tholin-atm-mk04",
             "advanced-foundry-mk01", "advanced-foundry-mk02", "advanced-foundry-mk03", "advanced-foundry-mk04",
-            "solid-separator", "solid-separator-mk02", "solid-separator-mk03", "solid-separator-mk04", "solid-separator-mk00", 
+            "solid-separator", "solid-separator-mk02", "solid-separator-mk03", "solid-separator-mk04", "solid-separator-mk00",
             "centrifuge-mk01", "centrifuge-mk02", "centrifuge-mk03", "centrifuge-mk04",
             "distilator", "distilator-mk02", "distilator-mk03", "distilator-mk04", "ddc-mk00",
             "trits-reef-mk01", "trits-reef-mk02", "trits-reef-mk03", "trits-reef-mk04",
@@ -625,6 +625,7 @@ if settings.startup["pysimple-graphics"].value then
         ["boiler"] = {"solar-tower-building"},
         ["mining-drill"] = {"aluminium-mine", "geothermal-plant-mk01", "natural-gas-derrick-mk01", "natural-gas-derrick-mk02", "natural-gas-derrick-mk03", "natural-gas-derrick-mk04"},
         ["furnace"] = {"compost-plant-mk00"},
+        ["tree"] = {"tree-01", "tree-02", "tree-02-red", "tree-03", "tree-04", "tree-05", "tree-06", "tree-06-brown", "tree-07", "tree-08", "tree-08-brown", "tree-08-red", "tree-09", "tree-09-brown", "tree-09-red"},
     }
     for kind,buildings in pairs(tall_buildings) do
         for _,name in pairs(buildings) do
@@ -803,6 +804,7 @@ if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new m
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["salt-rock"] = { frequency = 0.5, richness = 5 }
 end
 
+-- Temporary initialization of circuit connection data for entities which should eventually be handled by core py mods (the connector positions are also adjusted in circuit-connections.lua)
 if not data.raw["lab"]["lab"].circuit_connector then
     data.raw["lab"]["lab"].circuit_connector = {}
     data.raw["lab"]["lab"].draw_circuit_wires = true
@@ -826,10 +828,7 @@ if not data.raw["pipe"]["niobium-pipe"].circuit_connector then
     data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_wire_max_distance = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_wire_max_distance
     data.raw["pipe-to-ground"]["ht-pipes-to-ground"].default_fluid_temperature_signal = data.raw["pipe-to-ground"]["pipe-to-ground"].default_fluid_temperature_signal
 end
-if not data.raw["boiler"]["oil-boiler-mk01"].circuit_connector then
-    data.raw["boiler"]["oil-boiler-mk01"].circuit_connector = {{},{},{},{}}
-    data.raw["boiler"]["oil-boiler-mk01"].draw_circuit_wires = true
-    data.raw["boiler"]["oil-boiler-mk01"].circuit_wire_max_distance = 14
+if data.raw["boiler"]["lrf-panel-mk01"] and not data.raw["boiler"]["lrf-panel-mk01"].circuit_connector then
     data.raw["boiler"]["lrf-panel-mk01"].circuit_connector = {{},{},{},{}}
     data.raw["boiler"]["lrf-panel-mk01"].draw_circuit_wires = true
     data.raw["boiler"]["lrf-panel-mk01"].circuit_wire_max_distance = 14
@@ -840,17 +839,30 @@ if not data.raw["boiler"]["oil-boiler-mk01"].circuit_connector then
     data.raw["boiler"]["solar-tower-building"].draw_circuit_wires = true
     data.raw["boiler"]["solar-tower-building"].circuit_wire_max_distance = 14
 end
+if data.raw["boiler"]["oil-boiler-mk01"] and not data.raw["boiler"]["oil-boiler-mk01"].circuit_connector then
+    data.raw["boiler"]["oil-boiler-mk01"].circuit_connector = {{},{},{},{}}
+    data.raw["boiler"]["oil-boiler-mk01"].draw_circuit_wires = true
+    data.raw["boiler"]["oil-boiler-mk01"].circuit_wire_max_distance = 14
+end
+if data.raw["assembling-machine"]["oil-boiler-mk01"] and not data.raw["assembling-machine"]["oil-boiler-mk01"].circuit_connector then
+    data.raw["assembling-machine"]["oil-boiler-mk01"].circuit_connector = {{},{},{},{}}
+    data.raw["assembling-machine"]["oil-boiler-mk01"].draw_circuit_wires = true
+    data.raw["assembling-machine"]["oil-boiler-mk01"].circuit_wire_max_distance = 14
+end
+if data.raw["boiler"]["oil-boiler-mk01-legacy"] and not data.raw["boiler"]["oil-boiler-mk01-legacy"].circuit_connector then
+    data.raw["boiler"]["oil-boiler-mk01-legacy"].circuit_connector = {{},{},{},{}}
+    data.raw["boiler"]["oil-boiler-mk01-legacy"].draw_circuit_wires = true
+    data.raw["boiler"]["oil-boiler-mk01-legacy"].circuit_wire_max_distance = 14
+end
 
--- TODO: Pipe connection graphical issues for centrifugal pan, niobium mine, grease table, cooling tower mk2
--- TODO: desulfurizator-unit recipe is incorrectly listed as a T.U.R.D. recipe (it can be, but isn't necessarily and this is inconsistent with other recipes which are available either way)
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
 -- TODO: Fix layering issues for HAWT MK1-MK4 (they appear on top of objects in front of them)
 -- TODO: Fix crackling sound artifacts from seaweed crop facility (most apparent when panning the camera)
 -- TODO: Aerial turbines don't appear correctly in the electric network info graphs (production doesn't show more than 1 for total amount, accumulator charge doesn't list them at all)
--- TODO: The recipe names for subcritical-water-03 and subcritical-water-02 are mixed up (the mk3 version is unlocked long before the mk2 version)
--- TODO: Rename hydrogen chloride to hydrochloric acid (the former is a gas IRL, but it is a liquid in-game)
+-- TODO: Rename or change disposal methods for fluids which are gases IRL but liquids in-game or vice versa - hydrogen chloride to hydrochloric acid, acetone, etc
 -- TODO: Remove spaces & extra leading zeros from names (e.g. MK 02 -> MK2)
 -- TODO: Move gold tech deeper?
+-- TODO: Update navens abomination turd recipes to be in their own "navens" slaughterhouse menu group and once again grouped with other navens-related items in factoriopedia
 
 -- Potential balance changes:
 -- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)

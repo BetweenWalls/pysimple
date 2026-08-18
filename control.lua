@@ -3,11 +3,18 @@
 script.on_init(
   function()
     initialize()
+    startup()
+  end
+)
+script.on_load(
+  function()
+    startup()
   end
 )
 script.on_configuration_changed(
   function()
     initialize()
+    startup()
   end
 )
 
@@ -34,6 +41,17 @@ function initialize()
   clear_notifications()
 end
 
+-- May be needed in the future to allow the navens abomination turd to be selectable from its own "navens" group within slaughterhouses
+function startup()
+  --[[
+  if settings.startup["pysimple-recipe-menu"].value then
+    if remote.interfaces["py-recipe-gui"] and remote.interfaces["py-recipe-gui"]["add_subgroup"] then
+      remote.call("py-recipe-gui", "add_subgroup", "py-alienlife-navens")
+    end
+  end
+  ]]
+end
+
 --- Updates map colors
 function rechart()
   for _,force in pairs(game.forces) do
@@ -43,7 +61,7 @@ function rechart()
   end
 end
 
---- Enables recipes which should be enabled but aren't due to technology changes and clears notifications for turd recipes
+--- Enables recipes which should be enabled but aren't due to technology changes
 function validate_technology_effects()
   local altered_techs = {
     "coal-processing-1",

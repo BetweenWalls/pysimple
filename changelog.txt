@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.2
+Date: 2026.08.18
+  Changes:
+    - Trees are now considered "tall"
+    - Reordered brown/black refined concrete to be above other colors
+    - Moved navens abomination turd recipes into auog subgroup so it can be selected within the slaughterhouse gui
+    - Removed duplicate subgroup usage for recipes in PyBlock
+    - Recipes are now reorganized within their respective technologies in PyBlock (functional tech tree changes are still disabled)
+    - Organized unsorted Py Veganism items/recipes
+  Balancing:
+    - Adjusted rebalanced recipe speed multipliers for: kicalk (x1 to x2), coal-fawogae (x1 to x2), shaft-mk01 (x5 to x3)
+---------------------------------------------------------------------------------------------------
 Version: 1.1.1
 Date: 2026.07.19
   Changes:
