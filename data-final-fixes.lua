@@ -392,18 +392,18 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
     for kind,names in pairs(turd_item) do
         for _,name in pairs(names) do
             if data.raw[kind][name] then
-                py.add_to_description(kind, data.raw[kind][name], {"turd.font", {"description.pysimple-turd-item"}})
+                py.add_to_description(data.raw[kind][name], nil, {"turd.font", {"description.pysimple-turd-item"}})
             end
         end
     end
     for kind,names in pairs(turd_replacement) do
         for _,name in pairs(names) do
             if data.raw[kind][name] then
-                py.add_to_description(kind, data.raw[kind][name], {"turd.font", {"description.pysimple-turd"}})
+                py.add_to_description(data.raw[kind][name], nil, {"turd.font", {"description.pysimple-turd"}})
             end
         end
     end
-    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description("recipe", data.raw.recipe["zipir1-pyvoid-hatchery"], {"turd.font", {"turd.recipe-replacement"}}) end
+    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description(data.raw.recipe["zipir1-pyvoid-hatchery"], nil, {"turd.font", {"turd.recipe-replacement"}}) end
 
     -- sets "rocket capacity" to be the same as the stack size (removes "too heavy for a rocket!" text)
     if feature_flags["space_travel"] and not (mods["space-age"] or mods["pystellarexpedition"]) then

@@ -1,12 +1,13 @@
 {
 	"name": "pysimple",
-	"version": "1.1.2",
+	"version": "1.1.3",
 	"title": "Pyanodons Streamlined",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
 	"factorio_version": "2.1",
 	"dependencies": [
 		"pyalternativeenergy >= 3.2.1",
+		"pypostprocessing >= 3.1.4",
 		"(?) pyhardmode",
 		"(?) PyBlock",
 		"(?) tidy",
