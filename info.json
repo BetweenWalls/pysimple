@@ -1,12 +1,12 @@
 {
 	"name": "pysimple",
-	"version": "1.1.2",
+	"version": "1.1.3",
 	"title": "Pyanodons Streamlined",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
 	"factorio_version": "2.1",
 	"dependencies": [
-		"pyalternativeenergy >= 3.2.1",
+		"pyalternativeenergy >= 3.2.7",
 		"(?) pyhardmode",
 		"(?) PyBlock",
 		"(?) tidy",
@@ -15,15 +15,18 @@
 		"? blueprint-sandboxes",
 		"? sw-rates-calc-extreme",
 		"? FactorySearch",
+		"? inserter-throughput-fork",
 		"? UndergroundIndicatorsFixed",
 		"? belt-visualizer",
+		"? PipeVisualizer-2-1-Support",
+		"? automatic-underground-pipe-connectors",
 		"? FilterHelper",
 		"? CopyPasteModules",
 		"? force-inventory-insert",
+		"? preserve-products-produced",
 		"? crafting-queue-enhancements",
 		"? HandyHandsRefactored",
-		"? Brighter-Lamps",
-		"? preserve-products-produced"
+		"? gradient-lighting"
 	],
 	"description": "Provides settings to make Py a more polished experience. Organizes menus, updates graphics, alters names & descriptions, adjusts the tech tree, rebalances recipe speeds, and more. All changes are fully configurable via the settings."
 }

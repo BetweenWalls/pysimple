@@ -104,7 +104,7 @@ else
     data.raw["string-setting"]["pysimple-tech-tree"].hidden = false
 end
 
-if mods["pyhardmode"] then
+if mods["pyhardmode"] then -- TODO: Instead of hiding this setting, disable the changes if pyhardmode's "pyhm-decrease-containers-inventory-size" setting is enabled, but otherwise allow it to work as normal
     data.raw["bool-setting"]["pysimple-storage-chests"].hidden = true
 else
     data.raw["bool-setting"]["pysimple-storage-chests"].hidden = false

@@ -1,4 +1,14 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.3
+Date: 2026.09.17
+  Changes:
+    - Updated to use new add_to_description format, preventing a crash
+    - Added optional dependencies (recommendations) to replace those which have been missing since the 2.0 -> 2.1 update
+    - Removed tech tree adjustments for steam cooling recipe unlocks since they're implemented in base py now
+  Balancing:
+    - The "other balance changes" now also extends the support length of elevated rails to be able to span large buildings
+    - Adjusted rebalanced recipe speed multipliers for: scrapin bots turd
+---------------------------------------------------------------------------------------------------
 Version: 1.1.2
 Date: 2026.08.18
   Changes:

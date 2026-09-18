@@ -155,12 +155,6 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     add_unlock("pressured-air", "hot-air-mk01", "fluid-pressurization", 1)
     add_unlock("pressured-water", "hot-air-mk01", "fluid-pressurization", 2)
     if technology_adjustments == "2" then add_unlock("saline-water", "fluid-processing-machines-1") end
-    add_unlock("cool-steam-500-to-250", "nonrenewable-mk01", "nonrenewable-mk02")
-    add_unlock("cool-steam-1000-to-500", "nonrenewable-mk02", "nonrenewable-mk03")
-    add_unlock("cool-steam-2000-to-1000", "nonrenewable-mk03", "nonrenewable-mk04")
-    add_unlock("cool-pressured-steam-2000-to-1000", "nonrenewable-mk02", "nonrenewable-mk01")
-    add_unlock("cool-pressured-steam-3000-to-2000", "nonrenewable-mk03", "nonrenewable-mk02")
-    add_unlock("cool-pressured-steam-4000-to-3000", "nonrenewable-mk04", "nonrenewable-mk03")
     add_unlock("nuclear-sample", "uranium-processing", "chemical-science-pack")
     add_unlock("bio-oil-2", "bioprocessing", "light-oil-mk02")
     add_unlock("resorcinol", "collagen", "epoxy")
@@ -172,7 +166,7 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
     adjust_prerequisites("nexelit-mk01", nil, "titanium-mk01")
     adjust_prerequisites("lead-mk02", "lead-mk01")
     adjust_prerequisites("titanium-mk02", "titanium-mk01")
-    adjust_prerequisites("compost", "mycology-mk01")
+    adjust_prerequisites("compost", "mycology-mk01", "py-science-pack-1")
     adjust_prerequisites("microbiology-mk01", "compost")
     adjust_prerequisites("oil-machines-mk01", "automation-2", "intermetallics-mk01")
     adjust_prerequisites("machine-components-mk01", nil, "automation-2")
@@ -392,18 +386,18 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
     for kind,names in pairs(turd_item) do
         for _,name in pairs(names) do
             if data.raw[kind][name] then
-                py.add_to_description(kind, data.raw[kind][name], {"turd.font", {"description.pysimple-turd-item"}})
+                py.add_to_description(data.raw[kind][name], nil, {"description.pysimple-turd-item"})
             end
         end
     end
     for kind,names in pairs(turd_replacement) do
         for _,name in pairs(names) do
             if data.raw[kind][name] then
-                py.add_to_description(kind, data.raw[kind][name], {"turd.font", {"description.pysimple-turd"}})
+                py.add_to_description(data.raw[kind][name], nil, {"description.pysimple-turd"})
             end
         end
     end
-    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description("recipe", data.raw.recipe["zipir1-pyvoid-hatchery"], {"turd.font", {"turd.recipe-replacement"}}) end
+    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description(data.raw.recipe["zipir1-pyvoid-hatchery"], nil, {"turd.recipe-replacement"}) end
 
     -- sets "rocket capacity" to be the same as the stack size (removes "too heavy for a rocket!" text)
     if feature_flags["space_travel"] and not (mods["space-age"] or mods["pystellarexpedition"]) then
@@ -686,7 +680,7 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
         ["full-render-phagnots-laser"] = {{res="gas-bladder", mult=2}},
         ["full-render-phagnots-music"] = {{res="gas-bladder", mult=2}},
         ["ex-gut-phag"] = {{res="gas-bladder", mult=2}},
-        ["zogna-bacteria-darkness"] = {{res="zogna-bacteria", mult=1.25}},
+        ["zogna-bacteria-darkness"] = {{res="zogna-bacteria", mult=1.1}},
         ["log3-cheap"] = {{ing="ash", mult=1.5}},
         ["log6-cheap"] = {{ing="ash", mult=1.5}},
         ["fish-hydrolysate-cooling"] = {{res="fish-hydrolysate", mult=2}},
@@ -741,6 +735,16 @@ if settings.startup["pysimple-misc"].value then -- "other balance changes"
         data.raw.module["py-sawblade-module-mk02"].effect.productivity = 0.03
         data.raw.module["py-sawblade-module-mk03"].effect.productivity = 0.04
         data.raw.module["py-sawblade-module-mk04"].effect.productivity = 0.05
+    end
+
+    if data.raw["rail-support"] and data.raw["rail-support"]["rail-support"] and data.raw["rail-support"]["rail-support"].support_range < 15 then
+        data.raw["rail-support"]["rail-support"].support_range = 15
+    end
+    if data.raw["rail-ramp"] and data.raw["rail-ramp"]["rail-ramp"] and data.raw["rail-ramp"]["rail-ramp"].support_range < 13 then
+        data.raw["rail-ramp"]["rail-ramp"].support_range = 13
+    end
+    if data.raw["rail-ramp"] and data.raw["rail-ramp"]["dummy-rail-ramp"] and data.raw["rail-ramp"]["dummy-rail-ramp"].support_range < 13 then
+        data.raw["rail-ramp"]["dummy-rail-ramp"].support_range = 13
     end
 
     local auogs = {["module"] = {"auog", "auog-mk02", "auog-mk03", "auog-mk04"}, ["item"] = {"charged-auog"}}
@@ -805,24 +809,24 @@ if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new m
 end
 
 -- Temporary initialization of circuit connection data for entities which should eventually be handled by core py mods (the connector positions are also adjusted in circuit-connections.lua)
-if not data.raw["lab"]["lab"].circuit_connector then
+if data.raw["lab"]["lab"] and not data.raw["lab"]["lab"].circuit_connector then
     data.raw["lab"]["lab"].circuit_connector = {}
     data.raw["lab"]["lab"].draw_circuit_wires = true
     data.raw["lab"]["lab"].circuit_wire_max_distance = 14
 end
-if not data.raw["pipe"]["niobium-pipe"].circuit_connector then
-    data.raw["pipe"]["niobium-pipe"].circuit_connector = data.raw["pipe"]["pipe"].circuit_connector
-    data.raw["pipe"]["niobium-pipe"].draw_circuit_wires = data.raw["pipe"]["pipe"].draw_circuit_wires
-    data.raw["pipe"]["niobium-pipe"].circuit_wire_max_distance = data.raw["pipe"]["pipe"].circuit_wire_max_distance
-    data.raw["pipe"]["niobium-pipe"].default_fluid_temperature_signal = data.raw["pipe"]["pipe"].default_fluid_temperature_signal
-    data.raw["pipe"]["ht-pipes"].circuit_connector = data.raw["pipe"]["pipe"].circuit_connector
-    data.raw["pipe"]["ht-pipes"].draw_circuit_wires = data.raw["pipe"]["pipe"].draw_circuit_wires
-    data.raw["pipe"]["ht-pipes"].circuit_wire_max_distance = data.raw["pipe"]["pipe"].circuit_wire_max_distance
-    data.raw["pipe"]["ht-pipes"].default_fluid_temperature_signal = data.raw["pipe"]["pipe"].default_fluid_temperature_signal
+if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and not data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_connector then
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_connector = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_connector
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].draw_circuit_wires = data.raw["pipe-to-ground"]["pipe-to-ground"].draw_circuit_wires
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_wire_max_distance = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_wire_max_distance
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].default_fluid_temperature_signal = data.raw["pipe-to-ground"]["pipe-to-ground"].default_fluid_temperature_signal
+end
+if data.raw["pipe"]["ht-pipes"] and not data.raw["pipe"]["ht-pipes"].circuit_connector then
+    data.raw["pipe"]["ht-pipes"].circuit_connector = data.raw["pipe"]["pipe"].circuit_connector
+    data.raw["pipe"]["ht-pipes"].draw_circuit_wires = data.raw["pipe"]["pipe"].draw_circuit_wires
+    data.raw["pipe"]["ht-pipes"].circuit_wire_max_distance = data.raw["pipe"]["pipe"].circuit_wire_max_distance
+    data.raw["pipe"]["ht-pipes"].default_fluid_temperature_signal = data.raw["pipe"]["pipe"].default_fluid_temperature_signal
+end
+if data.raw["pipe-to-ground"]["ht-pipes-to-ground"] and not data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_connector then
     data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_connector = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_connector
     data.raw["pipe-to-ground"]["ht-pipes-to-ground"].draw_circuit_wires = data.raw["pipe-to-ground"]["pipe-to-ground"].draw_circuit_wires
     data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_wire_max_distance = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_wire_max_distance
@@ -832,9 +836,13 @@ if data.raw["boiler"]["lrf-panel-mk01"] and not data.raw["boiler"]["lrf-panel-mk
     data.raw["boiler"]["lrf-panel-mk01"].circuit_connector = {{},{},{},{}}
     data.raw["boiler"]["lrf-panel-mk01"].draw_circuit_wires = true
     data.raw["boiler"]["lrf-panel-mk01"].circuit_wire_max_distance = 14
+end
+if data.raw["boiler"]["stirling-concentrator"] and not data.raw["boiler"]["stirling-concentrator"].circuit_connector then
     data.raw["boiler"]["stirling-concentrator"].circuit_connector = {{},{},{},{}}
     data.raw["boiler"]["stirling-concentrator"].draw_circuit_wires = true
     data.raw["boiler"]["stirling-concentrator"].circuit_wire_max_distance = 14
+end
+if data.raw["boiler"]["solar-tower-building"] and not data.raw["boiler"]["solar-tower-building"].circuit_connector then
     data.raw["boiler"]["solar-tower-building"].circuit_connector = {{},{},{},{}}
     data.raw["boiler"]["solar-tower-building"].draw_circuit_wires = true
     data.raw["boiler"]["solar-tower-building"].circuit_wire_max_distance = 14
@@ -857,12 +865,14 @@ end
 
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
 -- TODO: Fix layering issues for HAWT MK1-MK4 (they appear on top of objects in front of them)
+-- TODO: Pipe graphical issues for evaporator on the north side of the building where the pipes appear to extend too far
 -- TODO: Fix crackling sound artifacts from seaweed crop facility (most apparent when panning the camera)
 -- TODO: Aerial turbines don't appear correctly in the electric network info graphs (production doesn't show more than 1 for total amount, accumulator charge doesn't list them at all)
 -- TODO: Rename or change disposal methods for fluids which are gases IRL but liquids in-game or vice versa - hydrogen chloride to hydrochloric acid, acetone, etc
 -- TODO: Remove spaces & extra leading zeros from names (e.g. MK 02 -> MK2)
 -- TODO: Move gold tech deeper?
 -- TODO: Update navens abomination turd recipes to be in their own "navens" slaughterhouse menu group and once again grouped with other navens-related items in factoriopedia
+-- TODO: Increase costs for py cranes to match other techs at their level
 
 -- Potential balance changes:
 -- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)

@@ -202,6 +202,7 @@ local recipe_speed_multipliers = {
     {names={"fawogae-2", "fawogae-2-nitrogen"}, mult=2.5},
     {names={"fawogae-3", "fawogae-3-nitrogen"}, mult=2},
     {names={"fawogae-4", "fawogae-4-nitrogen"}, mult=1.5},
+    {names={"ulric-1-manure", "ulric-2-manure", "ulric-3-manure", "ulric-4-manure"}, mult=1.2},
     {names={"ulric-manure-1", "ulric-manure-2", "ulric-manure-3", "ulric-manure-4"}, mult=3},
     {names={"full-render-ulrics", "full-render-ulrics-lard", "full-render-ulrics-laser", "full-render-ulrics-music"}, mult=6},
     {names={"ex-blo-ulr", "ex-bon-ulr", "ex-bra-ulr", "ex-fat-ulr", "ex-gut-ulr", "ex-me-ulr", "ex-ski-ulr"}, mult=3},
@@ -421,7 +422,7 @@ function multiply_recipe_speed(name, mult)
     if recipe then
         if recipe.energy_required then
             recipe.energy_required = recipe.energy_required / mult
-            py.add_to_description("recipe", recipe, {"description.pysimple-speed-mult", "×"..mult})
+            py.add_to_description(recipe, nil, {"description.pysimple-speed-mult", "×"..mult})
         end
     elseif debug_errors then
         error("invalid recipe name: "..name)
@@ -435,7 +436,7 @@ function multiply_entity_consumption(kind, name, mult)
         local energy_value = util.parse_energy(building.energy_usage) * 60
         if energy_value then
             building.energy_usage = energy_value * mult .. "W"
-            py.add_to_description("entity", building, {"description.pysimple-consumption-mult", "×"..mult})
+            py.add_to_description(building, nil, {"description.pysimple-consumption-mult", "×"..mult})
         end
     elseif debug_errors then
         error("invalid entity name: "..name)
@@ -466,10 +467,10 @@ if settings.startup["pysimple-faster-recipes"].value then
     end
 end
 
---- Adds a string to a recipe description - used for exceptional cases when the above functions don't work properly
+--- Adds a string to a recipe description - was used for exceptional cases when the above functions didn't work properly prior to the py.add_to_description function using custom_tooltip_fields
 function add_to_description(recipe, localised_string)
     if data.raw.recipe[recipe] then
-        data.raw.recipe[recipe].localised_description = {"?", {"", {"recipe-description." .. recipe}, "\n", localised_string}, localised_string }
+        data.raw.recipe[recipe].localised_description = {"?", {"", {"recipe-description." .. recipe}, "", localised_string}, localised_string }
     end
 end
-add_to_description("purest-nitrogen-gas", {"description.pysimple-speed-mult", "x"..recipe_speed_multipliers["purest-nitrogen-gas"]})
+add_to_description("purest-nitrogen-gas", {""}) -- not necessary, but it turns out that the original description doesn't display correctly without this

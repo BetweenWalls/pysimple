@@ -860,7 +860,7 @@ if settings.startup["pysimple-recipe-menu"].value then
             local ingredient = recipe.ingredients[1]
             local res = recipe.results[1]
             local div = 1
-            if ingredient.type == "fluid" then div = 50 end
+            if ingredient.type == "fluid" then div = 30 end
             if res.amount then
                 data.raw.recipe[name].order = "zpy-recipe-"..tostring(math.max(res.amount / (1000 * ingredient.amount/div), 0.0001))
             else
