@@ -386,18 +386,18 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
     for kind,names in pairs(turd_item) do
         for _,name in pairs(names) do
             if data.raw[kind][name] then
-                py.add_to_description(data.raw[kind][name], nil, {"description.pysimple-turd-item"})
+                py.add_to_description(data.raw[kind][name], nil, {"turd.font", {"description.pysimple-turd-item"}})
             end
         end
     end
     for kind,names in pairs(turd_replacement) do
         for _,name in pairs(names) do
             if data.raw[kind][name] then
-                py.add_to_description(data.raw[kind][name], nil, {"description.pysimple-turd"})
+                py.add_to_description(data.raw[kind][name], nil, {"turd.font", {"description.pysimple-turd"}})
             end
         end
     end
-    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description(data.raw.recipe["zipir1-pyvoid-hatchery"], nil, {"turd.recipe-replacement"}) end
+    if data.raw.recipe["zipir1-pyvoid-hatchery"] then py.add_to_description(data.raw.recipe["zipir1-pyvoid-hatchery"], nil, {"turd.font", {"turd.recipe-replacement"}}) end
 
     -- sets "rocket capacity" to be the same as the stack size (removes "too heavy for a rocket!" text)
     if feature_flags["space_travel"] and not (mods["space-age"] or mods["pystellarexpedition"]) then
@@ -601,11 +601,11 @@ if settings.startup["pysimple-graphics"].value then
         end
     end
 
-    local tall_buildings = {
+    local tall_entities = {
         ["assembling-machine"] = {
             "nuclear-reactor-mox-mk01", "nuclear-reactor-mox-mk02", "cooling-tower-mk02", "rhe", "drp",
-            "tholin-plant-mk01", "tholin-plant-mk02", "tholin-plant-mk03", "tholin-plant-mk04",
             "neutron-absorber-mk01", "neutron-absorber-mk02", "neutron-absorber-mk03", "neutron-absorber-mk04",
+            "neutron-moderator-mk01", "neutron-moderator-mk02", "neutron-moderator-mk03", "neutron-moderator-mk04",
             "tholin-atm-mk01", "tholin-atm-mk02", "tholin-atm-mk03", "tholin-atm-mk04",
             "advanced-foundry-mk01", "advanced-foundry-mk02", "advanced-foundry-mk03", "advanced-foundry-mk04",
             "solid-separator", "solid-separator-mk02", "solid-separator-mk03", "solid-separator-mk04", "solid-separator-mk00",
@@ -614,15 +614,18 @@ if settings.startup["pysimple-graphics"].value then
             "trits-reef-mk01", "trits-reef-mk02", "trits-reef-mk03", "trits-reef-mk04",
         },
         ["generator"] = {"steam-turbine-mk02", "steam-turbine-mk04"},
-        ["solar-panel"] = {"vawt-turbine-mk01"},
         ["electric-energy-interface"] = {"sut"},
         ["boiler"] = {"solar-tower-building"},
+        ["roboport"] = {"py-ze-mk02", "py-ze-mk03"},
         ["mining-drill"] = {"aluminium-mine", "geothermal-plant-mk01", "natural-gas-derrick-mk01", "natural-gas-derrick-mk02", "natural-gas-derrick-mk03", "natural-gas-derrick-mk04"},
         ["furnace"] = {"compost-plant-mk00"},
         ["tree"] = {"tree-01", "tree-02", "tree-02-red", "tree-03", "tree-04", "tree-05", "tree-06", "tree-06-brown", "tree-07", "tree-08", "tree-08-brown", "tree-08-red", "tree-09", "tree-09-brown", "tree-09-red"},
+        ["unit"] = {"caravan", "caravan-turd", "fluidavan", "fluidavan-turd", "nukavan", "nukavan-turd", "flyavan", "flyavan-turd", "fluidflyavan", "fluidflyavan-turd", "digosaurus", "digosaurus-turd", "thikat", "thikat-turd", "work-o-dile", "work-o-dile-turd", "ocula", "gobachov", "huzu", "chorkok"},
+        ["construction-robot"] = {"py-construction-robot-mk01", "py-construction-robot-mk02", "py-construction-robot-mk03", "py-construction-robot-mk04"},
+        ["logistic-robot"] = {"py-logistic-robot-mk01", "py-logistic-robot-mk02", "py-logistic-robot-mk03", "py-logistic-robot-mk04"},
     }
-    for kind,buildings in pairs(tall_buildings) do
-        for _,name in pairs(buildings) do
+    for kind,entities in pairs(tall_entities) do
+        for _,name in pairs(entities) do
             if data.raw[kind][name] then
                 data.raw[kind][name].tall = true
             end
@@ -637,22 +640,22 @@ if feature_flags["spoiling"] and settings.startup["pysimple-decay"].value then -
 end
 
 if settings.startup["pysimple-brains"].value then -- "rebalance brains"
-    local cartridge_recipes = {["brain-cartridge-01"]=5, ["brain-cartridge-02"]=10, ["brain-cartridge-04"]=20}
-    for recipe,amount in pairs(cartridge_recipes) do
-        if data.raw.recipe[recipe] then
-            for _,ingredient in pairs(data.raw.recipe[recipe].ingredients) do
-                if ingredient.name == "brain" then
-                    ingredient.amount = amount
-                end
-            end
-        end
-    end
-    local bioscaffold_recipes = {"bio-scafold", "bio-scafold-with-lamp"}
-    for _,recipe in pairs(bioscaffold_recipes) do
-        if data.raw.recipe[recipe] then
-            for _,ingredient in pairs(data.raw.recipe[recipe].ingredients) do
-                if ingredient.name == "chitin" then
-                    ingredient.amount = 3
+    local recipe_changes = {
+        ["brain-cartridge-01"] = {{ing="brain", mult=1/3}, {ing="scrude", mult=5}, {ing="nbalti", mult=5}},
+        ["brain-cartridge-02"] = {{ing="brain", mult=2/3}, {ing="navens", mult=5}, {ing="glass", mult=5}},
+        ["brain-cartridge-03"] = {{ing="eva", mult=2}, {ing="molybdenum-plate", mult=2}},
+        ["brain-cartridge-04"] = {{ing="brain", mult=4/3}},
+        ["bio-scafold"] = {{ing="chitin", mult=3/20}, {ing="bonemeal", mult=2.4}},
+        ["bio-scafold-with-lamp"] = {{ing="chitin", mult=3/20}, {ing="bonemeal", mult=2.4}},
+    }
+    for name,infos in pairs(recipe_changes) do
+        local recipe = data.raw.recipe[name]
+        if recipe then
+            for _,info in pairs(infos) do
+                for i,ingredient in pairs(recipe.ingredients) do
+                    if ingredient.name == info.ing then
+                        recipe.ingredients[i].amount = math.floor(recipe.ingredients[i].amount * info.mult)
+                    end
                 end
             end
         end
@@ -660,6 +663,8 @@ if settings.startup["pysimple-brains"].value then -- "rebalance brains"
 end
 
 if settings.startup["pysimple-misc"].value then -- "other balance changes"
+    -- TODO: Fix recipe names to match their new output amounts: saline-water, gravel-saline-water, workers-food, iron-slime, chitin-void, chitin-to-geothermal-water, zogna-bacteria-darkness, fish-hydrolysate-cooling
+    -- TODO: Reinvestigate py science renames (other science recipes include the amount of output)
     local recipe_changes = {
         ["saline-water"] = {{ing="stone", mult=2}, {ing="water", mult=2}, {res="water-saline", mult=2}},
         ["gravel-saline-water"] = {{ing="water", mult=2}, {res="water-saline", mult=2}},
@@ -809,22 +814,11 @@ if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new m
 end
 
 -- Temporary initialization of circuit connection data for entities which should eventually be handled by core py mods (the connector positions are also adjusted in circuit-connections.lua)
-if data.raw["lab"]["lab"] and not data.raw["lab"]["lab"].circuit_connector then
-    data.raw["lab"]["lab"].circuit_connector = {}
-    data.raw["lab"]["lab"].draw_circuit_wires = true
-    data.raw["lab"]["lab"].circuit_wire_max_distance = 14
-end
 if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and not data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_connector then
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_connector = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_connector
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].draw_circuit_wires = data.raw["pipe-to-ground"]["pipe-to-ground"].draw_circuit_wires
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].circuit_wire_max_distance = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_wire_max_distance
     data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].default_fluid_temperature_signal = data.raw["pipe-to-ground"]["pipe-to-ground"].default_fluid_temperature_signal
-end
-if data.raw["pipe"]["ht-pipes"] and not data.raw["pipe"]["ht-pipes"].circuit_connector then
-    data.raw["pipe"]["ht-pipes"].circuit_connector = data.raw["pipe"]["pipe"].circuit_connector
-    data.raw["pipe"]["ht-pipes"].draw_circuit_wires = data.raw["pipe"]["pipe"].draw_circuit_wires
-    data.raw["pipe"]["ht-pipes"].circuit_wire_max_distance = data.raw["pipe"]["pipe"].circuit_wire_max_distance
-    data.raw["pipe"]["ht-pipes"].default_fluid_temperature_signal = data.raw["pipe"]["pipe"].default_fluid_temperature_signal
 end
 if data.raw["pipe-to-ground"]["ht-pipes-to-ground"] and not data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_connector then
     data.raw["pipe-to-ground"]["ht-pipes-to-ground"].circuit_connector = data.raw["pipe-to-ground"]["pipe-to-ground"].circuit_connector
@@ -864,11 +858,9 @@ if data.raw["boiler"]["oil-boiler-mk01-legacy"] and not data.raw["boiler"]["oil-
 end
 
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
--- TODO: Fix layering issues for HAWT MK1-MK4 (they appear on top of objects in front of them)
 -- TODO: Pipe graphical issues for evaporator on the north side of the building where the pipes appear to extend too far
--- TODO: Fix crackling sound artifacts from seaweed crop facility (most apparent when panning the camera)
 -- TODO: Aerial turbines don't appear correctly in the electric network info graphs (production doesn't show more than 1 for total amount, accumulator charge doesn't list them at all)
--- TODO: Rename or change disposal methods for fluids which are gases IRL but liquids in-game or vice versa - hydrogen chloride to hydrochloric acid, acetone, etc
+-- TODO: Rename fluids which are gases IRL but liquids in-game or vice versa - hydrogen chloride to hydrochloric acid, acetone, etc
 -- TODO: Remove spaces & extra leading zeros from names (e.g. MK 02 -> MK2)
 -- TODO: Move gold tech deeper?
 -- TODO: Update navens abomination turd recipes to be in their own "navens" slaughterhouse menu group and once again grouped with other navens-related items in factoriopedia
@@ -878,8 +870,8 @@ end
 -- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)
 -- TODO: Make fluid caravan volume a consistent amount (40k?) instead of 25k or 27.5k due to optional setting (make it based off the outpost volume instead of the volume of py-tank-4000)
 -- TODO: Make shell -> lime recipe available earlier? or make the composting recipe better for it?
--- TODO: Add setting to balance ingredient amounts for some early recipes? - some (alien life) recipes are weak compared to alternatives
--- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired
+-- TODO: Add setting to balance ingredient amounts for some early recipes? - some (alien life) recipes are weak/strong compared to alternatives
+-- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired?
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")

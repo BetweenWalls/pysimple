@@ -311,18 +311,12 @@ local untiered_circuit_buildings = {
     ["rocket-silo"] = {
         ["mega-farm"] = { variation = 27, main_offset = util.by_pixel( 50.25, -49), shadow_offset = util.by_pixel( 50.25, -49), show_shadow = true },
     },
-    ["lab"] = {
-        ["lab"] = { variation =  0, main_offset = util.by_pixel( 31.875,  40.125), shadow_offset = util.by_pixel( 31.875,  40.125), show_shadow = true },
-    },
     ["boiler"] = {
         ["oil-boiler-mk01"] = { variation = 31, main_offset = util.by_pixel(-43.375,  29.875), shadow_offset = util.by_pixel(-43.375,  29.875), show_shadow = true },
         ["oil-boiler-mk01-legacy"] = { variation = 31, main_offset = util.by_pixel(-43.375,  29.875), shadow_offset = util.by_pixel(-43.375,  29.875), show_shadow = true },
         ["lrf-panel-mk01"] = { variation =  0, main_offset = util.by_pixel( 4.375,  50.625), shadow_offset = util.by_pixel( 4.375,  50.625), show_shadow = true },
         ["stirling-concentrator"] = { variation =  1, main_offset = util.by_pixel( 50.75, 0), shadow_offset = util.by_pixel( 50.75, 0), show_shadow = true },
         ["solar-tower-building"] = { variation =  1, main_offset = util.by_pixel( 225,  222.625), shadow_offset = util.by_pixel( 225,  222.625), show_shadow = true },
-    },
-    ["pipe"] = {
-        ["ht-pipes"] = { variation =  2, main_offset = util.by_pixel(-0.25, -9.875), shadow_offset = util.by_pixel(-0.25, -9.875), show_shadow = true },
     },
     ["pipe-to-ground"] = {
         ["niobium-pipe-to-ground"] = {
@@ -364,8 +358,6 @@ if settings.startup["pysimple-graphics"].value then
                         table.insert(connections, circuit_connector_definitions.create_single( universal_connector_template, info ))
                     end
                     data.raw[kind][name].circuit_connector = connections
-                elseif kind == "pipe" then
-                    data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info, info, info, info, info, info, info, info, info, info, info, info, info, info, info, info } )
                 elseif #info == 4 then
                     data.raw[kind][name].circuit_connector = circuit_connector_definitions.create_vector( universal_connector_template, { info[1], info[2], info[3], info[4] } )
                 else

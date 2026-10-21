@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.4
+Date: 2026.10.21
+  Changes:
+    - Robots, caravans, and other indirectly-controlled units are now considered "tall"
+    - Re-added icons and green color to "TURD replacement" descriptions
+  Balancing:
+    - The "rebalance brains" setting now increases the amount of non-brain ingredients required for vatbrain cartridges and the
+      amount of non-chitin ingredients required for bioscaffolds to compensate for fewer brains/chitin being needed
+---------------------------------------------------------------------------------------------------
 Version: 1.1.3
 Date: 2026.09.17
   Changes:
@@ -6,7 +15,7 @@ Date: 2026.09.17
     - Added optional dependencies (recommendations) to replace those which have been missing since the 2.0 -> 2.1 update
     - Removed tech tree adjustments for steam cooling recipe unlocks since they're implemented in base py now
   Balancing:
-    - The "other balance changes" now also extends the support length of elevated rails to be able to span large buildings
+    - The "other balance changes" setting now also extends the support length of elevated rails to be able to span large buildings
     - Adjusted rebalanced recipe speed multipliers for: scrapin bots turd
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.2

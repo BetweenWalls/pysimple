@@ -153,6 +153,7 @@ local recipe_speed_multipliers = {
     ["duralumin-1"] = 2,
     ["fenxsb-alloy-2"] = 4,
     ["pbsb-alloy"] = 2,
+    ["ernico-2"] = 2,
     -- alien life:
     {names={"bio-sample", "bio-sample-icd"}, mult=2},
     {names={"Moss-1", "Moss-1-chlorinated", "Moss-1-without-sludge", "Moss-1-without-sludge-for-real"}, mult=4},
