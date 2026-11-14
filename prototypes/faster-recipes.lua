@@ -34,7 +34,6 @@ local recipe_speed_multipliers = {
     ["sulfur-void-water"] = 5,
     ["ash"] = 2,
     ["filtration-dirty-water"] = 2,
-    ["formica"] = 2,
     ["calcium-carbide"] = 2,
     ["acetylene"] = 2,
     ["agar"] = 3,
@@ -161,8 +160,7 @@ local recipe_speed_multipliers = {
     {names={"Moss-3", "Moss-3-chlorinated", "Moss-3-without-sludge", "Moss-3-without-sludge-for-real"}, mult=2.4},
     {names={"Moss-4", "Moss-4-chlorinated", "Moss-4-without-sludge", "Moss-4-without-sludge-for-real"}, mult=1.6},
     {names={"log1", "log2", "log3", "log3-cheap"}, mult=2},
-    ["fiber-01"] = 3,
-    ["fiber-dry-storage"] = 5,
+    ["fiber-01"] = 2,
     ["kicalk-fiber"] = 2,
     ["sap-01"] = 3,
     ["sap-mk02"] = 1.8,
@@ -177,10 +175,6 @@ local recipe_speed_multipliers = {
     {names={"seaweed-2", "seaweed-2-dry"}, mult=2.5},
     {names={"seaweed-3", "seaweed-3-dry"}, mult=2},
     {names={"seaweed-4", "seaweed-4-dry"}, mult=1.5},
-    {names={"vrauks-cocoon-1", "vrauks-cocoon-1-no-water", "vrauks-1", "vrauks-1-no-water"}, mult=4},
-    {names={"vrauks-cocoon-2", "vrauks-cocoon-2-no-water", "vrauks-2", "vrauks-2-no-water"}, mult=3.25},
-    {names={"vrauks-cocoon-3", "vrauks-cocoon-3-no-water", "vrauks-3", "vrauks-3-no-water"}, mult=2.5},
-    {names={"vrauks-cocoon-4", "vrauks-cocoon-4-no-water", "vrauks-4", "vrauks-4-no-water"}, mult=1.75},
     {names={"full-render-vrauks", "full-render-vrauks-lard", "full-render-vrauks-laser", "full-render-vrauks-music"}, mult=2},
     ["phytoplankton"] = 3,
     ["jerky-to-phytoplankton"] = 2,
@@ -203,7 +197,6 @@ local recipe_speed_multipliers = {
     {names={"fawogae-2", "fawogae-2-nitrogen"}, mult=2.5},
     {names={"fawogae-3", "fawogae-3-nitrogen"}, mult=2},
     {names={"fawogae-4", "fawogae-4-nitrogen"}, mult=1.5},
-    {names={"ulric-1-manure", "ulric-2-manure", "ulric-3-manure", "ulric-4-manure"}, mult=1.2},
     {names={"ulric-manure-1", "ulric-manure-2", "ulric-manure-3", "ulric-manure-4"}, mult=3},
     {names={"full-render-ulrics", "full-render-ulrics-lard", "full-render-ulrics-laser", "full-render-ulrics-music"}, mult=6},
     {names={"ex-blo-ulr", "ex-bon-ulr", "ex-bra-ulr", "ex-fat-ulr", "ex-gut-ulr", "ex-me-ulr", "ex-ski-ulr"}, mult=3},
@@ -233,7 +226,6 @@ local recipe_speed_multipliers = {
     {names={"zipir-a-5", "zipir-a-5-suicide"}, mult=1.4},
     {names={"full-render-zipir", "full-render-zipir-lard", "full-render-zipir-laser", "full-render-zipir-music"}, mult=3},
     {names={"ex-blo-zipir", "ex-bra-zipir", "ex-fat-zipir", "ex-gut-zipir", "ex-me-zipir", "ex-ski-zipir"}, mult=2},
-    ["xyhiphoe-single"] = 3,
     {names={"full-render-xyhiphoe", "full-render-xyhiphoe-lard", "full-render-xyhiphoe-laser", "full-render-xyhiphoe-music"}, mult=3},
     {names={"ex-blo-xyh", "ex-gut-xyh", "ex-me-xyh"}, mult=2},
     ["yotoi-fruit-1"] = 2,
@@ -311,8 +303,31 @@ local recipe_speed_multipliers = {
     {names={"caged-xeno-2", "caged-xeno-2-dna-polymerase"}, mult=1.66},
     {names={"caged-xeno-3", "caged-xeno-3-dna-polymerase"}, mult=1.33},
     {names={"full-render-xenos", "full-render-xenos-lard", "full-render-xenos-laser", "full-render-xenos-music"}, mult=3},
-    {names={"quantum-dots-folding-1", "quantum-dots-folding-2", "quantum-dots-folding-3", "quantum-dots-folding-4"}, mult=8},
 }
+if settings.startup["pysimple-faster-recipes"].value then
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-1", "vrauks-1"}, mult=4})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-2", "vrauks-2"}, mult=3.25})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-3", "vrauks-3"}, mult=2.5})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-4", "vrauks-4"}, mult=1.75})
+    if settings.startup["pysimple-turds"].value then
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-1-no-water", "vrauks-1-no-water"}, mult=4.8})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-2-no-water", "vrauks-2-no-water"}, mult=3.9})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-3-no-water", "vrauks-3-no-water"}, mult=3})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-4-no-water", "vrauks-4-no-water"}, mult=2.1})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-5-no-water", "vrauks-5-no-water"}, mult=1.2})
+    else
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-1-no-water", "vrauks-1-no-water"}, mult=4})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-2-no-water", "vrauks-2-no-water"}, mult=3.25})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-3-no-water", "vrauks-3-no-water"}, mult=2.5})
+        table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-4-no-water", "vrauks-4-no-water"}, mult=1.75})
+    end
+elseif settings.startup["pysimple-turds"].value then
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-1-no-water", "vrauks-1-no-water"}, mult=1.2})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-2-no-water", "vrauks-2-no-water"}, mult=1.2})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-3-no-water", "vrauks-3-no-water"}, mult=1.2})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-4-no-water", "vrauks-4-no-water"}, mult=1.2})
+    table.insert(recipe_speed_multipliers, {names={"vrauks-cocoon-5-no-water", "vrauks-5-no-water"}, mult=1.2})
+end
 
 -- Energy multipliers are chosen to keep power consumption values roughly linear between tiers for plant/animal buildings
 local building_energy_multipliers = {

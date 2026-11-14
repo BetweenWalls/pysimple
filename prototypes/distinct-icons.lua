@@ -15,6 +15,8 @@ local recipes = {
     {icon="__pyalienlifegraphics__/graphics/icons/replicator-grod.png", numbered=true, names={"grod-super-1", "grod-super-2", "grod-super-3", "grod-super-4", "grod-super-5", "grod-super-6", "grod-super-7", "grod-super-8", "grod-super-9", "grod-super-10"}},
     {icon="__pyalienlifegraphics__/graphics/icons/replicator-cadaveric-arum.png", numbered=true, names={"arum-super-1", "arum-super-2", "arum-super-3", "arum-super-4", "arum-super-5", "arum-super-6", "arum-super-7", "arum-super-8", "arum-super-9", "arum-super-10"}},
     {icon="__pyalternativeenergygraphics__/graphics/icons/replicator-mova.png", numbered=true, names={"mova-super-1", "mova-super-2", "mova-super-3", "mova-super-4", "mova-super-5", "mova-super-6", "mova-super-7", "mova-super-8", "mova-super-9", "mova-super-10"}},
+    {icon="__pyalienlifegraphics__/graphics/icons/cadaveric-arum.png", add="__pyalienlifegraphics__/graphics/icons/cadaveric-arum-codex.png", names={"cadaveric-arum-sample"}},
+    {icon="__pyalienlifegraphics__/graphics/icons/guar.png", add="__pyalienlifegraphics__/graphics/icons/ralesia-codex.png", names={"guar-sample"}},
 }
 
 local kinds = {"item", "module"}
@@ -61,6 +63,9 @@ if settings.startup["pysimple-graphics"].value then
                     if info.artificial then
                         table.insert(recipe.icons, {icon = "__pyalienlifegraphics__/graphics/icons/laboratory-grown-brain.png", scale = 0.16, shift = {8,8}})
                     end
+                    if info.add then
+                        table.insert(recipe.icons, {icon = info.add, scale = 0.27, shift = {-10,-10}})
+                    end
                     if info.numbered then
                         if i+skip < 10 then
                             table.insert(recipe.icons, {icon = "__pyalienlifegraphics__/graphics/icons/"..tostring(i+skip)..".png", scale = 0.25, shift = {8,8}})
@@ -78,4 +83,8 @@ if settings.startup["pysimple-graphics"].value then
             end
         end
     end
+    data.raw.recipe["sea-sponge-sprouts-flagellum"].icons[1] = {icon = "__pyalienlifegraphics__/graphics/icons/sea-sponge-sprouts.png"}
+    data.raw.recipe["sea-sponge-sprouts-2-flagellum"].icons[1] = {icon = "__pyalienlifegraphics__/graphics/icons/sea-sponge-sprouts.png"}
+    data.raw.recipe["sea-sponge-sprouts-3-flagellum"].icons[1] = {icon = "__pyalienlifegraphics__/graphics/icons/sea-sponge-sprouts.png"}
+    data.raw.recipe["sea-sponge-sprouts-4-flagellum"].icons[1] = {icon = "__pyalienlifegraphics__/graphics/icons/sea-sponge-sprouts.png"}
 end

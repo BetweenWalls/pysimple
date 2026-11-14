@@ -199,6 +199,16 @@ if technology_adjustments ~= "1" then -- if either "yes" option is selected for 
         if data.raw.technology["fast-mdrn-loader"] then data.raw.technology["fast-mdrn-loader"].unit.ingredients = data.raw.technology["logistics-2"].unit.ingredients end
         if data.raw.technology["stack-mdrn-loader"] then data.raw.technology["stack-mdrn-loader"].unit.ingredients = data.raw.technology["fast-mdrn-loader"].unit.ingredients end
     end
+    if mods["InserterCranes-for-pymods"] then
+        if data.raw.technology["technology-nco-py-crane-mk2-crane"] and data.raw.technology["technology-nco-py-crane-mk2-crane"].unit.count < 1400 then data.raw.technology["technology-nco-py-crane-mk2-crane"].unit.count = 1400 end
+        if data.raw.technology["technology-nco-py-crane-mk3-crane"] and data.raw.technology["technology-nco-py-crane-mk3-crane"].unit.count < 2000 then data.raw.technology["technology-nco-py-crane-mk3-crane"].unit.count = 2000 end
+        if data.raw.technology["technology-nco-py-crane-mk4-crane"] and data.raw.technology["technology-nco-py-crane-mk4-crane"].unit.count < 3300 then data.raw.technology["technology-nco-py-crane-mk4-crane"].unit.count = 3300 end
+    end
+    if mods["cranes_pyanodon"] then
+        if data.raw.technology["cranes-mk2"] and data.raw.technology["cranes-mk2"].unit.count < 1400 then data.raw.technology["cranes-mk2"].unit.count = 1400 end
+        if data.raw.technology["cranes-mk3"] and data.raw.technology["cranes-mk3"].unit.count < 2000 then data.raw.technology["cranes-mk3"].unit.count = 2000 end
+        if data.raw.technology["cranes-mk4"] and data.raw.technology["cranes-mk4"].unit.count < 3300 then data.raw.technology["cranes-mk4"].unit.count = 3300 end
+    end
 end
 
 if settings.startup["pysimple-descriptions"].value ~= "1" or settings.startup["pysimple-storage-tanks"].value then
@@ -311,8 +321,7 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
                 "py-biomass-powerplant-mk01", "py-biomass-powerplant-mk02", "py-biomass-powerplant-mk03", "py-biomass-powerplant-mk04",
             },
             ["technology"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "biomassplant-mk01", "biomassplant-mk02", "biomassplant-mk03", "biomassplant-mk04" },
-            ["tool"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4" },
-            ["item"] = { "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", "fenxsb-alloy" },
+            ["item"] = { "py-science-pack-1", "py-science-pack-2", "py-science-pack-3", "py-science-pack-4", "battery-mk00", "portable-gasoline-generator", "used-nexelit-battery", "nexelit-battery", "used-quantum-battery", "quantum-battery", "fenxsb-alloy" },
             ["generator-equipment"] = { "portable-gasoline-generator" },
             ["wall"] = { "poorman-wood-fence" },
             ["storage-tank"] = { "tailings-pond" },
@@ -345,7 +354,6 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
         end
     end
     -- adjusts names and descriptions for clarity, such as making multi-product recipes include each product so they can be searched the same way as other recipes
-    -- TODO: Should these changes be made prior to data-final-fixes so that recipes automatically incorporate item name changes?
     -- TODO: Programmatically rename multi-product recipes by combining already-existing locales for the individual items
     for desc,desc_groups in pairs(locale_entries) do
         for type,items in pairs(desc_groups) do
@@ -361,6 +369,10 @@ if settings.startup["pysimple-descriptions"].value ~= "1" then
     if mods["PyBlock"] then
         -- soot-separation is the only recipe which needs a different name as it produces nickel ore in addition to the other products
         if data.raw.recipe["soot-separation"] then data.raw.recipe["soot-separation"].localised_name = {"name.recipe-soot-separation-pyblock"} end
+    end
+    if settings.startup["pysimple-misc"].value then
+        data.raw.recipe["py-science-pack-1-turd"]["localised_name"] = {"name.recipe-py-science-pack-1-turd-rebalanced"}
+        data.raw.recipe["py-science-pack-2-turd"]["localised_name"] = {"name.recipe-py-science-pack-2-turd-rebalanced"}
     end
 
     local turd_item = {
@@ -525,6 +537,12 @@ if settings.startup["pysimple-graphics"].value then
             ["natural-gas-mk03"] = {203, 142, 11, 255},
             ["natural-gas-mk04"] = {203, 142, 11, 255},
         },
+        ["unit"] = {
+            ["aerial-blimp-mk01"] = {0, 127, 160, 255},
+            ["aerial-blimp-mk02"] = {0, 127, 160, 255},
+            ["aerial-blimp-mk03"] = {0, 127, 160, 255},
+            ["aerial-blimp-mk04"] = {0, 127, 160, 255},
+        },
         ["electric-energy-interface"] = {
             ["microwave-receiver"] = {0, 127, 160, 255},
             ["sut"] = {0, 127, 160, 255},
@@ -564,6 +582,7 @@ if settings.startup["pysimple-graphics"].value then
         },
         ["burner-generator"] = {
             ["generator-1"] = {0, 127, 160, 255},
+            ["generator-1-turd"] = {0, 127, 160, 255},
             ["generator-2"] = {0, 127, 160, 255},
             ["py-rtg"] = {0, 127, 160, 255},
         },
@@ -619,7 +638,14 @@ if settings.startup["pysimple-graphics"].value then
         ["roboport"] = {"py-ze-mk02", "py-ze-mk03"},
         ["mining-drill"] = {"aluminium-mine", "geothermal-plant-mk01", "natural-gas-derrick-mk01", "natural-gas-derrick-mk02", "natural-gas-derrick-mk03", "natural-gas-derrick-mk04"},
         ["furnace"] = {"compost-plant-mk00"},
-        ["tree"] = {"tree-01", "tree-02", "tree-02-red", "tree-03", "tree-04", "tree-05", "tree-06", "tree-06-brown", "tree-07", "tree-08", "tree-08-brown", "tree-08-red", "tree-09", "tree-09-brown", "tree-09-red"},
+        ["tree"] = {
+            "tree-01", "tree-02", "tree-02-red", "tree-03", "tree-04", "tree-05", "tree-06", "tree-06-brown", "tree-07", "tree-08", "tree-08-brown", "tree-08-red", "tree-09", "tree-09-brown", "tree-09-red", -- vanilla
+            "tree-plant", "yumako-tree", "jellystem", "slipstack", "funneltrunk", "hairyclubnub", "teflilly", "lickmaw", "stingfrond", "boompuff", "sunnycomb", -- space age
+            "tree-desert-a", "tree-desert-b", "tree-desert-c", "tree-desert-d", "tree-desert-e", "tree-desert-f", "tree-desert-g", "tree-desert-h", "tree-desert-i", "tree-desert-j", "tree-desert-k", "tree-desert-l", "tree-desert-m", "tree-desert-n", -- alien biomes (4 lines)
+            "tree-dryland-a", "tree-dryland-b", "tree-dryland-c", "tree-dryland-d", "tree-dryland-e", "tree-dryland-f", "tree-dryland-g", "tree-dryland-h", "tree-dryland-i", "tree-dryland-j", "tree-dryland-k", "tree-dryland-l", "tree-dryland-m", "tree-dryland-n", "tree-dryland-o",
+            "tree-grassland-a", "tree-grassland-b", "tree-grassland-c", "tree-grassland-d", "tree-grassland-e", "tree-grassland-f", "tree-grassland-g", "tree-grassland-h", "tree-grassland-h2", "tree-grassland-h3", "tree-grassland-i", "tree-grassland-j", "tree-grassland-k", "tree-grassland-l", "tree-grassland-m", "tree-grassland-n", "tree-grassland-o", "tree-grassland-p", "tree-grassland-q",
+            "tree-palm-a", "tree-palm-b", "tree-snow-a", "tree-volcanic-a", "tree-wetland-a", "tree-wetland-b", "tree-wetland-c", "tree-wetland-d", "tree-wetland-e", "tree-wetland-f", "tree-wetland-g", "tree-wetland-h", "tree-wetland-i", "tree-wetland-j", "tree-wetland-k", "tree-wetland-l", "tree-wetland-m", "tree-wetland-n", "tree-wetland-o",
+        },
         ["unit"] = {"caravan", "caravan-turd", "fluidavan", "fluidavan-turd", "nukavan", "nukavan-turd", "flyavan", "flyavan-turd", "fluidflyavan", "fluidflyavan-turd", "digosaurus", "digosaurus-turd", "thikat", "thikat-turd", "work-o-dile", "work-o-dile-turd", "ocula", "gobachov", "huzu", "chorkok"},
         ["construction-robot"] = {"py-construction-robot-mk01", "py-construction-robot-mk02", "py-construction-robot-mk03", "py-construction-robot-mk04"},
         ["logistic-robot"] = {"py-logistic-robot-mk01", "py-logistic-robot-mk02", "py-logistic-robot-mk03", "py-logistic-robot-mk04"},
@@ -633,7 +659,7 @@ if settings.startup["pysimple-graphics"].value then
     end
 end
 
-if feature_flags["spoiling"] and settings.startup["pysimple-decay"].value then -- "rebalance decay times"
+if feature_flags["spoiling"] and settings.startup["py-enable-decay"].value and settings.startup["pysimple-decay"].value then -- "rebalance decay times"
     data.raw.item["petri-dish-bacteria"].spoil_ticks = 900
     data.raw.item["agar"].spoil_ticks = 3600
     data.raw.item["cellulose"].spoil_ticks = 7200
@@ -662,155 +688,61 @@ if settings.startup["pysimple-brains"].value then -- "rebalance brains"
     end
 end
 
-if settings.startup["pysimple-misc"].value then -- "other balance changes"
-    -- TODO: Fix recipe names to match their new output amounts: saline-water, gravel-saline-water, workers-food, iron-slime, chitin-void, chitin-to-geothermal-water, zogna-bacteria-darkness, fish-hydrolysate-cooling
-    -- TODO: Reinvestigate py science renames (other science recipes include the amount of output)
-    local recipe_changes = {
-        ["saline-water"] = {{ing="stone", mult=2}, {ing="water", mult=2}, {res="water-saline", mult=2}},
-        ["gravel-saline-water"] = {{ing="water", mult=2}, {res="water-saline", mult=2}},
-        ["workers-food"] = {{res="workers-food", mult=3}},
-        ["iron-slime"] = {{res="iron-slime", mult=5}},
-        ["chitin-void"] = {{res="carbolic-oil", mult=2}, {res="naphthalene-oil", mult=2}},
-        ["chitin-to-geothermal-water"] = {{res="geothermal-water", mult=4}},
-        ["minor-extract-gas-from-coalbed-3"] = {{ing="oxygen", mult=0.2}},
-        ["extract-gas-from-coalbed-3"] = {{ing="oxygen", mult=0.2}},
-        ["extract-gas-from-coalbed-4"] = {{ing="oxygen", mult=0.2}},
-        ["coalbed-gas-to-co2"] = {{ing="hot-air", mult=0.2}},
-        ["coalbed-gas-to-hydrogen"] = {{ing="hot-air", mult=0.2}},
-        ["coalbed-gas-to-syngas"] = {{ing="hot-air", mult=0.2}},
-        ["coalbed-gas-to-acidgas"] = {{ing="hot-air", mult=0.2}},
-        ["coalbed-gas-to-refsyngas"] = {{ing="hot-air", mult=1/3}},
-        ["full-render-phagnots"] = {{res="gas-bladder", mult=2}},
-        ["full-render-phagnots-lard"] = {{res="gas-bladder", mult=2}},
-        ["full-render-phagnots-laser"] = {{res="gas-bladder", mult=2}},
-        ["full-render-phagnots-music"] = {{res="gas-bladder", mult=2}},
-        ["ex-gut-phag"] = {{res="gas-bladder", mult=2}},
-        ["zogna-bacteria-darkness"] = {{res="zogna-bacteria", mult=1.1}},
-        ["log3-cheap"] = {{ing="ash", mult=1.5}},
-        ["log6-cheap"] = {{ing="ash", mult=1.5}},
-        ["fish-hydrolysate-cooling"] = {{res="fish-hydrolysate", mult=2}},
-        ["breed-fish-egg-1-doused"] = {{res="fish-oil", mult=4}},
-        ["breed-fish-egg-2-doused"] = {{res="fish-oil", mult=4}, {res="fish-hydrolysate", mult=4}},
-        ["breed-fish-egg-3-doused"] = {{res="fish-oil", mult=4}, {res="fish-hydrolysate", mult=4}, {res="fishmeal", mult=4}},
-        ["breed-fish-egg-4-doused"] = {{res="fish-oil", mult=4}, {res="fish-hydrolysate", mult=4}, {res="fishmeal", mult=4}, {res="fish-emulsion", mult=4}},
-        ["py-science-pack-1-turd"] = {{res="py-science-pack-1", mult=2.4}},
-        ["py-science-pack-2-turd"] = {{res="py-science-pack-2", mult=1.5}},
-    }
-    for name,infos in pairs(recipe_changes) do
-        local recipe = data.raw.recipe[name]
-        if recipe then
-            for _,info in pairs(infos) do
-                if info.ing then
-                    for i,ingredient in pairs(recipe.ingredients) do
-                        if ingredient.name == info.ing then
-                            recipe.ingredients[i].amount = math.floor(recipe.ingredients[i].amount * info.mult)
-                        end
-                    end
-                elseif info.res then
-                    for i,result in pairs(recipe.results) do
-                        if result.name == info.res then
-                            recipe.results[i].amount = math.floor(recipe.results[i].amount * info.mult)
-                        end
-                    end
-                end
-            end
-        end
-    end
-    if data.raw.recipe["saline-water"] then
-        data.raw.recipe["saline-water"].energy_required = 40
-        data.raw.recipe["gravel-saline-water"].energy_required = 40
-    end
-    if data.raw.accumulator["accumulator"] then
-        data.raw.accumulator["accumulator"].energy_source.input_flow_limit = "3MW"
-        data.raw.accumulator["accumulator"].energy_source.output_flow_limit = "3MW"
-    end
-    if data.raw.item["workers-food"] then
-        data.raw.item["workers-food"].stack_size = 40
-        data.raw.item["workers-food-02"].stack_size = 20
-        data.raw.item["workers-food-03"].stack_size = 20
-    end
-    if data.raw.module["self-generation-module-mk01"] then
-        data.raw.module["self-generation-module-mk01"].effect.productivity = 1.5
-        data.raw.module["self-generation-module-mk02"].effect.productivity = 1.5
-        data.raw.module["self-generation-module-mk03"].effect.productivity = 1.5
-        data.raw.module["self-generation-module-mk04"].effect.productivity = 1.5
-    end
-    if data.raw.module["py-sawblade-module-mk01"] then
-        data.raw.module["py-sawblade-module-mk01"].effect.productivity = 0.02
-        data.raw.module["py-sawblade-module-mk02"].effect.productivity = 0.03
-        data.raw.module["py-sawblade-module-mk03"].effect.productivity = 0.04
-        data.raw.module["py-sawblade-module-mk04"].effect.productivity = 0.05
-    end
-
-    if data.raw["rail-support"] and data.raw["rail-support"]["rail-support"] and data.raw["rail-support"]["rail-support"].support_range < 15 then
-        data.raw["rail-support"]["rail-support"].support_range = 15
-    end
-    if data.raw["rail-ramp"] and data.raw["rail-ramp"]["rail-ramp"] and data.raw["rail-ramp"]["rail-ramp"].support_range < 13 then
-        data.raw["rail-ramp"]["rail-ramp"].support_range = 13
-    end
-    if data.raw["rail-ramp"] and data.raw["rail-ramp"]["dummy-rail-ramp"] and data.raw["rail-ramp"]["dummy-rail-ramp"].support_range < 13 then
-        data.raw["rail-ramp"]["dummy-rail-ramp"].support_range = 13
-    end
-
-    local auogs = {["module"] = {"auog", "auog-mk02", "auog-mk03", "auog-mk04"}, ["item"] = {"charged-auog"}}
-    for kind,names in pairs(auogs) do
-        for _,auog in pairs(names) do
-            if data.raw[kind][auog] then
-                data.raw[kind][auog].fuel_value = util.parse_energy(data.raw[kind][auog].fuel_value) * 60 * 2 .. "W"
-            end
-        end
-    end
-
-    if data.raw["pipe-to-ground"]["pipe-to-ground"] and data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then
-        data:extend({
-            {
-                type = "recipe",
-                name = "niobium-pipe-to-ground-upgrading",
-                enabled = false,
-                energy_required = 4,
-                crafting_categories = {"crafting"},
-                ingredients = {
-                    { type = "item", name = "pipe-to-ground", amount = 2 },
-                    { type = "item", name = "niobium-plate", amount = 5 },
-                },
-                results = {
-                    { type = "item", name = "niobium-pipe-to-ground", amount = 2 }
-                }
-            },
-            {
-                type = "recipe",
-                name = "ht-pipe-to-ground-upgrading",
-                enabled = false,
-                energy_required = 4,
-                crafting_categories = {"crafting"},
-                ingredients = {
-                    { type = "item", name = "niobium-pipe-to-ground", amount = 2 },
-                    { type = "item", name = "titanium-plate", amount = 3 },
-                    { type = "item", name = "plastic-bar", amount = 3 },
-                    { type = "item", name = "rubber", amount = 13 },
-                },
-                results = {
-                    { type = "item", name = "ht-pipes-to-ground", amount = 2 }
-                }
-            },
-        })
-        table.insert( data.raw.technology["niobium"].effects, {type = "unlock-recipe", recipe = "niobium-pipe-to-ground-upgrading"} )
-        table.insert( data.raw.technology["coal-processing-3"].effects, {type = "unlock-recipe", recipe = "ht-pipe-to-ground-upgrading"} )
-    end
-end
+-- the "other balance changes" setting has adjustments in data-updates.lua
 
 if data.raw["pipe"]["pipe"] and data.raw["pipe"]["niobium-pipe"] then data.raw["pipe"]["pipe"].next_upgrade = "niobium-pipe" end
 if data.raw["pipe-to-ground"]["pipe-to-ground"] and data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] then data.raw["pipe-to-ground"]["pipe-to-ground"].next_upgrade = "niobium-pipe-to-ground" end
 if data.raw["pipe"]["niobium-pipe"] and data.raw["pipe"]["ht-pipes"] then data.raw["pipe"]["niobium-pipe"].next_upgrade = "ht-pipes" end
 if data.raw["pipe-to-ground"]["niobium-pipe-to-ground"] and data.raw["pipe-to-ground"]["ht-pipes-to-ground"] then data.raw["pipe-to-ground"]["niobium-pipe-to-ground"].next_upgrade = "ht-pipes-to-ground" end
 
-if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds a new map generation preset
+if data.raw["map-gen-presets"]["default"]["py-recommended"] then -- adds new map generation presets
     data.raw["map-gen-presets"]["default"]["py-streamlined"] = table.deepcopy(data.raw["map-gen-presets"]["default"]["py-recommended"])
-    data.raw["map-gen-presets"]["default"]["py-streamlined"].order = "i"
+    data.raw["map-gen-presets"]["default"]["py-streamlined"].order = "hb"
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["iron-ore"] = { frequency = 0.33, size = 0.75, richness = 6 }
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["copper-ore"] = { frequency = 0.33, size = 0.75, richness = 6 }
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["stone"] = { frequency = 0.75, size = 0.75, richness = 6 }
     data.raw["map-gen-presets"]["default"]["py-streamlined"].basic_settings.autoplace_controls["salt-rock"] = { frequency = 0.5, richness = 5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"] = table.deepcopy(data.raw["map-gen-presets"]["default"]["py-recommended"])
+    data.raw["map-gen-presets"]["default"]["py-lean"].order = "hc"
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["stone"] = { frequency = 0.33, size = 0.75, richness = 6 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["uranium-ore"] = { frequency = 0.33, size = 0.75, richness = 1.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["antimonium"] = { frequency = 0.33, size = 0.75, richness = 1.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ree"] = { frequency = 0.33, size = 0.75, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-aluminium"] = { frequency = 0.33, size = 0.75, richness = 0.33 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-bioreserve"] = { frequency = 0.33, size = 0.75, richness = 2 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-nexelit"] = { frequency = 0.33, size = 0.75, richness = 0.33 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["borax"] = { frequency = 0.33, size = 0.75, richness = 2 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-chromium"] = { frequency = 0.33, size = 0.75, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-lead"] = { frequency = 0.33, size = 0.75, richness = 0.75 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["molybdenum-ore"] = { frequency = 0.33, size = 0.75, richness = 0.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-nickel"] = { frequency = 0.33, size = 0.75, richness = 0.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["niobium"] = { frequency = 0.33, size = 0.75, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["oil-sand"] = { frequency = 0.33, size = 0.75, richness = 0.75 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-quartz"] = { frequency = 0.33, size = 0.75, richness = 1.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["raw-coal"] = { frequency = 0.33, size = 0.75, richness = 1.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-tin"] = { frequency = 0.33, size = 0.75, richness = 0.75 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-titanium"] = { frequency = 0.33, size = 0.75, richness = 0.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["ore-zinc"] = { frequency = 0.33, size = 0.75, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["aluminium-rock"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["chromium-rock"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["coal-rock"] = { frequency = 0.33, size = 1, richness = 0.75 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["geothermal-crack"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["copper-rock"] = { frequency = 0.33, size = 1, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["iron-rock"] = { frequency = 0.33, size = 1, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["lead-rock"] = { frequency = 0.33, size = 1, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["nickel-rock"] = { frequency = 0.33, size = 1, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["phosphate-rock"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["phosphate-rock-02"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["quartz-rock"] = { frequency = 0.33, size = 1, richness = 0.75 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["rare-earth-bolide"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["regolites"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["salt-rock"] = { frequency = 0.33, size = 1, richness = 0.5 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["sulfur-patch"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["tin-rock"] = { frequency = 0.33, size = 1, richness = 0.25 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["titanium-rock"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["uranium-rock"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["volcanic-pipe"] = { frequency = 0.33, size = 1, richness = 0.17 }
+    data.raw["map-gen-presets"]["default"]["py-lean"].basic_settings.autoplace_controls["zinc-rock"] = { frequency = 0.33, size = 1, richness = 0.17 }
 end
 
 -- Temporary initialization of circuit connection data for entities which should eventually be handled by core py mods (the connector positions are also adjusted in circuit-connections.lua)
@@ -856,27 +788,32 @@ if data.raw["boiler"]["oil-boiler-mk01-legacy"] and not data.raw["boiler"]["oil-
     data.raw["boiler"]["oil-boiler-mk01-legacy"].draw_circuit_wires = true
     data.raw["boiler"]["oil-boiler-mk01-legacy"].circuit_wire_max_distance = 14
 end
+if not data.raw.unit["aerial-blimp-mk01"].has_belt_immunity then data.raw.unit["aerial-blimp-mk01"].has_belt_immunity = true end
+if not data.raw.unit["aerial-blimp-mk02"].has_belt_immunity then data.raw.unit["aerial-blimp-mk02"].has_belt_immunity = true end
+if not data.raw.unit["aerial-blimp-mk03"].has_belt_immunity then data.raw.unit["aerial-blimp-mk03"].has_belt_immunity = true end
+if not data.raw.unit["aerial-blimp-mk04"].has_belt_immunity then data.raw.unit["aerial-blimp-mk04"].has_belt_immunity = true end
 
 -- TODO: Compost TURD upgrade for sweet tooth has redundant recipes listed - the sweet syrup and a-type molasses are already unlocked via a prerequisite technology
--- TODO: Pipe graphical issues for evaporator on the north side of the building where the pipes appear to extend too far
--- TODO: Aerial turbines don't appear correctly in the electric network info graphs (production doesn't show more than 1 for total amount, accumulator charge doesn't list them at all)
 -- TODO: Rename fluids which are gases IRL but liquids in-game or vice versa - hydrogen chloride to hydrochloric acid, acetone, etc
 -- TODO: Remove spaces & extra leading zeros from names (e.g. MK 02 -> MK2)
 -- TODO: Move gold tech deeper?
--- TODO: Update navens abomination turd recipes to be in their own "navens" slaughterhouse menu group and once again grouped with other navens-related items in factoriopedia
--- TODO: Increase costs for py cranes to match other techs at their level
+-- TODO: Move code to data-updates.lua where possible to improve convenience for other mods
 
 -- Potential balance changes:
 -- TODO: Rebalance biomass amounts for many items (e.g. higher tiers of the same item should not produce less biomass)
 -- TODO: Make fluid caravan volume a consistent amount (40k?) instead of 25k or 27.5k due to optional setting (make it based off the outpost volume instead of the volume of py-tank-4000)
 -- TODO: Make shell -> lime recipe available earlier? or make the composting recipe better for it?
--- TODO: Add setting to balance ingredient amounts for some early recipes? - some (alien life) recipes are weak/strong compared to alternatives
 -- TODO: Make zipirs produce chitin instead of skin to allow a method of scaling chitin more than brains, allowing bioprinting to be used more heavily for vatbrains if desired?
+-- TODO: Add setting to balance ingredient amounts for some early recipes? - some recipes are weak/strong compared to alternatives (such as auog t1)
+-- TODO: Add setting to introduce hard mode recipe balance changes (notably, those which add under-utilized animals to science recipes)
+-- TODO: Split "other balance changes" so that those changes which can't be easily undone (substation area, elevated rail support range) are separated
+-- TODO: Investigate other topics: fusion/nuclear energy, tholins, bhoddos fuel, dhilmos speed, simik turds, LFR, microwave receiver
 
 require("prototypes/reorganize-item-groups")
 require("prototypes/sort-recipe-unlocks")
 require("prototypes/circuit-connections")
 require("prototypes/drawing-box-extensions")
 require("prototypes/distinct-icons")
+require("prototypes/mech-armor")
 require("prototypes/faster-recipes")
 require("prototypes/energy-changes")

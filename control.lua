@@ -3,18 +3,11 @@
 script.on_init(
   function()
     initialize()
-    startup()
-  end
-)
-script.on_load(
-  function()
-    startup()
   end
 )
 script.on_configuration_changed(
   function()
     initialize()
-    startup()
   end
 )
 
@@ -39,17 +32,6 @@ function initialize()
   storage.graphics = settings.startup["pysimple-graphics"].value
   validate_technology_effects()
   clear_notifications()
-end
-
--- May be needed in the future to allow the navens abomination turd to be selectable from its own "navens" group within slaughterhouses
-function startup()
-  --[[
-  if settings.startup["pysimple-recipe-menu"].value then
-    if remote.interfaces["py-recipe-gui"] and remote.interfaces["py-recipe-gui"]["add_subgroup"] then
-      remote.call("py-recipe-gui", "add_subgroup", "py-alienlife-navens")
-    end
-  end
-  ]]
 end
 
 --- Updates map colors
@@ -120,7 +102,7 @@ function clear_notifications()
     "venom-gland-to-dynemicin", "cognition-osteochain-to-kondo-substrate", "dimensional-gastricorg-to-inverse-opal",
     "auog-food-01-sawdust", "auog-food-01-sawdust", "auog-recharge-glowing-mushroom-mk01", "auog-recharge-glowing-mushroom-mk02", "auog-recharge-glowing-mushroom-mk03", "auog-recharge-glowing-mushroom-mk04", "auog-paddock-mk01-with-dirt", "auog-paddock-mk02-with-dirt", "auog-paddock-mk03-with-dirt", "auog-paddock-mk04-with-dirt",
     "bhoddos-1-meltdown", "bhoddos-2-meltdown", "bhoddos-3-meltdown", "bhoddos-4-meltdown", "bhoddos-1-exoenzymes", "bhoddos-2-exoenzymes", "bhoddos-3-exoenzymes", "bhoddos-4-exoenzymes", "bhoddos-spore-upgraded", "sporopollenin-gills", "biomass-sporopollenin-nerfed",
-    "naphtha-arqad", "carbon-black-phytoplankton", "nanofibrils-xyhiphoe",
+    "naphtha-arqad", "carbon-black-phytoplankton", "nanofibrils-xyhiphoe", "filtration-media-2-nanofibril-turd",
     "bio-scafold-with-lamp", "bio-scafold-2-with-lamp", "bio-scafold-3-with-lamp", "bio-scafold-4-with-lamp", "bio-printer-mk01-yag", "bio-printer-mk02-yag", "bio-printer-mk03-yag", "bio-printer-mk04-yag", "stem-cell-recycle-1", "stem-cell-recycle-2", "stem-cell-recycle-3",
     "path-1-advanced-recipe", "path-2-advanced-recipe", "path-3-advanced-recipe",
     "cadaveric-arum-1-soil", "cadaveric-arum-2-soil", "cadaveric-arum-3-soil", "cadaveric-arum-4-soil", "cadaveric-arum-mk01-with-nanofibrils", "cadaveric-arum-mk02-with-nanofibrils", "cadaveric-arum-mk03-with-nanofibrils", "cadaveric-arum-mk04-with-nanofibrils", "cadaveric-arum-1-msa", "cadaveric-arum-2-msa", "cadaveric-arum-3-msa", "cadaveric-arum-4-msa",
@@ -153,7 +135,7 @@ function clear_notifications()
     "paper-towel", "ralesia-seeds-paper-towel", "ralesia-plantation-mk01-with-ceramic", "ralesia-plantation-mk02-with-ceramic", "ralesia-plantation-mk03-with-ceramic", "ralesia-plantation-mk04-with-ceramic", "ralesia-1-hydrogen-burn", "ralesia-2-hydrogen-burn", "ralesia-3-hydrogen-burn", "ralesia-4-hydrogen-burn",
     "deadhead-recycle", "rennea-1-deadhead", "rennea-2-deadhead", "rennea-3-deadhead", "rennea-4-deadhead", "rennea-1-hydrophile", "rennea-2-hydrophile", "rennea-3-hydrophile", "rennea-4-hydrophile", "rennea-seeds-venom",
     "py-science-pack-1-turd", "py-science-pack-2-turd", "py-science-pack-3-turd", "py-science-pack-4-turd",
-    "fts-reactor-with-centrifuge", "fts-reactor-mk02-with-centrifuge", "fts-reactor-mk03-with-centrifuge", "fts-reactor-mk04-with-centrifuge", "nano-cellulose-sap", "sap-tree-mulch-mk01", "sap-tree-mulch-mk02", "sap-tree-mulch-mk03", "sap-tree-mulch-mk04",
+    "ash-sap", "fts-reactor-with-centrifuge", "fts-reactor-mk02-with-centrifuge", "fts-reactor-mk03-with-centrifuge", "fts-reactor-mk04-with-centrifuge", "nano-cellulose-sap", "sap-tree-mulch-mk01", "sap-tree-mulch-mk02", "sap-tree-mulch-mk03", "sap-tree-mulch-mk04",
     "caged-antelope-1-5th-dimension", "caged-antelope-2-5th-dimension", "caged-antelope-3-5th-dimension", "caged-antelope-4-5th-dimension", "caged-antelope-5-5th-dimension", "caged-antelope-6-5th-dimension", "caged-antelope-7-5th-dimension", "caged-antelope-8-5th-dimension", "full-render-antelope-existential", "quantum-dots-folding-1", "quantum-dots-folding-2", "quantum-dots-folding-3", "quantum-dots-folding-4",
     "Scrondrix-cub-1-boron", "Scrondrix-cub-2-boron", "Scrondrix-cub-3-boron", "Scrondrix-cub-4-boron", "Scrondrix-1-boron", "Scrondrix-2-boron", "Scrondrix-3-boron", "Scrondrix-4-boron", "scrondrix-mk02-boron", "scrondrix-mk03-boron", "scrondrix-mk04-boron", "Scrondrix-cub-1-vegan", "Scrondrix-cub-2-vegan", "Scrondrix-cub-3-vegan", "Scrondrix-cub-4-vegan", "Scrondrix-1-vegan", "Scrondrix-2-vegan", "Scrondrix-3-vegan", "Scrondrix-4-vegan", "scrondrix-mk02-vegan", "scrondrix-mk03-vegan", "scrondrix-mk04-vegan", "scrondrix-brain-slaughterhouse-ex", "scrondrix-experimental-treatment",
     "seaweed-crop-mk01-with-ai", "seaweed-crop-mk02-with-ai", "seaweed-crop-mk03-with-ai", "seaweed-crop-mk04-with-ai", "slacked-lime-seaweed-recycle", "slacked-lime-from-seaweed", "seaweed-1-dry", "seaweed-2-dry", "seaweed-3-dry", "seaweed-4-dry", "seaweed-5-dry",

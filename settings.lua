@@ -75,12 +75,25 @@ data:extend ({
     },
     {
         type = "bool-setting",
-        name = "pysimple-misc",
+        name = "pysimple-turds",
         setting_type = "startup",
         default_value = false,
         order = "k"
     },
+    {
+        type = "bool-setting",
+        name = "pysimple-misc",
+        setting_type = "startup",
+        default_value = false,
+        order = "l"
+    },
 })
+data:extend {{
+    type = "bool-setting",
+    name = "py-enable-decay",
+    setting_type = "startup",
+    default_value = false
+}}
 
 if data.raw["bool-setting"]["py-tank-adjust"] ~= nil then
     data.raw["bool-setting"]["py-tank-adjust"].default_value = true
@@ -93,6 +106,7 @@ if data.raw["bool-setting"]["pypp-big-inventory-gui"] ~= nil then
 end
 
 if feature_flags["spoiling"] then
+    data.raw["bool-setting"]["py-enable-decay"].default_value = true
     data.raw["bool-setting"]["pysimple-decay"].hidden = false
 else
     data.raw["bool-setting"]["pysimple-decay"].hidden = true

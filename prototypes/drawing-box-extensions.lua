@@ -83,6 +83,18 @@ local tiered_buildings = {
     ["simple-entity-with-owner"] = {
         ["tidal-mk0"] = 0.3,
         ["solar-tower-panel"] = 1.1,
+    },
+    ["beacon"] = {
+        ["diet-beacon-AM1-FM"] = 3.5,
+        ["diet-beacon-AM2-FM"] = 3.5,
+        ["diet-beacon-AM3-FM"] = 3.5,
+        ["diet-beacon-AM4-FM"] = 3.5,
+        ["diet-beacon-AM5-FM"] = 3.5,
+        ["beacon-AM1-FM"] = 5.5,
+        ["beacon-AM2-FM"] = 5.5,
+        ["beacon-AM3-FM"] = 5.5,
+        ["beacon-AM4-FM"] = 5.5,
+        ["beacon-AM5-FM"] = 5.5,
     }
 }
 local untiered_buildings = {
@@ -144,7 +156,7 @@ local untiered_buildings = {
     ["furnace"] = {
         ["barrel-machine-mk01"] = 2,
         ["py-gas-vent"] = 4.1,
-        ["py-burner"] = 2.1,
+        ["py-burner"] = 2.2,
         ["co2-absorber"] = 0.2,
         ["compost-plant-mk01-turd"] = 4.3,
         ["compost-plant-mk02-turd"] = 4.3,
@@ -191,6 +203,9 @@ local untiered_buildings = {
     ["linked-container"] = {
         ["wyrmhole"] = 1.6,
     },
+    ["lab"] = {
+        ["lab"] = 5.5,
+    },
     ["roboport"] = {
         ["py-recharge-station-mk01"] = 2.8,
         ["py-roboport-mk02"] = 2,
@@ -201,7 +216,7 @@ local untiered_buildings = {
     },
     ["accumulator"] = {
         ["accumulator-mk01"] = 2.2,
-        ["accumulator-mk02"] = 2.5,
+        ["accumulator-mk02"] = 2.6,
         ["accumulator-mk03"] = 2.8,
     },
     ["radar"] = {
@@ -213,6 +228,8 @@ local untiered_buildings = {
         ["aerial-base-combinator"] = 1.2,
     },
     ["burner-generator"] = {
+        ["generator-1"] = 0.6,
+        ["generator-1-turd"] = 0.6,
         ["py-rtg"] = 0.6,
     },
     ["generator"] = {
@@ -222,21 +239,27 @@ local untiered_buildings = {
     },
     ["solar-panel"] = {
         ["solar-panel-mk01"] = 1.3,
+        ["solar-panel-mk02"] = 3.2,
+        ["solar-panel-mk03"] = 1.2,
         ["solar-panel-mk04"] = 0.2,
-    },
-    ["electric-energy-interface"] = {
-        ["solar-panel-mk02"] = 3,
-        ["solar-panel-mk03"] = 1,
         ["vawt-turbine-mk01"] = 4,
-        ["vawt-turbine-mk02"] = 2,
+        ["vawt-turbine-mk02"] = 2.2,
         ["vawt-turbine-mk03"] = 4,
         ["vawt-turbine-mk04"] = 12,
+        ["hawt-turbine-mk01"] = 0.6,
+        ["hawt-turbine-mk02"] = 2.3,
+        ["hawt-turbine-mk03"] = 5.5,
+        ["hawt-turbine-mk04"] = 1.4,
+        ["multiblade-turbine-mk01"] = 2.5,
+        ["multiblade-turbine-mk03"] = 1,
+        -- Note: Multiblade turbines and HAWTs don't display properly in the drawing box (the rotating turbine part is missing)
+    },
+    ["electric-energy-interface"] = {
         ["microwave-receiver"] = 4.6,
         ["sut"] = 16.5,
-        -- Note: Multiblade turbines and HAWTs don't display properly in the drawing box or factoriopedia (the rotating turbine part is missing)
     },
     ["electric-pole"] = {
-        ["nexelit-power-pole"] = 1.7,
+        ["nexelit-power-pole"] = 3.4,
         ["nexelit-substation"] = 0.8,
     },
     ["rocket-silo"] = {
@@ -259,6 +282,7 @@ if settings.startup["pysimple-graphics"].value then
                 min = 0
                 max = 32
             end
+            if kind == "beacon" then max = 5 end
             for i=min,max do
                 if data.raw[kind][name..i] then
                     data.raw[kind][name..i].drawing_box_vertical_extension = extension

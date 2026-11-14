@@ -1,4 +1,29 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.1.5
+Date: 2026.11.13
+  Changes:
+    - Added recommendations for mods which enable space age features - if available, mech armor graphics will be used for flying armors
+    - Factoriopedia now shows relevant technologies for turd recipes
+    - Added a new map preset with less rich resources for those who want a middle ground between regular py and pyblock archipelago which
+      will make expanding to new resource patches rarely necessary instead of almost never required
+    - Updated icons for some sponge turd recipes, cadaveric arum starter recipe, guar starter recipe
+    - Updated navens abomination related recipes to be categorized with other navens again and work with the custom slaughterhouse gui
+    - Updated py group order strings to reduce the likelihood of other modded groups interrupting them
+    - Updated item order for some pipe/belt related mods
+    - Added tall tree compatibility for alien biome trees
+    - Added technology cost compatibility tweaks for py cranes
+    - Fixed renamed science item names
+    - Fixed renamed recipes sometimes having incorrect quantities prepended to them
+    - Fixed drawing box vertical extensions for several entities including labs, wind turbines, beacons, and nexelit power poles
+  Balancing:
+    - Merged previous TURD-related changes into a new setting which rebalances the following TURDs: sawblades (wood processing unit),
+      dry storage and internal burner (fastwood forestry), reuse water (vrauks), temperature control and dosing pumps (fish),
+      total darkness (incubator), recirculation pumps (seaweed), remote growth technologies (xyhiphoe), sap slurry FTS pyrolysis (sap),
+      scrapin' bots (ulric), unstable phosphoronium and material spectroscopy (research), quantum folding (schrödinger antelope)
+    - The "other balance changes" setting now also extends the supply area of substations and increases the fuel consumption of biofuel
+      powerplants
+    - Adjusted rebalanced recipe speed multipliers for: fiber-01 (x3 to x2), formica (x2 to x1)
+---------------------------------------------------------------------------------------------------
 Version: 1.1.4
 Date: 2026.10.21
   Changes:

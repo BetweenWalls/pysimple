@@ -1,12 +1,17 @@
 {
 	"name": "pysimple",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"title": "Pyanodons Streamlined",
 	"author": "BetweenWalls",
 	"contact": "Discord: @between_walls",
 	"factorio_version": "2.1",
 	"dependencies": [
 		"pyalternativeenergy >= 3.2.11",
+		"+ enable-all-feature-flags",
+		"+ elevated-rails",
+		"+ toolbelt-equipment",
+		"+ mech-armor",
+		"+ cargo-bays-and-unloaders",
 		"(?) pyhardmode",
 		"(?) PyBlock",
 		"(?) tidy",
